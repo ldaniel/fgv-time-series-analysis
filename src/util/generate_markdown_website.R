@@ -18,7 +18,7 @@ rootDirectoryPath     <- stringr::str_replace(scriptsDirectoryPath, "/src/util",
 # generating website from markdown files --------------------------------------
 setwd(markdownDirectoryPath)
 
-rmarkdown::render_site(encoding="UTF-8")  # call the website generation function
+rmarkdown::render_site(encoding="UTF-8", quiet = FALSE)  # call the website generation function
 
 # moving website files to docs directory --------------------------------------
 if(file.exists(docsDirectoryPath))
