@@ -1,12 +1,12 @@
 # clearing everything before starting -----------------------------------------
 # clear environment and memory
-initialTime <- Sys.time() # get the initial time
-
 rm(list=ls())
 invisible(gc())
 
 # clear console screen
 cat("\014")
+
+initialTime <- Sys.time() # get the initial time
 
 # getting the necessary directories to generate the website -------------------
 scriptsDirectoryPath  <- dirname(rstudioapi::getSourceEditorContext()$path)
