@@ -1,5 +1,7 @@
 # clearing everything before starting -----------------------------------------
 # clear environment and memory
+initialTime <- Sys.time() # get the initial time
+
 rm(list=ls())
 invisible(gc())
 
@@ -16,12 +18,7 @@ rootDirectoryPath     <- stringr::str_replace(scriptsDirectoryPath, "/src/util",
 # generating website from markdown files --------------------------------------
 setwd(markdownDirectoryPath)
 
-initialTime <- Sys.time() # get the initial time
 rmarkdown::render_site(encoding="UTF-8")  # call the website generation function
-finalTime <- Sys.time()   # get the final time
-
-# showing the amount of time, in minutes, to generate the website
-print(difftime(finalTime, initialTime, tz="GMT", units="mins")) 
 
 # moving website files to docs directory --------------------------------------
 if(file.exists(docsDirectoryPath))
@@ -42,3 +39,7 @@ if(file.exists(tempSiteDirecoryPath))
 # setting the working directory to the original one ---------------------------
 setwd(rootDirectoryPath)
 getwd()
+
+finalTime <- Sys.time()   # get the final time
+# showing the amount of time, in minutes, to generate the website
+print(difftime(finalTime, initialTime, tz="GMT", units="mins")) 
