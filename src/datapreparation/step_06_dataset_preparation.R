@@ -1,17 +1,12 @@
 # dataset preparation ---------------------------------------------------------
 
-# The objective of this step is to return a DataFrame to be used in the
-# predictive modeling.
+## filter Selic data -----
+selic_actual        <- filter(selic_actual, Date >= make_date(2002, 1, 1))
+selic_actual$Value  <- selic_actual$Value / 100
 
-# defining the final dataset to evaluate
-source_dataset <- mytable
+selic_target        <- filter(selic_target, Date >= make_date(2002, 1, 1))
+selic_target$Value  <- selic_target$Value / 100
 
-# calling function to split and create train and test databases
-# this function will split the dataset into train and test data and save the sampling in disk
-# to resample just delete './models/source_train_test_dataset.rds' file and rerun this script
-if (file.exists('./models/source_train_test_dataset.rds')) {
-  source_train_test_dataset <- readRDS('./models/source_train_test_dataset.rds')
-} else {
-  source_train_test_dataset <- fgvr::createTestAndTrainSamples(source_dataset, "x_importance", 12345, 0.7)
-  saveRDS(source_train_test_dataset, './models/source_train_test_dataset.rds')  
-}
+## filter IPCA data -----
+ipca_12m        <- filter(ipca_12m, Date >= make_date(2002, 1, 1))
+ipca_12m$Value  <- ipca_12m$Value / 100

@@ -17,7 +17,7 @@ rootDirectoryPath     <- stringr::str_replace(scriptsDirectoryPath, "/src/util",
 setwd(markdownDirectoryPath)
 
 initialTime <- Sys.time() # get the initial time
-rmarkdown::render_site()  # call the website generation function
+rmarkdown::render_site(encoding="UTF-8")  # call the website generation function
 finalTime <- Sys.time()   # get the final time
 
 # showing the amount of time, in minutes, to generate the website
