@@ -1,0 +1,31 @@
+name: "__myproject__"
+navbar:
+  title: "FGV MBA"
+  left:
+    - text: "Home"
+      icon: fa-home
+      href: index.html
+    - text: "Business Case"
+      icon: fa-hand-holding-usd
+      menu: 
+        - text: "About the Data"
+          href: 01_about_the_data.html
+        - text: "---------"
+        - text: "Initial Analysis"
+        - text: "Data Preparation"
+          href: 02_data_preparation.html
+        - text: "Data Exploration"
+          href: 03_exploration_report.html
+    - text: "Final Report"
+      icon: fa-file-invoice-dollar
+      menu:
+        - text: "Conclusion"
+          href: conclusion.html
+        - text: "References"
+          href: references.html
+output:
+  html_document: 
+    theme: cosmo
+    highlight: tango
+    number_sections: yes
+    toc: yes

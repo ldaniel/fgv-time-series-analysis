@@ -1,0 +1,33 @@
+---
+title: "References"
+date: "August, 2019"
+---
+
+# References used in this class assigment.
+
+******************************************************
+
+## Theory
+
+### Books and articles
+
+- [**Title of the article 1**](http://www.url.com) --Author 1 name
+- [**Title of the article 2**](http://www.url.com) --Author 2 name
+- [**Title of the article n**](http://www.url.com) --Author n name
+
+### Wikipedia
+
+- [**Wikepedia article 1**](https://en.wikipedia.org/wiki/article) --Author 1 name
+- [**Wikepedia article 2**](https://en.wikipedia.org/wiki/article) --Author 2 name
+- [**Wikepedia article n**](https://en.wikipedia.org/wiki/article) --Author n name
+
+
+******************************************************
+
+## Awesome functions from the community
+
+Some awesome functions we found in ***The Internet*** and adapted for this class assignment.
+
+- [**Title of the functions 1**](http://www.url.com) --Author 1 name
+- [**Title of the functions 2**](http://www.url.com) --Author 2 name
+- [**Title of the functions n**](http://www.url.com) --Author n name
