@@ -1,3 +1,6 @@
+# references
+# https://cran.r-project.org/web/packages/BETS/vignettes/BETS_basic_usage.html
+
 # source scripts -------------------------------------------------------------
 
 source("./src/datapreparation/execute_data_preparation.R")
