@@ -6,10 +6,7 @@ In this project, we developed a set of works to go further in Time Series Analys
 
 This website intends to present the work analysis for the *"Análise de Séries Temporais"* class assignment.
 
-Grupos de 4 a 5 pessoas
-Escolher uma série temporal
-
-Apresentação de 10 min:
+Escolher uma série temporal e realizar uma apresentação de 10 min:
 
 - Definir o problema de projeção
 - Descrever a série temporal
