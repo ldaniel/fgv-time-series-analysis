@@ -12,7 +12,7 @@
 
 
 
-<title>Data preparation</title>
+<title>Preparação dos Dados</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -357,21 +357,24 @@ $(document).ready(function () {
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fa fa-hand-holding-usd"></span>
      
-    Business Case
+    Cenário Proposto
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="01_about_the_data.html">About the Data</a>
+      <a href="01_about_the_data.html">Sobre os dados</a>
     </li>
     <li class="divider"></li>
-    <li class="dropdown-header">Initial Analysis</li>
+    <li class="dropdown-header">Análise Inicial</li>
     <li>
-      <a href="02_data_preparation.html">Data Preparation</a>
+      <a href="02_data_preparation.html">Preparação dos Dados</a>
     </li>
     <li>
-      <a href="03_exploration_report.html">Data Exploration</a>
+      <a href="03_data_exploration.html">Exploração dos Dados</a>
+    </li>
+    <li>
+      <a href="04_models_exploration.html">Exploração dos Modelos</a>
     </li>
   </ul>
 </li>
@@ -379,16 +382,16 @@ $(document).ready(function () {
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fa fa-file-invoice-dollar"></span>
      
-    Final Report
+    Relatório Final
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="conclusion.html">Conclusion</a>
+      <a href="conclusion.html">Conclusão</a>
     </li>
     <li>
-      <a href="references.html">References</a>
+      <a href="references.html">Referências</a>
     </li>
   </ul>
 </li>
@@ -404,15 +407,15 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Data preparation</h1>
-<h4 class="date">August, 2019</h4>
+<h1 class="title toc-ignore">Preparação dos Dados</h1>
+<h4 class="date">Outubro de 2019</h4>
 
 </div>
 
 <div id="TOC">
 <ul>
-<li><a href="#using-a-step-by-step-approach"><span class="toc-section-number">1</span> Using a step by step approach</a></li>
-<li><a href="#create-functions-step-1"><span class="toc-section-number">2</span> Create Functions (step 1)</a><ul>
+<li><a href="#utilizando-uma-abordagem-dividida-em-passos"><span class="toc-section-number">1</span> Utilizando uma abordagem dividida em passos</a></li>
+<li><a href="#funções-criadas"><span class="toc-section-number">2</span> Funções criadas</a><ul>
 <li><a href="#specific-data-ingestion-functions"><span class="toc-section-number">2.1</span> Specific data ingestion functions</a><ul>
 <li><a href="#function-1"><span class="toc-section-number">2.1.1</span> Function 1</a></li>
 <li><a href="#function-2"><span class="toc-section-number">2.1.2</span> Function 2</a></li>
@@ -423,22 +426,22 @@ $(document).ready(function () {
 </ul>
 </div>
 
-<div id="using-a-step-by-step-approach" class="section level1">
-<h1><span class="header-section-number">1</span> Using a step by step approach</h1>
-<p>Before starting the analysis for the {{<strong>myproject</strong>}}, a few important steps were taken in order to prepare the source data files. These steps are listed below:</p>
+<div id="utilizando-uma-abordagem-dividida-em-passos" class="section level1">
+<h1><span class="header-section-number">1</span> Utilizando uma abordagem dividida em passos</h1>
+<p>Antes de iniciar a análise para o projeto Time-Series-Analysis, alguns importantes passos foram realizados para preparação da fonte de dados. Estes passos foram descritos a seguir:</p>
 <ul>
-<li><strong>Step 01</strong>: Create Functions;</li>
-<li><strong>Step 02</strong>: Data Ingestion;</li>
-<li><strong>Step 03</strong>: Data Cleaning;</li>
-<li><strong>Step 04</strong>: Label Translation;</li>
-<li><strong>Step 05</strong>: Data Enhancement;</li>
-<li><strong>Step 06</strong>: Dataset Preparation.</li>
+<li><strong>Step 01</strong>: Configuração do ambiente;</li>
+<li><strong>Step 02</strong>: Extração dos dados (download);</li>
+<li><strong>Step 03</strong>: Ingestão dos dados;</li>
+<li><strong>Step 04</strong>: Tratamento dos dados;</li>
+<li><strong>Step 05</strong>: Enriquecimento dos dados;</li>
+<li><strong>Step 06</strong>: Preparação dos datasets.</li>
 </ul>
 <hr />
 </div>
-<div id="create-functions-step-1" class="section level1">
-<h1><span class="header-section-number">2</span> Create Functions (step 1)</h1>
-<p>This step create functions to be used in the next steps. Following, all functions created are described.</p>
+<div id="funções-criadas" class="section level1">
+<h1><span class="header-section-number">2</span> Funções criadas</h1>
+<p>Para realização deste trabalho, algumas funções foram criadas para otimizar atividades e procedimentos repetitivos. Estas funções também podem, futuramente, serem reusadas em outros projetos ou mesmo serem adicionadas uma library R.</p>
 <div id="specific-data-ingestion-functions" class="section level2">
 <h2><span class="header-section-number">2.1</span> Specific data ingestion functions</h2>
 <div id="function-1" class="section level3">

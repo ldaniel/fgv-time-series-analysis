@@ -12,7 +12,7 @@
 
 
 
-<title>Conclusion</title>
+<title>Conclusão</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -357,21 +357,24 @@ $(document).ready(function () {
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fa fa-hand-holding-usd"></span>
      
-    Business Case
+    Cenário Proposto
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="01_about_the_data.html">About the Data</a>
+      <a href="01_about_the_data.html">Sobre os dados</a>
     </li>
     <li class="divider"></li>
-    <li class="dropdown-header">Initial Analysis</li>
+    <li class="dropdown-header">Análise Inicial</li>
     <li>
-      <a href="02_data_preparation.html">Data Preparation</a>
+      <a href="02_data_preparation.html">Preparação dos Dados</a>
     </li>
     <li>
-      <a href="03_exploration_report.html">Data Exploration</a>
+      <a href="03_data_exploration.html">Exploração dos Dados</a>
+    </li>
+    <li>
+      <a href="04_models_exploration.html">Exploração dos Modelos</a>
     </li>
   </ul>
 </li>
@@ -379,16 +382,16 @@ $(document).ready(function () {
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fa fa-file-invoice-dollar"></span>
      
-    Final Report
+    Relatório Final
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="conclusion.html">Conclusion</a>
+      <a href="conclusion.html">Conclusão</a>
     </li>
     <li>
-      <a href="references.html">References</a>
+      <a href="references.html">Referências</a>
     </li>
   </ul>
 </li>
@@ -404,104 +407,98 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Conclusion</h1>
-<h4 class="date">August, 2019</h4>
+<h1 class="title toc-ignore">Conclusão</h1>
+<h4 class="date">Outubro de 2019</h4>
 
 </div>
 
 <div id="TOC">
 <ul>
-<li><a href="#objective"><span class="toc-section-number">1</span> Objective</a></li>
-<li><a href="#model-evaluation"><span class="toc-section-number">2</span> Model evaluation</a><ul>
-<li><a href="#getting-the-predicted-score-from-each-model"><span class="toc-section-number">2.1</span> Getting the predicted score from each model</a></li>
-<li><a href="#getting-performance-measures-for-each-model."><span class="toc-section-number">2.2</span> Getting performance measures for each model.</a></li>
-<li><a href="#evaluating-performance-of-each-model"><span class="toc-section-number">2.3</span> Evaluating performance of each model</a><ul>
-<li><a href="#density-plots"><span class="toc-section-number">2.3.1</span> Density Plots</a></li>
-<li><a href="#score-boxplots"><span class="toc-section-number">2.3.2</span> Score Boxplots</a></li>
-<li><a href="#ks-plots"><span class="toc-section-number">2.3.3</span> KS Plots</a></li>
-<li><a href="#roc-curve"><span class="toc-section-number">2.3.4</span> ROC Curve</a></li>
-<li><a href="#acurracy"><span class="toc-section-number">2.3.5</span> Acurracy</a></li>
+<li><a href="#objetivos"><span class="toc-section-number">1</span> Objetivos</a></li>
+<li><a href="#criando-os-datasets-de-séries-temporais"><span class="toc-section-number">2</span> Criando os datasets de séries temporais</a><ul>
+<li><a href="#carregando-a-base-de-dados-processada"><span class="toc-section-number">2.1</span> Carregando a base de dados processada</a></li>
+<li><a href="#criando-o-conjunto-de-dados-de-treino-e-teste"><span class="toc-section-number">2.2</span> Criando o conjunto de dados de treino e teste</a></li>
 </ul></li>
+<li><a href="#rodando-os-modelos-lineares-de-séries-temporais"><span class="toc-section-number">3</span> Rodando os modelos lineares de séries temporais</a><ul>
+<li><a href="#modelo-de-tendência-linear"><span class="toc-section-number">3.1</span> Modelo de Tendência Linear</a></li>
 </ul></li>
-<li><a href="#final-considerations-and-project-limitations"><span class="toc-section-number">3</span> Final considerations and project limitations</a></li>
+<li><a href="#considerações-finais"><span class="toc-section-number">4</span> Considerações finais</a></li>
 </ul>
 </div>
 
-<div id="objective" class="section level1">
-<h1><span class="header-section-number">1</span> Objective</h1>
-<p>Describe the objetive of this report.</p>
+<div id="objetivos" class="section level1">
+<h1><span class="header-section-number">1</span> Objetivos</h1>
+<ul>
+<li>Definir o problema de projeção;</li>
+<li>Descrever a série temporal;</li>
+<li>Estimar com os modelos observado em aula;</li>
+<li>Concluir sobre o melhor modelo.</li>
+</ul>
 <hr />
 </div>
-<div id="model-evaluation" class="section level1">
-<h1><span class="header-section-number">2</span> Model evaluation</h1>
-<div id="getting-the-predicted-score-from-each-model" class="section level2">
-<h2><span class="header-section-number">2.1</span> Getting the predicted score from each model</h2>
-<p>We will start this task by consolidating all the actual and predicted score for all models in a single data frame for the full, train and test datasets.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># your code goes here</span></a></code></pre></div>
+<div id="criando-os-datasets-de-séries-temporais" class="section level1">
+<h1><span class="header-section-number">2</span> Criando os datasets de séries temporais</h1>
+<div id="carregando-a-base-de-dados-processada" class="section level2">
+<h2><span class="header-section-number">2.1</span> Carregando a base de dados processada</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">target_data &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&#39;../data/processed/target_dataset.rds&#39;</span>)</a>
+<a class="sourceLine" id="cb1-2" title="2"></a>
+<a class="sourceLine" id="cb1-3" title="3">target_ts &lt;-<span class="st"> </span><span class="kw">ts</span>(target_data<span class="op">$</span>Sales, </a>
+<a class="sourceLine" id="cb1-4" title="4">                <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">2005</span>,<span class="dv">1</span>), </a>
+<a class="sourceLine" id="cb1-5" title="5">                <span class="dt">end =</span> <span class="kw">c</span>(<span class="dv">2010</span>, <span class="dv">4</span>), </a>
+<a class="sourceLine" id="cb1-6" title="6">                <span class="dt">frequency =</span> <span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb1-7" title="7"></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="kw">summary</span>(target_ts)</a></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   48617   52681   59440   64757   76835  103337</code></pre>
 </div>
-<div id="getting-performance-measures-for-each-model." class="section level2">
-<h2><span class="header-section-number">2.2</span> Getting performance measures for each model.</h2>
-<p>To calculate the performance measures, derived from the confusion matrix, of each model we need to find the score cut off that best split our test dataset into Defaulters and Non-Defaulters.</p>
-<p>In this exercise we decide to not prioritize the accuracy on predicting Defaulters and Non-Defaulters, therefore we are looking for the score cut off that best predict each class equally.</p>
-<p>We will use the custom functions described in Auxiliary metrics functions topic in the Data Preparation session of this site.</p>
-<p>With the returned object from these functions we can plot the comparison between TPR (True Positive Rate) and TNR (True Negative Rate) to find the best cut off.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co">## getting cut off measures -----------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="co"># your code goes here</span></a></code></pre></div>
-<p>Having the best score cut off for each model we use <strong>HMeasure()</strong> function from <strong>hmeasure</strong> library to calculate the full set of metrics for classification methods.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># your code goes here</span></a></code></pre></div>
-<p>Below are the metrics on the train dataset:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># your code goes here</span></a></code></pre></div>
-<p>Below are the metrics on the test dataset:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># your code goes here</span></a></code></pre></div>
-</div>
-<div id="evaluating-performance-of-each-model" class="section level2">
-<h2><span class="header-section-number">2.3</span> Evaluating performance of each model</h2>
-<p>In this session we interpret the set of metrics we got from above steps.</p>
-<div id="density-plots" class="section level3">
-<h3><span class="header-section-number">2.3.1</span> Density Plots</h3>
-<p>Here we look back to the score density plot produced by each model side by side.</p>
-<p>Interesting enough to notice here how narrow the scores produced from Decision Tree model compared to the other models.</p>
-<p>As discussed in the Decision Tree session this model is extremely limited for this dataset with a huge variance in the tree depending on the train data and hyper parameters tuning.</p>
-<p>We are using our custom function <strong>Score_Histograms</strong> described in the Function topic of Data Preparation session of this site.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># your code goes here</span></a></code></pre></div>
-</div>
-<div id="score-boxplots" class="section level3">
-<h3><span class="header-section-number">2.3.2</span> Score Boxplots</h3>
-<p>Let’s now look at the score boxplots of each model side by side.</p>
-<p>This plot is a great way to visualize how well each model discriminate Defaulters and Non-Defaulters.</p>
-<p>Here we can see that Random Forest and Boosting have an edge on the classification power against the other models. Both of them have not presented interquartile overlap in their box plot, another important sign of discrimination power of the models.</p>
-<p>Our Decision Tree is right on the limit.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># your code goes here</span></a></code></pre></div>
-</div>
-<div id="ks-plots" class="section level3">
-<h3><span class="header-section-number">2.3.3</span> KS Plots</h3>
-<p>Now we look to the custom KS plots of each model side by side.</p>
-<p>The KS metric is the maximum distance between the cumulative distribution functions of two samples.</p>
-<p>KS metric ranges from 0 to 1, 0 meaning that there is no discrimination at all and 1 meaning a full discrimination.</p>
-<p>In this case we are comparing the cumulative distribution sample of Defaulters and Non-Defaulters.</p>
-<p>The bigger the KS metric the better the model are to discriminate Defaulters to Non-Defaulters.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co"># your code goes here</span></a></code></pre></div>
-</div>
-<div id="roc-curve" class="section level3">
-<h3><span class="header-section-number">2.3.4</span> ROC Curve</h3>
-<p>Now we look to the ROC curve of our models.</p>
-<p>The Receiver Operating Characteristic Curve is a plot that shows the discrimination ability of a binary classifier model as its classification threshold changes.</p>
-<p>We get this chart by plotting the <strong>True Positive Rate (TPR)</strong> against the <strong>False Positive Rate (FPR)</strong> at different threshold settings.</p>
-<p>The bigger the Area Under the Curve (AUC) the better the model is in classifying the observation.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># your code goes here</span></a></code></pre></div>
-</div>
-<div id="acurracy" class="section level3">
-<h3><span class="header-section-number">2.3.5</span> Acurracy</h3>
-<p>We finally look at the Confusion Matrix at the best cut off of each model to get a sense of the accuracy we were able to get in this exercise.</p>
-<p>We will use the custom functions described in Auxiliary metrics functions topic in the Data Preparation session of this site.</p>
-<p>Boosting is the best model we got in this exercise following very closely by Random Forest.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># your code goes here</span></a></code></pre></div>
+<div id="criando-o-conjunto-de-dados-de-treino-e-teste" class="section level2">
+<h2><span class="header-section-number">2.2</span> Criando o conjunto de dados de treino e teste</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># creating train and test sets ------------------------------------------------</span></a>
+<a class="sourceLine" id="cb3-2" title="2">test_sample_size &lt;-<span class="st"> </span><span class="dv">4</span></a>
+<a class="sourceLine" id="cb3-3" title="3">train_sample_size &lt;-<span class="st"> </span><span class="kw">length</span>(target_ts) <span class="op">-</span><span class="st"> </span>test_sample_size</a>
+<a class="sourceLine" id="cb3-4" title="4"></a>
+<a class="sourceLine" id="cb3-5" title="5">train_ts &lt;-<span class="st"> </span><span class="kw">window</span>(target_ts, <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">2005</span>, <span class="dv">1</span>), <span class="dt">end =</span> <span class="kw">c</span>(<span class="dv">2009</span>, <span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb3-6" title="6">test_ts &lt;-<span class="st"> </span><span class="kw">window</span>(target_ts, <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">2010</span>, <span class="dv">1</span>), <span class="dt">end =</span> <span class="kw">c</span>(<span class="dv">2010</span>, <span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb3-7" title="7"></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="co"># plot of the training and testing temporal series</span></a>
+<a class="sourceLine" id="cb3-9" title="9"><span class="kw">plot</span>(train_ts, </a>
+<a class="sourceLine" id="cb3-10" title="10">     <span class="dt">xlab =</span> <span class="st">&quot;Tempo&quot;</span>, </a>
+<a class="sourceLine" id="cb3-11" title="11">     <span class="dt">ylab =</span> <span class="st">&quot;Vendas&quot;</span>, </a>
+<a class="sourceLine" id="cb3-12" title="12">     <span class="dt">xaxt =</span> <span class="st">&quot;n&quot;</span>, </a>
+<a class="sourceLine" id="cb3-13" title="13">     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">48000</span>, <span class="dv">104000</span>), </a>
+<a class="sourceLine" id="cb3-14" title="14">     <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">2005</span>, <span class="dv">2011</span>), </a>
+<a class="sourceLine" id="cb3-15" title="15">     <span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>)</a>
+<a class="sourceLine" id="cb3-16" title="16"><span class="kw">axis</span>(<span class="dv">1</span>, <span class="dt">at =</span> <span class="kw">seq</span>(<span class="dv">2005</span>, <span class="dv">2011</span>, <span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">format</span>(<span class="kw">seq</span>(<span class="dv">2005</span>, <span class="dv">2011</span>, <span class="dv">1</span>)))</a>
+<a class="sourceLine" id="cb3-17" title="17"><span class="kw">lines</span>(test_ts, <span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</a>
+<a class="sourceLine" id="cb3-18" title="18"><span class="kw">box</span>(<span class="dt">lty =</span> <span class="st">&#39;1373&#39;</span>, <span class="dt">col =</span> <span class="st">&#39;black&#39;</span>)</a></code></pre></div>
+<p><img src="conclusion_files/figure-html/create_train_test_datasets-1.png" width="100%" /></p>
+<hr />
 </div>
 </div>
+<div id="rodando-os-modelos-lineares-de-séries-temporais" class="section level1">
+<h1><span class="header-section-number">3</span> Rodando os modelos lineares de séries temporais</h1>
+<div id="modelo-de-tendência-linear" class="section level2">
+<h2><span class="header-section-number">3.1</span> Modelo de Tendência Linear</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">model_trend &lt;-<span class="st"> </span><span class="kw">RunLinearTimeSeriesModel</span>(train_ts,</a>
+<a class="sourceLine" id="cb4-2" title="2">                                        test_ts,</a>
+<a class="sourceLine" id="cb4-3" title="3">                                        <span class="dt">formula =</span> <span class="st">&quot;train_ts ~ trend&quot;</span>, </a>
+<a class="sourceLine" id="cb4-4" title="4">                                        test_sample_size,</a>
+<a class="sourceLine" id="cb4-5" title="5">                                        <span class="dt">number_of_periods_for_forecasing =</span> <span class="dv">36</span>,</a>
+<a class="sourceLine" id="cb4-6" title="6">                                        <span class="dt">title =</span> <span class="st">&quot;Tendência Linear&quot;</span>)</a></code></pre></div>
+<p><img src="conclusion_files/figure-html/run_linear_time_series_model_1-1.png" width="100%" /><img src="conclusion_files/figure-html/run_linear_time_series_model_1-2.png" width="100%" /></p>
+<pre><code>## 
+##  Ljung-Box test
+## 
+## data:  Residuals from Linear regression model
+## Q* = 23.539, df = 3, p-value = 3.117e-05
+## 
+## Model df: 2.   Total lags used: 5</code></pre>
+<hr />
 </div>
-<div id="final-considerations-and-project-limitations" class="section level1">
-<h1><span class="header-section-number">3</span> Final considerations and project limitations</h1>
-<p>Describe your final considerations and project limitations here.</p>
+</div>
+<div id="considerações-finais" class="section level1">
+<h1><span class="header-section-number">4</span> Considerações finais</h1>
+<p>To-do.</p>
 </div>
 
 
