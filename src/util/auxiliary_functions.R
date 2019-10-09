@@ -1,19 +1,29 @@
 # functions -----------------------------------------------------------
+
+# clear environment, memory, console screen and plots
+ClearEnvironment <- function () {
+  rm(list=ls())
+  invisible(gc())
+  cat("\014")
+  
+  while (!is.null(dev.list()))
+    dev.off()
+}
+  
 RunLinearTimeSeriesModel <- function (train_ts, 
                                       test_ts, 
-                                      test_sample_size, 
-                                      formula, 
+                                      formula,
+                                      test_sample_size,
                                       number_of_periods_for_forecasing,
-                                      title)
-{
-  modelresults <-  list()
-  
+                                      title) {
+
   model <- tslm(as.formula(formula))
   model_projected <- forecast(model, h = test_sample_size, level = 0.95)
-  model_projected_analisys <- accuracy(model_projected, test_ts)  
+  model_projected_analisys <- accuracy(model_projected, test_ts)
   model_final <- tslm(as.formula(formula))
   model_final_projected <- forecast(model_final, h = number_of_periods_for_forecasing, level = 0.95)
-  
+
+  modelresults <- list()
   modelresults$model <- model
   modelresults$Acf <- Acf(model$residuals)
   modelresults$checkresiduals <- checkresiduals(model, test = "LB")
@@ -21,28 +31,25 @@ RunLinearTimeSeriesModel <- function (train_ts,
   modelresults$model_projected_analisys <- model_projected_analisys
   modelresults$model_final_projected <- model_final_projected
 
-  return(model_results) 
+  return(modelresults)
 }
 
 # work in progress
-RunSmoothingTimeSeriesModel <- function ()
-{
+RunSmoothingTimeSeriesModel <- function () {
   #to-do
 }
 
 # work in progress
-GetBetterTimeSeriesLinearModel <- function ()
-{
-  model_trend <- RunLinearModel("train_ts ~ trend", 
+GetBetterTimeSeriesLinearModel <- function () {
+  model_trend <- RunLinearTimeSeriesModel("train_ts ~ trend", 
                                 "Tendência Linear")
-  model_trend_square <- RunLinearModel("train_ts ~ trend + I(trend^2)", 
+  model_trend_square <- RunLinearTimeSeriesModel("train_ts ~ trend + I(trend^2)", 
                                        "Tendência Quadrática")
-  model_trend_season <- RunLinearModel("train_ts ~ trend + season", 
+  model_trend_season <- RunLinearTimeSeriesModel("train_ts ~ trend + season", 
                                        "Tendência Linear com Sazonalidade")
-  model_trend_square_season <- RunLinearModel("train_ts ~ season + trend + I(trend^2)", 
+  model_trend_square_season <- RunLinearTimeSeriesModel("train_ts ~ season + trend + I(trend^2)", 
                                               "Tendência Quadrática com Sazonalidade")
   
-  # consolidando os resultados das projeções para comparação --------------------
   rownames(model_trend)[1] <- "Tendência Linear Training Set" 
   rownames(model_trend)[2] <- "Tendência Linear Test Set" 
   
@@ -62,7 +69,6 @@ GetBetterTimeSeriesLinearModel <- function ()
 }
 
 # work in progress
-GetBetterTimeSeriesSmoothingModel <- function ()
-{
+GetBetterTimeSeriesSmoothingModel <- function () {
   #to-do
 }
