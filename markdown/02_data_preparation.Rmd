@@ -1,6 +1,6 @@
 ---
-title: "Data preparation"
-date: "October, 2019"
+title: "Preparação dos Dados"
+date: "Outubro de 2019"
 ---
 
 ```{r setup_preparation, include=FALSE}
@@ -17,21 +17,22 @@ knitr::opts_knit$set(root.dir = "../")
 
 ```
 
-# Using a step by step approach
+# Utilizando uma abordagem dividida em passos
 
-Before starting the analysis for the {{__myproject__}}, a few important steps were taken in order to prepare the source data files. These steps are listed below:
+Antes de iniciar a análise para o projeto Time-Series-Analysis, alguns importantes passos foram realizados para preparação da fonte de dados. Estes passos foram descritos a seguir:
 
-- **Step 01**: Create Functions;
-- **Step 02**: Data Ingestion;
-- **Step 03**: Data Cleaning;
-- **Step 04**: Label Translation;
-- **Step 05**: Data Enhancement;
-- **Step 06**: Dataset Preparation.
+- **Step 01**: Configuração do ambiente;
+- **Step 02**: Extração dos dados (download);
+- **Step 03**: Ingestão dos dados;
+- **Step 04**: Tratamento dos dados;
+- **Step 05**: Enriquecimento dos dados;
+- **Step 06**: Preparação dos datasets.
 
 *******************************************************************************
 
-# Create Functions (step 1)
-This step create functions to be used in the next steps. Following, all functions created are described.
+# Funções criadas
+
+Para realização deste trabalho, algumas funções foram criadas para otimizar atividades e procedimentos repetitivos. Estas funções também podem, futuramente, serem reusadas em outros projetos ou mesmo serem adicionadas uma library R.
 
 ## Specific data ingestion functions
 

@@ -1,0 +1,38 @@
+---
+title: "Exploração dos Modelos"
+date: "Outubro de 2019"
+---
+
+```{r setup_exploration, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.pos =  "h")
+knitr::opts_knit$set(root.dir = "../")
+
+options(Encoding="UTF-8")
+
+# data collection libraries
+library(Quandl)
+
+# data prep libraries
+library(tibble)
+library(magrittr)
+library(dplyr)
+library(tidyr)
+library(readr)
+library(readxl)
+library(stringr)
+library(lubridate)
+library(reticulate)
+
+# plotting libraries
+library(ggplot2)
+library(plotly)
+library(ggthemes)
+```
+
+## Histórico da Taxa de Venda de Títulos de Índice de Preços (NTN-B)
+
+```{r exploration_target_1, echo=FALSE, out.width = '100%'}
+# to-do
+```
+

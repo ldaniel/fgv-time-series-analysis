@@ -1,6 +1,6 @@
 ---
-title: "References"
-date: "October, 2019"
+title: "Referências"
+date: "Outrubro de 2019"
 ---
 
 # References used in this class assigment.

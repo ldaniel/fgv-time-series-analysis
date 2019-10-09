@@ -1,16 +1,17 @@
 ---
-title: "About the data"
+title: "Sobre os dados"
 ---
 
-# Setting the scene
+# Definindo o cenário
 
-## Introduction
-Include an introduction here.
+## Introdução
 
-## Task descripion
+To-do.
 
-Include a taks description here.
+## Descrição da tarefa
 
-## Data description
+To-do.
 
-Include a data description here.
+## Descrição dos dados
+
+To-do.

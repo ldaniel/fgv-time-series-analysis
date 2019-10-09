@@ -1,12 +1,12 @@
 ---
-title: "Conclusion"
-date: "October, 2019"
+title: "Conclusão"
+date: "Outubro de 2019"
 ---
 
 ```{r setup_evaluation, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.pos =  "h")
-knitr::opts_knit$set(root.dir = "../")
+knitr::opts_knit$set(root.dir = "./")
 
 # loading required libraries
 library(forecast)
@@ -18,19 +18,23 @@ library(crayon)
 ```{r scripts_evaluation, include=FALSE}
 # loading required steps before performing the analysis
 source("../src/util/auxiliary_functions.R")
+ClearEnvironment()
 ```
 
-# Objective
+# Objetivos
 
-Describe the objetive of this report.
+- Definir o problema de projeção;
+- Descrever a série temporal;
+- Estimar com os modelos observado em aula;
+- Concluir sobre o melhor modelo.
 
 *******************************************************************************
 
-# Models evaluation
+# Criando os datasets de séries temporais
 
-## Getting the MAPE score from each model
+## Carregando a base de dados processada
 
-```{r get_scores_evaluation, echo=TRUE}
+```{r data_load, echo=TRUE}
 
 target_data <- readRDS('../data/processed/target_dataset.rds')
 
@@ -39,18 +43,51 @@ target_ts <- ts(target_data$Sales,
                 end = c(2010, 4), 
                 frequency = 4)
 
-
+summary(target_ts)
 ```
 
-## Getting performance measures for each model.
+## Criando o conjunto de dados de treino e teste
 
-```{r get_measures_evaluation, echo=TRUE, out.width= '100%'}
-## getting cut off measures -----------------------------------------------------------------
-# your code goes here
+```{r create_train_test_datasets, echo=TRUE, out.width= '100%'}
+# creating train and test sets ------------------------------------------------
+test_sample_size <- 4
+train_sample_size <- length(target_ts) - test_sample_size
+
+train_ts <- window(target_ts, start = c(2005, 1), end = c(2009, 4))
+test_ts <- window(target_ts, start = c(2010, 1), end = c(2010, 4))
+
+# plot of the training and testing temporal series
+plot(train_ts, 
+     xlab = "Tempo", 
+     ylab = "Vendas", 
+     xaxt = "n", 
+     ylim = c(48000, 104000), 
+     xlim = c(2005, 2011), 
+     bty = "l")
+axis(1, at = seq(2005, 2011, 1), labels = format(seq(2005, 2011, 1)))
+lines(test_ts, bty = "l", col = "red")
+box(lty = '1373', col = 'black')
 ```
 
 *******************************************************************************
 
-# Final considerations and project limitations
+# Rodando os modelos lineares de séries temporais
+
+## Modelo de Tendência Linear
+
+```{r run_linear_time_series_model_1, echo=TRUE, out.width= '100%'}
+model_trend <- RunLinearTimeSeriesModel(train_ts,
+                                        test_ts,
+                                        formula = "train_ts ~ trend", 
+                                        test_sample_size,
+                                        number_of_periods_for_forecasing = 36,
+                                        title = "Tendência Linear")
+```
+
+
+
+*******************************************************************************
+
+# Considerações finais
 
 To-do.

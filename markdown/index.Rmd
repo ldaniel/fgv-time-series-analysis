@@ -2,21 +2,24 @@
 title: 'FGV MBA: Business Analytics & Big Data'
 ---
 
-# __myproject__
+# Time-Series-Analysis
 
-Describe your project using an short overview about the objectives.
+O objetivo deste website é apresentar a solução para o trabalho proposto no módulo de Análise de Séries Temporais do curso de MBA em Business Analytics e Big Data da FGV (turma Berrini)
 
-Use the menu above to navigate and see the final report.
+Utilize o menu acima para navegar pelo site e visualizar o relatório final.
 
 ## Professor
-- Professor name (name@email.com)
+- Rafael Scopel (rafael.scopel@stone.com.br)
 
-## Students / ID (matrícula)
+## Alunos / ID (matrícula)
 
-- [Student name 1](mailto:name@email.com) / A123456789
-- [Student name 2](mailto:name@email.com) / A123456789
-- [Student name 3](mailto:name@email.com) / A123456789
-- [Student name n](mailto:name@email.com) / A123456789
+- <a href="https://github.com/DanielFCampos"><img src="https://avatars2.githubusercontent.com/u/31582602?s=460&v=4" title="DanielFCampos" width="40" height="40"></a> [Daniel Campos](mailto:daniel.ferraz.campos@gmail.com) / A57635769
+- <a href="https://github.com/ldaniel"><img src="https://avatars2.githubusercontent.com/u/205534?s=460&v=4" title="ldaniel" width="40" height="40"></a>  [Leandro Daniel](mailto:contato@leandrodaniel.com) / A57622988
+- <a href="https://github.com/RodriGonca"><img src="https://avatars2.githubusercontent.com/u/50252438?s=460&v=4" title="RodriGonca" width="40" height="40"></a> [Rodrigo Goncalves](mailto:rodrigo.goncalves@me.com) / A57566093
+- <a href="https://github.com/ygorlima1"><img src="https://avatars2.githubusercontent.com/u/52429828?s=460&v=4" title="ygorlima1" width="40" height="40"></a>  [Ygor Lima](mailto:ygor_redesocial@hotmail.com) / A57549661
 
-## Where to find the source code of this project?
-This project can be found and downloaded on GitHub: https://github.com/your_user/your_project
+## Onde encontrar o código-fonte deste projeto?
+Este projeto pode ser baixado do GitHub: https://github.com/ldaniel/Time-Series-Analysis
+
+> Valar Morghulis!
+> :)
