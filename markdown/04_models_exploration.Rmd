@@ -25,7 +25,13 @@ ClearEnvironment()
 
 # Criando os datasets de séries temporais
 
+Analisar séries temporais são úteis para verificar padrões e criar previsões de movimentos futuros. Baseado na base de dados alvo de nossa análise, iremos transformá-la em um dataset de série temporal e na sequência criar as bases de treino e teste.
+
 ## Carregando a base de dados processada
+
+Carregamos a base de dados alvo, previamente tratada durante os passos explicados na fase de **Data Preparation** (preparação de dados).
+
+A função **ts** vai converter um vetor de valores de uma base de dados em um objeto R de séries temporais. Devemos passar para a função a coluna alvo e os valores de data de início e fim do período de observação bem como sua frequência.
 
 ```{r data_load, echo=TRUE}
 target_data <- readRDS('../data/processed/target_dataset.rds')
