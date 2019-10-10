@@ -91,10 +91,7 @@ box(lty = '1373', col = 'black')
 
 Para executarmos todos os modelos lineares de séries temporais, utilizamos a função **GenerateLinearTimeSeriesModels** criada para rodar cada um dos modelos desejados, gravando os resultados no diretório do projeto **\\models** para uso futuro.
 
-```
-linear_consolidation <- GenerateLinearTimeSeriesModels(train_ts, test_ts)
-```
-```{r generating_linear_models, include=FALSE}
+```{r generating_linear_models, echo=TRUE, out.width='100%'}
 linear_consolidation <- GenerateLinearTimeSeriesModels(train_ts, test_ts)
 ```
 
@@ -108,10 +105,7 @@ kable(linear_consolidation)
 
 Para executarmos todos os modelos de suavização exponencial de séries temporais, utilizamos a função **GenerateExponentialsmoothingStateTimeSeriesModel** criada para rodar cada um dos modelos desejados, gravando os resultados no diretório do projeto **\\models** para uso futuro.
 
-```
-smoothing_consolidation <- GenerateExponentialsmoothingStateTimeSeriesModel(target_ts, train_ts, test_ts)
-```
-```{r generating_smoothing_models, include=FALSE}
+```{r generating_smoothing_models, echo=TRUE, out.width='100%'}
 smoothing_consolidation <- GenerateExponentialsmoothingStateTimeSeriesModel(target_ts, train_ts, test_ts)
 ```
 
