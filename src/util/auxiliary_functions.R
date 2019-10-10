@@ -1,4 +1,4 @@
-# functions -----------------------------------------------------------
+# functions -------------------------------------------------------------------
 
 # clear environment, memory, console screen and plots
 ClearEnvironment <- function () {
@@ -9,7 +9,21 @@ ClearEnvironment <- function () {
   while (!is.null(dev.list()))
     dev.off()
 }
+
+# to-do: include description for this function  
+GenerateTrainTestDatasets <- function (target_ts,
+                                       train_start,
+                                       train_end,
+                                       test_start,
+                                       test_end) {
+  train_ts <- window(target_ts, start = train_start, end = train_end)
+  test_ts  <- window(target_ts, start = test_start,  end = test_end)
   
+  saveRDS(train_ts, '../data/processed/train_ts.rds')
+  saveRDS(test_ts, '../data/processed/test_ts.rds')
+}
+
+# to-do: include description for this function  
 RunLinearTimeSeriesModel <- function (train_ts, 
                                       test_ts, 
                                       formula,
@@ -34,41 +48,62 @@ RunLinearTimeSeriesModel <- function (train_ts,
   return(modelresults)
 }
 
-# work in progress
-RunSmoothingTimeSeriesModel <- function () {
-  #to-do
-}
-
-# work in progress
-GetBetterTimeSeriesLinearModel <- function () {
-  model_trend <- RunLinearTimeSeriesModel("train_ts ~ trend", 
-                                "Tendência Linear")
-  model_trend_square <- RunLinearTimeSeriesModel("train_ts ~ trend + I(trend^2)", 
-                                       "Tendência Quadrática")
-  model_trend_season <- RunLinearTimeSeriesModel("train_ts ~ trend + season", 
-                                       "Tendência Linear com Sazonalidade")
-  model_trend_square_season <- RunLinearTimeSeriesModel("train_ts ~ season + trend + I(trend^2)", 
-                                              "Tendência Quadrática com Sazonalidade")
+# to-do: include description for this function
+GenerateLinearTimeSeriesModels <- function (train_ts, test_ts) {
+  # Tendência Linear  
+  model_trend <- RunLinearTimeSeriesModel(train_ts,
+                                          test_ts,
+                                          formula = "train_ts ~ trend", 
+                                          test_sample_size = 4,
+                                          number_of_periods_for_forecasing = 36,
+                                          title = "Tendência Linear")
+  saveRDS(model_trend, '../models/ts_linear_model_trend.rds')
   
-  rownames(model_trend)[1] <- "Tendência Linear Training Set" 
-  rownames(model_trend)[2] <- "Tendência Linear Test Set" 
+  # Tendência Quadrática
+  model_trend_square <- RunLinearTimeSeriesModel(train_ts,
+                                                 test_ts,
+                                                 formula = "train_ts ~ trend + I(trend^2)", 
+                                                 test_sample_size = 4,
+                                                 number_of_periods_for_forecasing = 36,
+                                                 title = "Tendência Quadrática")
+  saveRDS(model_trend_square, '../models/ts_linear_model_trend_square.rds')
   
-  rownames(model_trend_square)[1] <- "Tendência Quadrática Training Set" 
-  rownames(model_trend_square)[2] <- "Tendência Quadrática Test Set" 
+  # Tendência Linear com Sazonalidade
+  model_trend_season <- RunLinearTimeSeriesModel(train_ts,
+                                                 test_ts,
+                                                 formula = "train_ts ~ trend + season", 
+                                                 test_sample_size = 4,
+                                                 number_of_periods_for_forecasing = 36,
+                                                 title = "Tendência Linear com Sazonalidade")
+  saveRDS(model_trend_season, '../models/ts_linear_model_trend_season.rds')
   
-  rownames(model_trend_season)[1] <- "Tendência Linear com Sazonalidade Training Set" 
-  rownames(model_trend_season)[2] <- "Tendência Linear com Sazonalidade Test Set" 
+  # Tendência Quadrática com Sazonalidade
+  model_trend_square_season <- RunLinearTimeSeriesModel(train_ts,
+                                                        test_ts,
+                                                        formula = "train_ts ~ season + trend + I(trend^2)", 
+                                                        test_sample_size = 4,
+                                                        number_of_periods_for_forecasing = 36,
+                                                        title = "Tendência Quadrática com Sazonalidade")
+  saveRDS(model_trend_square_season, '../models/ts_linear_model_trend_square_season.rds')
   
-  rownames(model_trend_square_season)[1] <- "Tendência Quadrática com Sazonalidade Training Set" 
-  rownames(model_trend_square_season)[2] <- "Tendência Quadrática com Sazonalidade Test Set" 
+  # performing results consolidation
+  consolidation <- tibble(model = character(), mape = numeric())
   
-  comparison <-  rbind(model_trend, 
-                       model_trend_square,
-                       model_trend_season,
-                       model_trend_square_season)
-}
-
-# work in progress
-GetBetterTimeSeriesSmoothingModel <- function () {
-  #to-do
+  consolidation <-  add_row(consolidation, 
+                            model = "model_trend", 
+                            mape = model_trend$model_projected_analisys["Test set",'MAPE'])
+  
+  consolidation <-  add_row(consolidation,
+                            model = "model_trend_square", 
+                            mape = model_trend_square$model_projected_analisys["Test set",'MAPE'])
+  
+  consolidation <-  add_row(consolidation,
+                            model = "model_trend_season", 
+                            mape = model_trend_season$model_projected_analisys["Test set",'MAPE'])
+  
+  consolidation <-  add_row(consolidation,
+                            model = "model_trend_square_season", 
+                            mape = model_trend_square_season$model_projected_analisys["Test set",'MAPE'])
+  
+  return(consolidation)
 }
