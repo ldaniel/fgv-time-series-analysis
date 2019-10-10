@@ -71,16 +71,32 @@ box(lty = '1373', col = 'black')
 Chamando a função de geração dos modelos lineares.
 
 ```{r generating_linear_models, echo=TRUE, out.width= '100%'}
-consolidation <- GenerateLinearTimeSeriesModels(train_ts, test_ts)
-kable(consolidation)
+linear_consolidation <- GenerateLinearTimeSeriesModels(train_ts, test_ts)
+kable(linear_consolidation)
 ```
 
 ## Analisando os resultados do modelo de Tendência Linear
 
-```{r run_linear_time_series_model_1, echo=TRUE, out.width= '100%'}
+```{r linear_time_series_model_1, echo=TRUE, out.width= '100%'}
 #to-do
 ```
 
+*******************************************************************************
+
+# Rodando os modelos de suavização exponencial de séries temporais
+
+Chamando a função de geração dos modelos de suavização exponencial.
+
+```{r generating_smoothing_models, echo=TRUE, out.width= '100%'}
+smoothing_consolidation <- GenerateExponentialsmoothingStateTimeSeriesModel(target_ts, train_ts, test_ts)
+kable(smoothing_consolidation)
+```
+
+## Analisando os resultados do modelo de Tendência Linear
+
+```{r smoothong_model_1, echo=TRUE, out.width= '100%'}
+#to-do
+```
 
 *******************************************************************************
 
