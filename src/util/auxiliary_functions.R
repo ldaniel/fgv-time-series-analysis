@@ -175,4 +175,4 @@ GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts, train_t
   }
   
   return(consolidation)
-}
+} 
