@@ -67,7 +67,7 @@ box(lty = '1373', col = 'black')
 
 # Rodando os modelos lineares de séries temporais
 
-Chamando a função de geração dos modelos lineares
+Chamando a função de geração dos modelos lineares.
 
 ```{r generating_linear_models, echo=TRUE, out.width= '100%'}
 consolidation <- GenerateLinearTimeSeriesModels(train_ts, test_ts)
