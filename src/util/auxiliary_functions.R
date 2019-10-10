@@ -1,4 +1,4 @@
-# functions -------------------------------------------------------------------
+# general functions -----------------------------------------------------------
 
 # clear environment, memory, console screen and plots
 ClearEnvironment <- function () {
@@ -9,6 +9,8 @@ ClearEnvironment <- function () {
   while (!is.null(dev.list()))
     dev.off()
 }
+
+# model functions -------------------------------------------------------------
 
 # to-do: include description for this function  
 GenerateTrainTestDatasets <- function (target_ts,
