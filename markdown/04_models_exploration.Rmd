@@ -79,7 +79,7 @@ box(lty = '1373', col = 'black')
 
 *******************************************************************************
 
-# Executado os modelos de séries temporáis
+# Executado os modelos de análise de séries temporais
 
 ## Rodando e salvando os modelos lineares de séries temporais
 
