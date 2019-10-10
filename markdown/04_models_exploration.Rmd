@@ -179,7 +179,7 @@ best_model$model_projected
 best_model$model_projected_analisys
 ```
 
-## Checando a projeção do modelo final
+## Checando a projeção final do modelo
 
 ```{r best_model_final_projection, echo=TRUE, out.width='100%'}
 best_model$model_final_projected
