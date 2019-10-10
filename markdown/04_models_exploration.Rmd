@@ -40,6 +40,15 @@ summary(target_ts)
 
 ## Criando o conjunto de dados de treino e teste
 
+Quando vamos criar um modelo de previsão de séries temporais o ideal é separar os dados em duas partes:
+
+- **Treino:** estes dados serão a base principal para definir os coeficientes/parâmetros do modelo;
+- **Teste:** são dados que serão separados e não foram vistos pelo modelo e serão usados para testá-lo e comparar com as previsões (geralmente comparando os valores passo-a-passo).
+
+O tamanho do conjunto de testes é normalmente cerca de 20% da amostra total, embora esse percentual dependa do tamanho da amostra que você tenha e também quanto tempo adiante você deseja fazer a previsão. A base de testes deve ser idealmente pelo menos tão grande quanto o horizonte máximo de previsão necessário.
+
+Diferente de outros métodos de previsões, como classificações e regressões sem a influência do tempo, em séries temporais não podemos dividir os dados de treino e teste com amostras aleatórias de qualquer parte dos dados, deve-se seguir o critério temporal da série, onde os dados de treino devem vir antes dos dados de teste.
+
 ```{r create_train_test_datasets, echo=TRUE, out.width='100%'}
 # creating train and test sets ------------------------------------------------
 GenerateTrainTestDatasets(target_ts,
@@ -50,7 +59,11 @@ GenerateTrainTestDatasets(target_ts,
 
 train_ts <- readRDS('../data/processed/train_ts.rds')
 test_ts  <- readRDS('../data/processed/test_ts.rds')
+```
 
+A seguir vemos o plot dos datasets de treino e teste.
+
+```{r plot_train_test_datasets, echo=TRUE, out.width='100%'}
 # plot of the training and testing temporal series
 plot(train_ts, 
      xlab = "Tempo", 
@@ -66,7 +79,9 @@ box(lty = '1373', col = 'black')
 
 *******************************************************************************
 
-# Rodando os modelos lineares de séries temporais
+# Executado os modelos de séries temporáis
+
+## Rodando e salvando os modelos lineares de séries temporais
 
 Para executarmos todos os modelos lineares de séries temporais, utilizamos a função **GenerateLinearTimeSeriesModels** criada para rodar cada um dos modelos desejados, gravando os resultados no diretório do projeto **\\models** para uso futuro.
 
@@ -83,15 +98,7 @@ Uma vez executada, a função retorna um preview com os resultados de MAPE para 
 kable(linear_consolidation)
 ```
 
-## Analisando os resultados do modelo de Tendência Linear
-
-```{r linear_time_series_model_1, echo=TRUE, out.width='100%'}
-#to-do
-```
-
-*******************************************************************************
-
-# Rodando os modelos de suavização exponencial de séries temporais
+## Rodando e salvando os modelos de suavização exponencial de séries temporais
 
 Para executarmos todos os modelos de suavização exponencial de séries temporais, utilizamos a função **GenerateExponentialsmoothingStateTimeSeriesModel** criada para rodar cada um dos modelos desejados, gravando os resultados no diretório do projeto **\\models** para uso futuro.
 
@@ -108,14 +115,12 @@ Uma vez executada, a função retorna um preview com os resultados de MAPE para 
 kable(smoothing_consolidation)
 ```
 
-## Analisando os resultados do modelo de Tendência Linear
-
-```{r smoothong_model_1, echo=TRUE, out.width='100%'}
-#to-do
-```
-
 *******************************************************************************
 
-# Considerações finais
+# Avaliando os modelos utilizados e seus resultados
 
-To-do.
+Para análise inicial dos modelos será utilizado como base a métrica **MAPE** (Mean Absolute Percentage Error, ou Erro Percentual Médio Absoluto).
+
+Essa métrica é interessante de ser usada, geralmente  em relatórios gerenciais, pois o erro é medido em termos percentuais e pode-se comparar o erro percentual do modelo de um produto X com o erro percentual de um produto Y.
+
+O cálculo dessa métrica pega o valor absoluto do erro dividido pelo preço real e posteriormente é calculada a média:
