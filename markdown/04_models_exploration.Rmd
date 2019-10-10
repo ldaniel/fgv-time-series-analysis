@@ -10,6 +10,7 @@ knitr::opts_knit$set(root.dir = "./")
 
 # loading required libraries
 library(dplyr)
+library(zoo)
 library(forecast)
 library(lubridate)
 library(readxl)
