@@ -142,3 +142,45 @@ kable(mape_ranking)
 ```
 
 O modelo de suavização exponencial **MMM** demonstrou a melhor métrica de **MAPE**, com o valor de **`r min(mape_ranking[,2])`**.
+
+Para analisarmos com mais detalhes o modelo com melhor performance, vamos carregar o objeto salvo anteriormente com todos os resultados do modelo.
+
+```{r loading_best_model, echo=TRUE, out.width='100%'}
+best_model <- readRDS('../models/ts_exponential_smoothing_model_MMM.rds')
+```
+
+## Resultados gerais do modelo
+
+```{r best_model_summary, echo=TRUE, out.width='100%'}
+best_model$model
+```
+
+## Checando autocorrelação do modelo
+
+```{r best_model_Acf, echo=TRUE, out.width='100%'}
+best_model$Acf
+```
+
+## Checando resíduos do modelo
+
+```{r best_model_residuals, echo=TRUE, out.width='100%'}
+best_model$checkresiduals
+```
+
+## Checando a projeção do modelo
+
+```{r best_model_projection, echo=TRUE, out.width='100%'}
+best_model$model_projected
+```
+
+## Checando as métricas do modelo
+
+```{r best_model_metrics, echo=TRUE, out.width='100%'}
+best_model$model_projected_analisys
+```
+
+## Checando a projeção do modelo final
+
+```{r best_model_final_projection, echo=TRUE, out.width='100%'}
+best_model$model_final_projected
+```
