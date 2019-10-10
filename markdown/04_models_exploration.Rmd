@@ -40,7 +40,7 @@ summary(target_ts)
 
 ## Criando o conjunto de dados de treino e teste
 
-```{r create_train_test_datasets, echo=TRUE, out.width= '100%'}
+```{r create_train_test_datasets, echo=TRUE, out.width='100%'}
 # creating train and test sets ------------------------------------------------
 GenerateTrainTestDatasets(target_ts,
                           c(2005, 1),
@@ -68,16 +68,24 @@ box(lty = '1373', col = 'black')
 
 # Rodando os modelos lineares de séries temporais
 
-Chamando a função de geração dos modelos lineares.
+Para executarmos todos os modelos lineares de séries temporais, utilizamos a função **GenerateLinearTimeSeriesModels** criada para rodar cada um dos modelos desejados, gravando os resultados no diretório do projeto **\\models** para uso futuro.
 
-```{r generating_linear_models, echo=TRUE, out.width= '100%'}
+```
 linear_consolidation <- GenerateLinearTimeSeriesModels(train_ts, test_ts)
+```
+```{r generating_linear_models, include=FALSE}
+linear_consolidation <- GenerateLinearTimeSeriesModels(train_ts, test_ts)
+```
+
+Uma vez executada, a função retorna um preview com os resultados de MAPE para cada um dos modelos, mostrados a seguir.
+
+```{r consolidated_linear_models_preview, echo=TRUE, out.width= '100%'}
 kable(linear_consolidation)
 ```
 
 ## Analisando os resultados do modelo de Tendência Linear
 
-```{r linear_time_series_model_1, echo=TRUE, out.width= '100%'}
+```{r linear_time_series_model_1, echo=TRUE, out.width='100%'}
 #to-do
 ```
 
@@ -85,16 +93,24 @@ kable(linear_consolidation)
 
 # Rodando os modelos de suavização exponencial de séries temporais
 
-Chamando a função de geração dos modelos de suavização exponencial.
+Para executarmos todos os modelos de suavização exponencial de séries temporais, utilizamos a função **GenerateExponentialsmoothingStateTimeSeriesModel** criada para rodar cada um dos modelos desejados, gravando os resultados no diretório do projeto **\\models** para uso futuro.
 
-```{r generating_smoothing_models, echo=TRUE, out.width= '100%'}
+```
 smoothing_consolidation <- GenerateExponentialsmoothingStateTimeSeriesModel(target_ts, train_ts, test_ts)
+```
+```{r generating_smoothing_models, include=FALSE}
+smoothing_consolidation <- GenerateExponentialsmoothingStateTimeSeriesModel(target_ts, train_ts, test_ts)
+```
+
+Uma vez executada, a função retorna um preview com os resultados de MAPE para cada um dos modelos, mostrados a seguir.
+
+```{r consolidated_smoothing_models_preview, echo=TRUE, out.width='100%'}
 kable(smoothing_consolidation)
 ```
 
 ## Analisando os resultados do modelo de Tendência Linear
 
-```{r smoothong_model_1, echo=TRUE, out.width= '100%'}
+```{r smoothong_model_1, echo=TRUE, out.width='100%'}
 #to-do
 ```
 
