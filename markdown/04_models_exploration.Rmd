@@ -133,9 +133,12 @@ O cálculo dessa métrica pega o valor absoluto do erro dividido pelo preço rea
 
 $$MAPE = \frac{1}{n} \sum_{d_i} (\frac{1}{q} \sum_{t_j}\left\lvert{\frac{gap_{i,j}-s_{i,j}}{gap_{i,j}}}\right\rvert)$$
 
+Para analisar o desempenho dos modelos utilizados em nosso dataset de série temporal, vamos primeiramente classificar do melhor para o pior, baseado no resultado de **MAPE**.
 
 ```{r checking_all_mape_results, echo=TRUE, out.width='100%'}
 mape_ranking <- rbind(linear_consolidation, smoothing_consolidation) %>% 
         arrange(MAPE)
 kable(mape_ranking)
 ```
+
+O modelo de suavização exponencial **MMM** demonstrou a melhor métrica de **MAPE**, com o valor de **`r min(mape_ranking[,2])`**.
