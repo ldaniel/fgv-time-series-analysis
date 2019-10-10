@@ -26,6 +26,8 @@ GenerateTrainTestDatasets <- function (target_ts,
   saveRDS(test_ts, '../data/processed/test_ts.rds')
 }
 
+# linear model functions ------------------------------------------------------
+
 # this function is capable of running a linear time series model
 # given a certain formula and based in a train/test pair datasets
 RunLinearTimeSeriesModel <- function (train_ts, 
@@ -117,6 +119,8 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts) {
   
   return(consolidation)
 }
+
+# exponential smoothing model functions ---------------------------------------
 
 # this function is capable of running a exponential smooghing time series 
 # model given a certain method and based in a train/test pair datasets
