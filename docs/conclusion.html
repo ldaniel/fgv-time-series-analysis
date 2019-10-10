@@ -415,14 +415,10 @@ $(document).ready(function () {
 <div id="TOC">
 <ul>
 <li><a href="#objetivos"><span class="toc-section-number">1</span> Objetivos</a></li>
-<li><a href="#criando-os-datasets-de-séries-temporais"><span class="toc-section-number">2</span> Criando os datasets de séries temporais</a><ul>
-<li><a href="#carregando-a-base-de-dados-processada"><span class="toc-section-number">2.1</span> Carregando a base de dados processada</a></li>
-<li><a href="#criando-o-conjunto-de-dados-de-treino-e-teste"><span class="toc-section-number">2.2</span> Criando o conjunto de dados de treino e teste</a></li>
+<li><a href="#tópico"><span class="toc-section-number">2</span> Tópico</a><ul>
+<li><a href="#subtópico"><span class="toc-section-number">2.1</span> Subtópico</a></li>
 </ul></li>
-<li><a href="#rodando-os-modelos-lineares-de-séries-temporais"><span class="toc-section-number">3</span> Rodando os modelos lineares de séries temporais</a><ul>
-<li><a href="#modelo-de-tendência-linear"><span class="toc-section-number">3.1</span> Modelo de Tendência Linear</a></li>
-</ul></li>
-<li><a href="#considerações-finais"><span class="toc-section-number">4</span> Considerações finais</a></li>
+<li><a href="#considerações-finais"><span class="toc-section-number">3</span> Considerações finais</a></li>
 </ul>
 </div>
 
@@ -436,68 +432,16 @@ $(document).ready(function () {
 </ul>
 <hr />
 </div>
-<div id="criando-os-datasets-de-séries-temporais" class="section level1">
-<h1><span class="header-section-number">2</span> Criando os datasets de séries temporais</h1>
-<div id="carregando-a-base-de-dados-processada" class="section level2">
-<h2><span class="header-section-number">2.1</span> Carregando a base de dados processada</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">target_data &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&#39;../data/processed/target_dataset.rds&#39;</span>)</a>
-<a class="sourceLine" id="cb1-2" title="2"></a>
-<a class="sourceLine" id="cb1-3" title="3">target_ts &lt;-<span class="st"> </span><span class="kw">ts</span>(target_data<span class="op">$</span>Sales, </a>
-<a class="sourceLine" id="cb1-4" title="4">                <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">2005</span>,<span class="dv">1</span>), </a>
-<a class="sourceLine" id="cb1-5" title="5">                <span class="dt">end =</span> <span class="kw">c</span>(<span class="dv">2010</span>, <span class="dv">4</span>), </a>
-<a class="sourceLine" id="cb1-6" title="6">                <span class="dt">frequency =</span> <span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb1-7" title="7"></a>
-<a class="sourceLine" id="cb1-8" title="8"><span class="kw">summary</span>(target_ts)</a></code></pre></div>
-<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   48617   52681   59440   64757   76835  103337</code></pre>
-</div>
-<div id="criando-o-conjunto-de-dados-de-treino-e-teste" class="section level2">
-<h2><span class="header-section-number">2.2</span> Criando o conjunto de dados de treino e teste</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># creating train and test sets ------------------------------------------------</span></a>
-<a class="sourceLine" id="cb3-2" title="2">test_sample_size &lt;-<span class="st"> </span><span class="dv">4</span></a>
-<a class="sourceLine" id="cb3-3" title="3">train_sample_size &lt;-<span class="st"> </span><span class="kw">length</span>(target_ts) <span class="op">-</span><span class="st"> </span>test_sample_size</a>
-<a class="sourceLine" id="cb3-4" title="4"></a>
-<a class="sourceLine" id="cb3-5" title="5">train_ts &lt;-<span class="st"> </span><span class="kw">window</span>(target_ts, <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">2005</span>, <span class="dv">1</span>), <span class="dt">end =</span> <span class="kw">c</span>(<span class="dv">2009</span>, <span class="dv">4</span>))</a>
-<a class="sourceLine" id="cb3-6" title="6">test_ts &lt;-<span class="st"> </span><span class="kw">window</span>(target_ts, <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">2010</span>, <span class="dv">1</span>), <span class="dt">end =</span> <span class="kw">c</span>(<span class="dv">2010</span>, <span class="dv">4</span>))</a>
-<a class="sourceLine" id="cb3-7" title="7"></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="co"># plot of the training and testing temporal series</span></a>
-<a class="sourceLine" id="cb3-9" title="9"><span class="kw">plot</span>(train_ts, </a>
-<a class="sourceLine" id="cb3-10" title="10">     <span class="dt">xlab =</span> <span class="st">&quot;Tempo&quot;</span>, </a>
-<a class="sourceLine" id="cb3-11" title="11">     <span class="dt">ylab =</span> <span class="st">&quot;Vendas&quot;</span>, </a>
-<a class="sourceLine" id="cb3-12" title="12">     <span class="dt">xaxt =</span> <span class="st">&quot;n&quot;</span>, </a>
-<a class="sourceLine" id="cb3-13" title="13">     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">48000</span>, <span class="dv">104000</span>), </a>
-<a class="sourceLine" id="cb3-14" title="14">     <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">2005</span>, <span class="dv">2011</span>), </a>
-<a class="sourceLine" id="cb3-15" title="15">     <span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>)</a>
-<a class="sourceLine" id="cb3-16" title="16"><span class="kw">axis</span>(<span class="dv">1</span>, <span class="dt">at =</span> <span class="kw">seq</span>(<span class="dv">2005</span>, <span class="dv">2011</span>, <span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">format</span>(<span class="kw">seq</span>(<span class="dv">2005</span>, <span class="dv">2011</span>, <span class="dv">1</span>)))</a>
-<a class="sourceLine" id="cb3-17" title="17"><span class="kw">lines</span>(test_ts, <span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</a>
-<a class="sourceLine" id="cb3-18" title="18"><span class="kw">box</span>(<span class="dt">lty =</span> <span class="st">&#39;1373&#39;</span>, <span class="dt">col =</span> <span class="st">&#39;black&#39;</span>)</a></code></pre></div>
-<p><img src="conclusion_files/figure-html/create_train_test_datasets-1.png" width="100%" /></p>
-<hr />
-</div>
-</div>
-<div id="rodando-os-modelos-lineares-de-séries-temporais" class="section level1">
-<h1><span class="header-section-number">3</span> Rodando os modelos lineares de séries temporais</h1>
-<div id="modelo-de-tendência-linear" class="section level2">
-<h2><span class="header-section-number">3.1</span> Modelo de Tendência Linear</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">model_trend &lt;-<span class="st"> </span><span class="kw">RunLinearTimeSeriesModel</span>(train_ts,</a>
-<a class="sourceLine" id="cb4-2" title="2">                                        test_ts,</a>
-<a class="sourceLine" id="cb4-3" title="3">                                        <span class="dt">formula =</span> <span class="st">&quot;train_ts ~ trend&quot;</span>, </a>
-<a class="sourceLine" id="cb4-4" title="4">                                        test_sample_size,</a>
-<a class="sourceLine" id="cb4-5" title="5">                                        <span class="dt">number_of_periods_for_forecasing =</span> <span class="dv">36</span>,</a>
-<a class="sourceLine" id="cb4-6" title="6">                                        <span class="dt">title =</span> <span class="st">&quot;Tendência Linear&quot;</span>)</a></code></pre></div>
-<p><img src="conclusion_files/figure-html/run_linear_time_series_model_1-1.png" width="100%" /><img src="conclusion_files/figure-html/run_linear_time_series_model_1-2.png" width="100%" /></p>
-<pre><code>## 
-##  Ljung-Box test
-## 
-## data:  Residuals from Linear regression model
-## Q* = 23.539, df = 3, p-value = 3.117e-05
-## 
-## Model df: 2.   Total lags used: 5</code></pre>
+<div id="tópico" class="section level1">
+<h1><span class="header-section-number">2</span> Tópico</h1>
+<div id="subtópico" class="section level2">
+<h2><span class="header-section-number">2.1</span> Subtópico</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># to-do</span></a></code></pre></div>
 <hr />
 </div>
 </div>
 <div id="considerações-finais" class="section level1">
-<h1><span class="header-section-number">4</span> Considerações finais</h1>
+<h1><span class="header-section-number">3</span> Considerações finais</h1>
 <p>To-do.</p>
 </div>
 
