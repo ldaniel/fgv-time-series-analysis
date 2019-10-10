@@ -46,10 +46,9 @@ RunLinearTimeSeriesModel <- function (train_ts,
 
   modelresults <- list()
   modelresults$model <- model
-  modelresults$Acf <- Acf(model$residuals)
-  modelresults$checkresiduals <- checkresiduals(model, test = "LB")
   modelresults$model_projected <- model_projected
   modelresults$model_projected_analisys <- model_projected_analisys
+  modelresults$model_final <- model_final
   modelresults$model_final_projected <- model_final_projected
 
   return(modelresults)
@@ -140,10 +139,9 @@ RunExponentialsmoothingStateTimeSeriesModel <- function (target_ts,
   
   modelresults <- list()
   modelresults$model <- model
-  modelresults$Acf <- Acf(model$residuals)
-  modelresults$checkresiduals <- checkresiduals(model, test = "LB")
   modelresults$model_projected <- model_projected
   modelresults$model_projected_analisys <- model_projected_analisys
+  modelresults$model_final <- model_final
   modelresults$model_final_projected <- model_final_projected
   
   return(modelresults)

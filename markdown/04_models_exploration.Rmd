@@ -149,37 +149,37 @@ Para analisarmos com mais detalhes o modelo com melhor performance, vamos carreg
 best_model <- readRDS('../models/ts_exponential_smoothing_model_MMM.rds')
 ```
 
-## Resultados gerais do modelo
+## Resultados gerais do modelo com a melhor métrica MAPE
 
 ```{r best_model_summary, echo=TRUE, out.width='100%'}
 summary(best_model$model)
 ```
 
-## Checando autocorrelação do modelo
+### Checando autocorrelação do modelo
 
 ```{r best_model_Acf, echo=TRUE, out.width='100%'}
 Acf(best_model$model$residuals)
 ```
 
-## Checando resíduos do modelo
+### Checando resíduos do modelo
 
 ```{r best_model_residuals, echo=TRUE, out.width='100%'}
-checkresiduals(best_model$model)
+checkresiduals(best_model$model, test = "LB")
 ```
 
-## Checando a projeção do modelo
+### Checando a projeção do modelo
 
 ```{r best_model_projection, echo=TRUE, out.width='100%'}
 summary(best_model$model_projected)
 ```
 
-## Checando as métricas do modelo
+### Checando as métricas do modelo
 
 ```{r best_model_metrics, echo=TRUE, out.width='100%'}
 best_model$model_projected_analisys
 ```
 
-## Checando a projeção final do modelo
+### Checando a projeção final do modelo
 
 ```{r best_model_final_projection, echo=TRUE, out.width='100%'}
 plot(best_model$model_final_projected, 
@@ -191,5 +191,4 @@ plot(best_model$model_final_projected,
      flty=2, main="Forecast from Polynomial regression model")
 axis(1, at=seq(2005, 2011, 1), labels=format(seq(2005, 2011, 1)))
 lines(best_model$model_final_projected$fitted, lwd=2, col="blue")
-
 ```
