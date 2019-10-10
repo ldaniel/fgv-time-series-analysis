@@ -12,7 +12,8 @@ ClearEnvironment <- function () {
 
 # model functions -------------------------------------------------------------
 
-# to-do: include description for this function  
+# this function will creates the training and testing datasets and 
+# save them to the data/processed directory for later consuming
 GenerateTrainTestDatasets <- function (target_ts,
                                        train_start,
                                        train_end,
@@ -25,7 +26,8 @@ GenerateTrainTestDatasets <- function (target_ts,
   saveRDS(test_ts, '../data/processed/test_ts.rds')
 }
 
-# to-do: include description for this function  
+# this function is capable of running a linear time series model
+# given a certain formula and based in a train/test pair datasets
 RunLinearTimeSeriesModel <- function (train_ts, 
                                       test_ts, 
                                       formula_train,
@@ -51,7 +53,8 @@ RunLinearTimeSeriesModel <- function (train_ts,
   return(modelresults)
 }
 
-# to-do: include description for this function
+# this function generates and saves all linear time series models to the
+# models directory for later consuming
 GenerateLinearTimeSeriesModels <- function (train_ts, test_ts) {
   # Tendência Linear  
   model_trend <- RunLinearTimeSeriesModel(train_ts,
@@ -115,7 +118,8 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts) {
   return(consolidation)
 }
 
-# to-do: include description for this function  
+# this function is capable of running a exponential smooghing time series 
+# model given a certain method and based in a train/test pair datasets
 RunExponentialsmoothingStateTimeSeriesModel <- function (target_ts,
                                                          train_ts, 
                                                          test_ts, 
@@ -139,4 +143,32 @@ RunExponentialsmoothingStateTimeSeriesModel <- function (target_ts,
   modelresults$model_final_projected <- model_final_projected
   
   return(modelresults)
+}
+
+# this function generates and saves all linear time series models to the
+# models directory for later consuming
+GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts, train_ts, test_ts) {
+
+  methods_list <- c("ANN", "AAN", "ANA", "AAA", "MNN", 
+                    "MAN", "MMN", "MNM", "MAM", "MMM", 
+                    "MNA", "MAA", "ZZZ")
+  consolidation <- tibble(Model = character(), MAPE = numeric())
+  
+  for (method_item in methods_list) {
+    model <- RunExponentialsmoothingStateTimeSeriesModel(target_ts,
+                                                         train_ts, 
+                                                         test_ts, 
+                                                         method = method_item,
+                                                         test_sample_size = 4,
+                                                         number_of_periods_for_forecasing = 36,
+                                                         title = method)
+    model_file_name <- paste0('../models/ts_exponential_smoothing_model_', method_item,'.rds')
+    saveRDS(model, model_file_name)
+    
+    consolidation <-  add_row(consolidation,
+                              Model = method_item, 
+                              MAPE = model$model_projected_analisys["Test set",'MAPE'])
+  }
+  
+  return(consolidation)
 }
