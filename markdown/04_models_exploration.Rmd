@@ -124,3 +124,5 @@ Para análise inicial dos modelos será utilizado como base a métrica **MAPE** 
 Essa métrica é interessante de ser usada, geralmente  em relatórios gerenciais, pois o erro é medido em termos percentuais e pode-se comparar o erro percentual do modelo de um produto X com o erro percentual de um produto Y.
 
 O cálculo dessa métrica pega o valor absoluto do erro dividido pelo preço real e posteriormente é calculada a média:
+
+$$MAPE = \frac{1}{n} \sum_{d_i} (\frac{1}{q} \sum_{t_j}\left\lvert{\frac{gap_{i,j}-s_{i,j}}{gap_{i,j}}}\right\rvert)$$
