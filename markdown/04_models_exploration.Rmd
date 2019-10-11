@@ -133,7 +133,9 @@ Para executarmos o modelo Moving Average (MA) de séries temporais, utilizamos a
 ma_consolidation <- GenerateMovingAverageTimeSeriesModel(target_ts, 
                                                          train_ts, 
                                                          test_ts, 
-                                                         test_sample_size)
+                                                         test_sample_size,
+                                                         parameters$start_year,
+                                                         parameters$end_year)
 ```
 
 Uma vez executada, a função retorna um preview com os resultados de MAPE para o modelo, mostrados a seguir.
