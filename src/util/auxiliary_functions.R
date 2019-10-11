@@ -73,14 +73,14 @@ RunLinearTimeSeriesModel <- function (train_ts,
                                       formula_train,
                                       formula_final,
                                       test_sample_size,
-                                      number_of_periods_for_forecasing,
+                                      number_of_periods_for_forecasting,
                                       title) {
   
   model <- tslm(as.formula(formula_train))
   model_projected <- forecast(model, h = test_sample_size, level = 0.95)
   model_accuracy <- accuracy(model_projected, test_ts)
   model_final <- tslm(as.formula(formula_final))
-  model_final_projected <- forecast(model_final, h = number_of_periods_for_forecasing, level = 0.95)
+  model_final_projected <- forecast(model_final, h = number_of_periods_for_forecasting, level = 0.95)
   
   modelresults <- list()
   modelresults$title <- title
@@ -102,7 +102,7 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size)
                                           formula_train = "train_ts ~ trend",
                                           formula_final = "target_ts ~ trend", 
                                           test_sample_size,
-                                          number_of_periods_for_forecasing = 36,
+                                          number_of_periods_for_forecasting = 36,
                                           title = "Tendência Linear")
   saveRDS(model_trend, '../models/ts_linear_model_trend.rds')
   
@@ -112,7 +112,7 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size)
                                                  formula_train = "train_ts ~ trend + I(trend^2)", 
                                                  formula_final = "target_ts ~ trend + I(trend^2)", 
                                                  test_sample_size,
-                                                 number_of_periods_for_forecasing = 36,
+                                                 number_of_periods_for_forecasting = 36,
                                                  title = "Tendência Quadrática")
   saveRDS(model_trend_square, '../models/ts_linear_model_trend_square.rds')
 
@@ -122,7 +122,7 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size)
                                            formula_train = "train_ts ~ season", 
                                            formula_final = "target_ts ~ season", 
                                            test_sample_size,
-                                           number_of_periods_for_forecasing = 36,
+                                           number_of_periods_for_forecasting = 36,
                                            title = "Sazonalidade")
   saveRDS(model_season, '../models/ts_linear_model_season.rds')
   
@@ -132,7 +132,7 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size)
                                                  formula_train = "train_ts ~ trend + season", 
                                                  formula_final = "target_ts ~ trend + season", 
                                                  test_sample_size,
-                                                 number_of_periods_for_forecasing = 36,
+                                                 number_of_periods_for_forecasting = 36,
                                                  title = "Tendência Linear com Sazonalidade")
   saveRDS(model_trend_season, '../models/ts_linear_model_trend_season.rds')
   
@@ -142,7 +142,7 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size)
                                                         formula_train = "train_ts ~ season + trend + I(trend^2)", 
                                                         formula_final = "target_ts ~ season + trend + I(trend^2)", 
                                                         test_sample_size,
-                                                        number_of_periods_for_forecasing = 36,
+                                                        number_of_periods_for_forecasting = 36,
                                                         title = "Tendência Quadrática com Sazonalidade")
   saveRDS(model_trend_square_season, '../models/ts_linear_model_trend_square_season.rds')
   
@@ -244,13 +244,13 @@ RunExponentialsmoothingStateTimeSeriesModel <- function (target_ts,
                                                          test_ts, 
                                                          method,
                                                          test_sample_size,
-                                                         number_of_periods_for_forecasing) {
+                                                         number_of_periods_for_forecasting) {
   
   model <- ets(train_ts, model = method)
   model_projected <- forecast(model, h = test_sample_size, level = 0.95)
   model_accuracy <- accuracy(model_projected, test_ts)
   model_final <- ets(target_ts, model = method)
-  model_final_projected <- forecast(model_final, h = number_of_periods_for_forecasing, level = 0.95)
+  model_final_projected <- forecast(model_final, h = number_of_periods_for_forecasting, level = 0.95)
   
   modelresults <- list()
   modelresults$title <- method
@@ -278,7 +278,7 @@ GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts, train_t
                                                          test_ts, 
                                                          method = method_item,
                                                          test_sample_size,
-                                                         number_of_periods_for_forecasing = 36)
+                                                         number_of_periods_for_forecasting = 36)
     model_file_name <- paste0('../models/ts_exponential_smoothing_model_', method_item,'.rds')
     saveRDS(model, model_file_name)
     
