@@ -12,6 +12,31 @@ ClearEnvironment <- function () {
 
 # model functions -------------------------------------------------------------
 
+# this function will define the train and test periods based on the percentage
+# desired to split these datasets
+GetTrainTestDatasetsParameters <- function (target_base_date, percentage){
+
+  split_index <- round(length(target_base_date) * percentage)
+  
+  parameters <- list()
+  
+  parameters$train_start <- c(as.numeric(format(as.Date(min(target_base_date), format="%d/%m/%Y"),"%Y")),
+                              as.numeric(format(as.Date(min(target_base_date), format="%d/%m/%Y"),"%m")))
+  
+  parameters$train_end <- c(as.numeric(format(as.Date(target_base_date[split_index], format="%d/%m/%Y"),"%Y")),
+                            as.numeric(format(as.Date(target_base_date[split_index], format="%d/%m/%Y"),"%m")))
+  
+  parameters$test_start <- c(as.numeric(format(as.Date(target_base_date[split_index + 1], format="%d/%m/%Y"),"%Y")),
+                             as.numeric(format(as.Date(target_base_date[split_index + 1], format="%d/%m/%Y"),"%m")))
+  
+  parameters$test_end <- c(as.numeric(format(as.Date(max(target_base_date), format="%d/%m/%Y"),"%Y")),
+                           as.numeric(format(as.Date(max(target_base_date), format="%d/%m/%Y"),"%m")))
+  
+  parameters$test_sample_size <- length(target_base_date) - split_index
+  
+  return(parameters)
+}
+
 # this function will creates the training and testing datasets and 
 # save them to the data/processed directory for later consuming
 GenerateTrainTestDatasets <- function (target_ts,
