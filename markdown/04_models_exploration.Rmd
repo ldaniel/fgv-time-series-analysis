@@ -8,8 +8,6 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.pos =  "h")
 knitr::opts_knit$set(root.dir = "./")
 
-options(encoding = 'UTF-8')
-
 # loading required libraries
 library(dplyr)
 library(zoo)
@@ -38,10 +36,10 @@ A função **ts** vai converter um vetor de valores de uma base de dados em um o
 ```{r data_load, echo=TRUE}
 target_data <- readRDS('../data/processed/target_dataset.rds')
 
-target_ts <- ts(target_data$Sales, 
-                start = c(2005,1), 
-                end = c(2010, 4), 
-                frequency = 4)
+target_ts <- ts(target_data$taxa_venda, 
+                start = c(2005, 8), 
+                end = c(2019, 10), 
+                frequency = 12)
 
 summary(target_ts)
 ```
@@ -53,17 +51,17 @@ Quando vamos criar um modelo de previsão de séries temporais o ideal é separa
 - **Treino:** estes dados serão a base principal para definir os coeficientes/parâmetros do modelo;
 - **Teste:** são dados que serão separados e não foram vistos pelo modelo e serão usados para testá-lo e comparar com as previsões (geralmente comparando os valores passo-a-passo).
 
-O tamanho do conjunto de testes é normalmente cerca de 20% da amostra total, embora esse percentual dependa do tamanho da amostra que você tenha e também quanto tempo adiante você deseja fazer a previsão. A base de testes deve ser idealmente pelo menos tão grande quanto o horizonte máximo de previsão necessário.
+O tamanho do conjunto de testes é normalmente cerca de 30% da amostra total, embora esse percentual dependa do tamanho da amostra que você tenha e também quanto tempo adiante você deseja fazer a previsão. A base de testes deve ser idealmente pelo menos tão grande quanto o horizonte máximo de previsão necessário.
 
 Diferente de outros métodos de previsões, como classificações e regressões sem a influência do tempo, em séries temporais não podemos dividir os dados de treino e teste com amostras aleatórias de qualquer parte dos dados, deve-se seguir o critério temporal da série, onde os dados de treino devem vir antes dos dados de teste.
 
 ```{r create_train_test_datasets, echo=TRUE, out.width='100%'}
 # creating train and test sets ------------------------------------------------
 GenerateTrainTestDatasets(target_ts,
-                          c(2005, 1),
-                          c(2009, 4),
-                          c(2010, 1),
-                          c(2010, 4))
+                          c(2005, 8),
+                          c(2015, 7),
+                          c(2015, 8),
+                          c(2019, 10))
 
 train_ts <- readRDS('../data/processed/train_ts.rds')
 test_ts  <- readRDS('../data/processed/test_ts.rds')
@@ -76,11 +74,12 @@ A seguir vemos o plot dos datasets de treino e teste.
 plot(train_ts, 
      xlab = "Tempo", 
      ylab = "Vendas", 
-     xaxt = "n", 
-     ylim = c(48000, 104000), 
-     xlim = c(2005, 2011), 
+     xaxt = "n",
+     xlim = c(2005, 2019),
+     ylim = c(0, 10), 
      bty = "l")
-axis(1, at = seq(2005, 2011, 1), labels = format(seq(2005, 2011, 1)))
+
+axis(1, at = seq(2005, 2019, 1), labels = format(seq(2005, 2019, 1)))
 lines(test_ts, bty = "l", col = "red")
 box(lty = '1373', col = 'black')
 ```
@@ -168,7 +167,7 @@ mape_ranking <- rbind(naive_consolidation,
 kable(mape_ranking)
 ```
 
-O modelo de suavização exponencial **MMM** demonstrou a melhor métrica de **MAPE**, com o valor de **`r min(mape_ranking[,2])`**.
+O modelo de suavização exponencial **`r min(mape_ranking[,1])`** demonstrou a melhor métrica de **MAPE**, com o valor de **`r min(mape_ranking[,2])`**.
 
 Para analisarmos com mais detalhes o modelo com melhor performance, vamos carregar o objeto salvo anteriormente com todos os resultados do modelo.
 
@@ -212,10 +211,10 @@ best_model$accuracy
 plot(best_model$model_final_projected, 
      xlab="Tempo", 
      ylab="Passageiros", 
-     ylim=c(48000, 104000), 
-     xlim=c(2005, 2011), 
-     bty="l", 
+     bty="l",
+     xlim = c(2005, 2019),
+     ylim = c(0, 10), 
      flty=2, main="Forecast from Polynomial regression model")
-axis(1, at=seq(2005, 2011, 1), labels=format(seq(2005, 2011, 1)))
+axis(1, at=seq(2005, 2019, 1), labels=format(seq(2005, 2019, 1)))
 lines(best_model$model_final_projected$fitted, lwd=2, col="blue")
 ```

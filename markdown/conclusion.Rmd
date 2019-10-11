@@ -12,7 +12,6 @@ knitr::opts_knit$set(root.dir = "./")
 library(forecast)
 library(lubridate)
 library(readxl)
-library(crayon)
 ```
 
 ```{r scripts_evaluation, include=FALSE}
