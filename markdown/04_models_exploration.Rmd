@@ -187,7 +187,7 @@ O modelo de suavização exponencial **`r mape_ranking[1,1]`** demonstrou a melh
 Para analisarmos com mais detalhes o modelo com melhor performance, vamos carregar o objeto salvo anteriormente com todos os resultados do modelo.
 
 ```{r loading_best_model, echo=TRUE, out.width='100%'}
-best_model <- readRDS('../models/ts_exponential_smoothing_model_MMM.rds')
+best_model <- readRDS(paste0('../models/', mape_ranking[1,1], '.rds'))
 ```
 
 ## Resultados gerais do modelo com a melhor métrica MAPE
