@@ -64,7 +64,7 @@ RunNaiveModel <- function (train_ts,
   model_accuracy <- accuracy(model, test_ts)
   
   modelresults <- list()
-  modelresults$title <- "Naive"
+  modelresults$title <- "ts_naive_model"
   modelresults$model <- model
   modelresults$accuracy <- model_accuracy
 
@@ -78,7 +78,7 @@ GenerateNaiveTimeSeriesModel <- function (train_ts, test_ts, test_sample_size) {
   model_naive <- RunNaiveModel(train_ts,
                                test_ts,
                                test_sample_size)
-  saveRDS(model_naive, '../models/ts_naive_model.rds')
+  saveRDS(model_naive, paste0('../models/', model_naive$title,'.rds'))
   
   # performing result's consolidation
   consolidation <- tibble(Model = character(), MAPE = numeric())
@@ -129,8 +129,8 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size)
                                           formula_final = "target_ts ~ trend", 
                                           test_sample_size,
                                           number_of_periods_for_forecasting = 36,
-                                          title = "Tendência Linear")
-  saveRDS(model_trend, '../models/ts_linear_model_trend.rds')
+                                          title = "ts_linear_model_trend")
+  saveRDS(model_trend, paste0('../models/', model_trend$title,'.rds'))
   
   # Tendência Quadrática
   model_trend_square <- RunLinearTimeSeriesModel(train_ts,
@@ -139,8 +139,8 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size)
                                                  formula_final = "target_ts ~ trend + I(trend^2)", 
                                                  test_sample_size,
                                                  number_of_periods_for_forecasting = 36,
-                                                 title = "Tendência Quadrática")
-  saveRDS(model_trend_square, '../models/ts_linear_model_trend_square.rds')
+                                                 title = "ts_linear_model_trend_square")
+  saveRDS(model_trend_square, paste0('../models/', model_trend_square$title,'.rds'))
 
   # Sazonalidade
   model_season <- RunLinearTimeSeriesModel(train_ts,
@@ -149,8 +149,8 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size)
                                            formula_final = "target_ts ~ season", 
                                            test_sample_size,
                                            number_of_periods_for_forecasting = 36,
-                                           title = "Sazonalidade")
-  saveRDS(model_season, '../models/ts_linear_model_season.rds')
+                                           title = "ts_linear_model_season")
+  saveRDS(model_season, paste0('../models/', model_season$title,'.rds'))
   
   # Tendência Linear com Sazonalidade
   model_trend_season <- RunLinearTimeSeriesModel(train_ts,
@@ -159,8 +159,8 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size)
                                                  formula_final = "target_ts ~ trend + season", 
                                                  test_sample_size,
                                                  number_of_periods_for_forecasting = 36,
-                                                 title = "Tendência Linear com Sazonalidade")
-  saveRDS(model_trend_season, '../models/ts_linear_model_trend_season.rds')
+                                                 title = "ts_linear_model_trend_season")
+  saveRDS(model_trend_season, paste0('../models/', model_trend_season$title,'.rds'))
   
   # Tendência Quadrática com Sazonalidade
   model_trend_square_season <- RunLinearTimeSeriesModel(train_ts,
@@ -169,8 +169,8 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size)
                                                         formula_final = "target_ts ~ season + trend + I(trend^2)", 
                                                         test_sample_size,
                                                         number_of_periods_for_forecasting = 36,
-                                                        title = "Tendência Quadrática com Sazonalidade")
-  saveRDS(model_trend_square_season, '../models/ts_linear_model_trend_square_season.rds')
+                                                        title = "ts_linear_model_trend_square_season")
+  saveRDS(model_trend_square_season, paste0('../models/', model_trend_square_season$title,'.rds'))
   
   # performing result's consolidation
   consolidation <- tibble(Model = character(), MAPE = numeric())
@@ -225,7 +225,7 @@ RunMovingAverageTimeSeriesModel <- function (train_ts,
   
   
   modelresults <- list()
-  modelresults$title <- "Moving Average (MA)"
+  modelresults$title <- "ts_moving_average_model"
   modelresults$simple_ma <- simple_ma
   modelresults$centered_ma <- centered_ma
   modelresults$simple_ma_projection <- simple_ma_projection
@@ -248,7 +248,7 @@ GenerateMovingAverageTimeSeriesModel <- function (target_ts, train_ts, test_ts, 
                                               start_date = 2005,
                                               end_date = 2019,
                                               frequency = 12)
-  saveRDS(model_ma, '../models/ts_moving_average_model.rds')
+  saveRDS(model_ma, paste0('../models/', model_ma$title,'.rds'))
   
   # performing result's consolidation
   consolidation <- tibble(Model = character(), MAPE = numeric())
@@ -279,7 +279,7 @@ RunExponentialsmoothingStateTimeSeriesModel <- function (target_ts,
   model_final_projected <- forecast(model_final, h = number_of_periods_for_forecasting, level = 0.95)
   
   modelresults <- list()
-  modelresults$title <- method
+  modelresults$title <- paste0("ts_exponential_smoothing_model_", method)
   modelresults$model <- model
   modelresults$model_projected <- model_projected
   modelresults$accuracy <- model_accuracy
@@ -305,7 +305,7 @@ GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts, train_t
                                                          method = method_item,
                                                          test_sample_size,
                                                          number_of_periods_for_forecasting = 36)
-    model_file_name <- paste0('../models/ts_exponential_smoothing_model_', method_item,'.rds')
+    model_file_name <- paste0('../models/', model$title,'.rds')
     saveRDS(model, model_file_name)
     
     consolidation <-  add_row(consolidation,
