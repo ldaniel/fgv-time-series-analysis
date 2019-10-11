@@ -12,8 +12,8 @@ ClearEnvironment <- function () {
 
 # model functions -------------------------------------------------------------
 
-# this function will define the train and test periods based on the percentage
-# desired to split these datasets
+# this function will define the all the required dates for the time series 
+# train and test periods based on the percentage desired to split these datasets
 GetTimeSeriesDateParameters <- function (target_base_date, percentage){
 
   split_index <- round(length(target_base_date) * percentage)
