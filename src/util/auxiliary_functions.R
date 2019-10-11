@@ -26,6 +26,44 @@ GenerateTrainTestDatasets <- function (target_ts,
   saveRDS(test_ts, '../data/processed/test_ts.rds')
 }
 
+# naive model functions -------------------------------------------------------
+
+# this function is capable of running the naive time series model
+# given a certain formula and based in a train/test pair datasets
+RunNaiveModel <- function (train_ts, 
+                           test_ts, 
+                           test_sample_size) {
+
+  model <- naive(train_ts, level = 0, h = test_sample_size)
+  model_accuracy <- accuracy(model, test_ts)
+  
+  modelresults <- list()
+  modelresults$title <- "Naive"
+  modelresults$model <- model
+  modelresults$accuracy <- model_accuracy
+
+  return(modelresults)
+}
+
+# this function generates and saves the naive time series models to the
+# model's directory for later consuming
+GenerateNaiveTimeSeriesModel <- function (train_ts, test_ts) {
+  
+  model_naive <- RunNaiveModel(train_ts,
+                               test_ts,
+                               test_sample_size = 4)
+  saveRDS(model_naive, '../models/ts_naive_model.rds')
+  
+  # performing result's consolidation
+  consolidation <- tibble(Model = character(), MAPE = numeric())
+  
+  consolidation <-  add_row(consolidation, 
+                            Model = model_naive$title, 
+                            MAPE = model_naive$accuracy["Test set",'MAPE'])
+
+  return(consolidation)
+}
+
 # linear model functions ------------------------------------------------------
 
 # this function is capable of running a linear time series model
@@ -37,27 +75,28 @@ RunLinearTimeSeriesModel <- function (train_ts,
                                       test_sample_size,
                                       number_of_periods_for_forecasing,
                                       title) {
-
+  
   model <- tslm(as.formula(formula_train))
   model_projected <- forecast(model, h = test_sample_size, level = 0.95)
-  model_projected_analisys <- accuracy(model_projected, test_ts)
+  model_accuracy <- accuracy(model_projected, test_ts)
   model_final <- tslm(as.formula(formula_final))
   model_final_projected <- forecast(model_final, h = number_of_periods_for_forecasing, level = 0.95)
-
+  
   modelresults <- list()
+  modelresults$title <- title
   modelresults$model <- model
   modelresults$model_projected <- model_projected
-  modelresults$model_projected_analisys <- model_projected_analisys
+  modelresults$accuracy <- model_accuracy
   modelresults$model_final <- model_final
   modelresults$model_final_projected <- model_final_projected
-
+  
   return(modelresults)
 }
 
 # this function generates and saves all linear time series models to the
-# models directory for later consuming
+# model's directory for later consuming
 GenerateLinearTimeSeriesModels <- function (train_ts, test_ts) {
-  # Tendência Linear  
+  # Tendência Linear
   model_trend <- RunLinearTimeSeriesModel(train_ts,
                                           test_ts,
                                           formula_train = "train_ts ~ trend",
@@ -76,6 +115,16 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts) {
                                                  number_of_periods_for_forecasing = 36,
                                                  title = "Tendência Quadrática")
   saveRDS(model_trend_square, '../models/ts_linear_model_trend_square.rds')
+
+  # Sazonalidade
+  model_season <- RunLinearTimeSeriesModel(train_ts,
+                                           test_ts,
+                                           formula_train = "train_ts ~ season", 
+                                           formula_final = "target_ts ~ season", 
+                                           test_sample_size = 4,
+                                           number_of_periods_for_forecasing = 36,
+                                           title = "Sazonalidade")
+  saveRDS(model_season, '../models/ts_linear_model_season.rds')
   
   # Tendência Linear com Sazonalidade
   model_trend_season <- RunLinearTimeSeriesModel(train_ts,
@@ -101,23 +150,90 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts) {
   consolidation <- tibble(Model = character(), MAPE = numeric())
   
   consolidation <-  add_row(consolidation, 
-                            Model = "model_trend", 
-                            MAPE = model_trend$model_projected_analisys["Test set",'MAPE'])
+                            Model = model_trend$title, 
+                            MAPE = model_trend$accuracy["Test set",'MAPE'])
   
   consolidation <-  add_row(consolidation,
-                            Model = "model_trend_square", 
-                            MAPE = model_trend_square$model_projected_analisys["Test set",'MAPE'])
+                            Model = model_trend_square$title, 
+                            MAPE = model_trend_square$accuracy["Test set",'MAPE'])
   
   consolidation <-  add_row(consolidation,
-                            Model = "model_trend_season", 
-                            MAPE = model_trend_season$model_projected_analisys["Test set",'MAPE'])
+                            Model = model_season$title, 
+                            MAPE = model_season$accuracy["Test set",'MAPE'])
   
   consolidation <-  add_row(consolidation,
-                            Model = "model_trend_square_season", 
-                            MAPE = model_trend_square_season$model_projected_analisys["Test set",'MAPE'])
+                            Model = model_trend_season$title, 
+                            MAPE = model_trend_season$accuracy["Test set",'MAPE'])
+  
+  consolidation <-  add_row(consolidation,
+                            Model = model_trend_square_season$title, 
+                            MAPE = model_trend_square_season$accuracy["Test set",'MAPE'])
   
   return(consolidation)
 }
+
+# moving average (MA) model functions ---------------------------------------
+
+# this function is capable of running the moving average (MA) time series 
+# model given a certain method and based in a train/test pair datasets
+RunMovingAverageTimeSeriesModel <- function (train_ts, 
+                                             test_ts, 
+                                             test_sample_size,
+                                             train_sample_size,
+                                             k_value,
+                                             order_value,
+                                             start_date,
+                                             end_date,
+                                             frequency) {
+  
+  simple_ma <- rollmean(train_ts, k = k_value, align = "right")
+  centered_ma <- ma(train_ts, order = order_value)
+  last_ma <- tail(simple_ma, 1)
+  simple_ma_projection <- ts(rep(last_ma, test_sample_size), 
+                             start=c(start_date, train_sample_size + 1), 
+                             end = c(end_date, train_sample_size + test_sample_size), 
+                             freq = frequency)
+  
+  model_train_accuracy <- accuracy(simple_ma, train_ts)
+  model_test_accuracy <- accuracy(simple_ma_projection, test_ts)
+  
+  
+  modelresults <- list()
+  modelresults$title <- "Moving Average (MA)"
+  modelresults$simple_ma <- simple_ma
+  modelresults$centered_ma <- centered_ma
+  modelresults$simple_ma_projection <- simple_ma_projection
+  modelresults$train_accuracy <- model_train_accuracy
+  modelresults$test_accuracy <- model_test_accuracy
+  
+  return(modelresults)
+}
+
+# this function generates and saves the moving average (MA) time series models 
+# to the model's directory for later consuming
+GenerateMovingAverageTimeSeriesModel <- function (target_ts, train_ts, test_ts) {
+  
+  model_ma <- RunMovingAverageTimeSeriesModel(train_ts, 
+                                              test_ts, 
+                                              test_sample_size = 4,
+                                              train_sample_size = length(target_ts) - 4,
+                                              k_value = 12,
+                                              order_value = 12,
+                                              start_date = 2005,
+                                              end_date = 2010,
+                                              frequency = 4)
+  saveRDS(model_ma, '../models/ts_moving_average_model.rds')
+  
+  # performing result's consolidation
+  consolidation <- tibble(Model = character(), MAPE = numeric())
+  
+  consolidation <-  add_row(consolidation, 
+                            Model = model_ma$title, 
+                            MAPE = model_ma$test_accuracy["Test set",'MAPE'])
+  
+  return(consolidation)
+} 
+
 
 # exponential smoothing model functions ---------------------------------------
 
@@ -128,19 +244,19 @@ RunExponentialsmoothingStateTimeSeriesModel <- function (target_ts,
                                                          test_ts, 
                                                          method,
                                                          test_sample_size,
-                                                         number_of_periods_for_forecasing,
-                                                         title) {
+                                                         number_of_periods_for_forecasing) {
   
   model <- ets(train_ts, model = method)
   model_projected <- forecast(model, h = test_sample_size, level = 0.95)
-  model_projected_analisys <- accuracy(model_projected, test_ts)
+  model_accuracy <- accuracy(model_projected, test_ts)
   model_final <- ets(target_ts, model = method)
   model_final_projected <- forecast(model_final, h = number_of_periods_for_forecasing, level = 0.95)
   
   modelresults <- list()
+  modelresults$title <- method
   modelresults$model <- model
   modelresults$model_projected <- model_projected
-  modelresults$model_projected_analisys <- model_projected_analisys
+  modelresults$accuracy <- model_accuracy
   modelresults$model_final <- model_final
   modelresults$model_final_projected <- model_final_projected
   
@@ -148,7 +264,7 @@ RunExponentialsmoothingStateTimeSeriesModel <- function (target_ts,
 }
 
 # this function generates and saves all linear time series models to the
-# models directory for later consuming
+# model's directory for later consuming
 GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts, train_ts, test_ts) {
 
   methods_list <- c("ANN", "AAN", "ANA", "AAA", "MNN", 
@@ -162,14 +278,13 @@ GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts, train_t
                                                          test_ts, 
                                                          method = method_item,
                                                          test_sample_size = 4,
-                                                         number_of_periods_for_forecasing = 36,
-                                                         title = method)
+                                                         number_of_periods_for_forecasing = 36)
     model_file_name <- paste0('../models/ts_exponential_smoothing_model_', method_item,'.rds')
     saveRDS(model, model_file_name)
     
     consolidation <-  add_row(consolidation,
-                              Model = method_item, 
-                              MAPE = model$model_projected_analisys["Test set",'MAPE'])
+                              Model = model$title, 
+                              MAPE = model$accuracy["Test set",'MAPE'])
   }
   
   return(consolidation)
