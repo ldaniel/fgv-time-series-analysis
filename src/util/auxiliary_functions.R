@@ -237,7 +237,12 @@ RunMovingAverageTimeSeriesModel <- function (train_ts,
 
 # this function generates and saves the moving average (MA) time series models 
 # to the model's directory for later consuming
-GenerateMovingAverageTimeSeriesModel <- function (target_ts, train_ts, test_ts, test_sample_size) {
+GenerateMovingAverageTimeSeriesModel <- function (target_ts, 
+                                                  train_ts, 
+                                                  test_ts, 
+                                                  test_sample_size,
+                                                  start_date_year,
+                                                  end_date_year) {
   
   model_ma <- RunMovingAverageTimeSeriesModel(train_ts, 
                                               test_ts, 
@@ -245,8 +250,8 @@ GenerateMovingAverageTimeSeriesModel <- function (target_ts, train_ts, test_ts, 
                                               train_sample_size = length(target_ts) - test_sample_size,
                                               k_value = 12,
                                               order_value = 12,
-                                              start_date = 2005,
-                                              end_date = 2019,
+                                              start_date = start_date_year,
+                                              end_date = end_date_year,
                                               frequency = 12)
   saveRDS(model_ma, paste0('../models/', model_ma$title,'.rds'))
   
