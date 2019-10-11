@@ -36,7 +36,7 @@ Utilizamos a função customizada **GetTimeSeriesDateParameters** para gerar tod
 ```{r data_load, echo=TRUE}
 target_data <- readRDS('../data/processed/target_dataset.rds')
 parameters <- GetTimeSeriesDateParameters(target_data$date, 0.7)
-parameters
+print(parameters)
 ```
 
 A função **ts** vai converter um vetor de valores de uma base de dados em um objeto R de séries temporais. Devemos passar para a função a coluna alvo e os valores de data de início e fim do período de observação bem como sua frequência.
