@@ -192,12 +192,12 @@ mape_ranking <- mape_ranking[c(3,1,2)]
 kable(mape_ranking)
 ```
 
-O modelo de suavização exponencial **`r mape_ranking[1,1]`** demonstrou a melhor métrica de **MAPE**, com o valor de **`r min(mape_ranking[,2])`**.
+O modelo **`r mape_ranking[1,2]`** demonstrou a melhor métrica de **MAPE**, com o valor de **`r min(mape_ranking[,3])`**.
 
 Para analisarmos com mais detalhes o modelo com melhor performance, vamos carregar o objeto salvo anteriormente com todos os resultados do modelo.
 
 ```{r loading_best_model, echo=TRUE, out.width='100%'}
-best_model <- readRDS(paste0('../models/', mape_ranking[1,1], '.rds'))
+best_model <- readRDS(paste0('../models/', mape_ranking[1,2], '.rds'))
 ```
 
 ## Resultados gerais do modelo com a melhor métrica MAPE
