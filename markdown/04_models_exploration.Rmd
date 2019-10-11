@@ -80,11 +80,12 @@ plot(train_ts,
      xlab = "Tempo", 
      ylab = "Vendas", 
      xaxt = "n",
-     xlim = c(2005, 2019),
+     xlim = c(parameters$start, parameters$end),
      ylim = c(0, 10), 
      bty = "l")
 
-axis(1, at = seq(2005, 2019, 1), labels = format(seq(2005, 2019, 1)))
+axis(1, at = seq(parameters$start, parameters$end, 1), 
+     labels = format(seq(parameters$start, parameters$end, 1)))
 lines(test_ts, bty = "l", col = "red")
 box(lty = '1373', col = 'black')
 ```
@@ -227,10 +228,11 @@ plot(best_model$model_final_projected,
      xlab = "Tempo", 
      ylab = "Indice", 
      bty = "l",
-     xlim = c(2005, 2019),
+     xlim = c(parameters$start, parameters$end),
      ylim = c(0, 10), 
      flty = 2, 
      main = "Forecast from Polynomial regression model")
-axis(1, at=seq(2005, 2019, 1), labels=format(seq(2005, 2019, 1)))
+axis(1, at=seq(parameters$start, parameters$end, 1), 
+     labels=format(seq(parameters$start, parameters$end, 1)))
 lines(best_model$model_final_projected$fitted, lwd=2, col="blue")
 ```
