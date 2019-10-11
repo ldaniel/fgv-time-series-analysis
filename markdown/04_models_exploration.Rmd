@@ -63,6 +63,8 @@ GenerateTrainTestDatasets(target_ts,
                           c(2015, 8),
                           c(2019, 10))
 
+test_sample_size = 51
+
 train_ts <- readRDS('../data/processed/train_ts.rds')
 test_ts  <- readRDS('../data/processed/test_ts.rds')
 ```
@@ -93,7 +95,9 @@ box(lty = '1373', col = 'black')
 Para executarmos o modelo Naive de séries temporais, utilizamos a função **GenerateNaiveTimeSeriesModel** criada para rodar este modelo, gravando os resultados no diretório do projeto **\\models** para uso futuro.
 
 ```{r generating_naive_model, echo=TRUE, out.width='100%'}
-naive_consolidation <- GenerateNaiveTimeSeriesModel(train_ts, test_ts)
+naive_consolidation <- GenerateNaiveTimeSeriesModel(train_ts, 
+                                                    test_ts, 
+                                                    test_sample_size)
 ```
 
 Uma vez executada, a função retorna um preview com os resultados de MAPE para o modelo, mostrados a seguir.
@@ -107,7 +111,9 @@ kable(naive_consolidation)
 Para executarmos todos os modelos lineares de séries temporais, utilizamos a função **GenerateLinearTimeSeriesModels** criada para rodar cada um dos modelos desejados, gravando os resultados no diretório do projeto **\\models** para uso futuro.
 
 ```{r generating_linear_models, echo=TRUE, out.width='100%'}
-linear_consolidation <- GenerateLinearTimeSeriesModels(train_ts, test_ts)
+linear_consolidation <- GenerateLinearTimeSeriesModels(train_ts, 
+                                                       test_ts, 
+                                                       test_sample_size)
 ```
 
 Uma vez executada, a função retorna um preview com os resultados de MAPE para cada um dos modelos, mostrados a seguir.
@@ -121,7 +127,10 @@ kable(linear_consolidation)
 Para executarmos o modelo Moving Average (MA) de séries temporais, utilizamos a função **GenerateMovingAverageTimeSeriesModel** criada para rodar este modelo, gravando os resultados no diretório do projeto **\\models** para uso futuro.
 
 ```{r generating_ma_model, echo=TRUE, out.width='100%'}
-ma_consolidation <- GenerateMovingAverageTimeSeriesModel(target_ts, train_ts, test_ts)
+ma_consolidation <- GenerateMovingAverageTimeSeriesModel(target_ts, 
+                                                         train_ts, 
+                                                         test_ts, 
+                                                         test_sample_size)
 ```
 
 Uma vez executada, a função retorna um preview com os resultados de MAPE para o modelo, mostrados a seguir.
@@ -135,7 +144,10 @@ kable(ma_consolidation)
 Para executarmos todos os modelos de suavização exponencial de séries temporais, utilizamos a função **GenerateExponentialsmoothingStateTimeSeriesModel** criada para rodar cada um dos modelos desejados, gravando os resultados no diretório do projeto **\\models** para uso futuro.
 
 ```{r generating_smoothing_models, echo=TRUE, out.width='100%'}
-smoothing_consolidation <- GenerateExponentialsmoothingStateTimeSeriesModel(target_ts, train_ts, test_ts)
+smoothing_consolidation <- GenerateExponentialsmoothingStateTimeSeriesModel(target_ts, 
+                                                                            train_ts, 
+                                                                            test_ts, 
+                                                                            test_sample_size)
 ```
 
 Uma vez executada, a função retorna um preview com os resultados de MAPE para cada um dos modelos, mostrados a seguir.
@@ -167,7 +179,7 @@ mape_ranking <- rbind(naive_consolidation,
 kable(mape_ranking)
 ```
 
-O modelo de suavização exponencial **`r min(mape_ranking[,1])`** demonstrou a melhor métrica de **MAPE**, com o valor de **`r min(mape_ranking[,2])`**.
+O modelo de suavização exponencial **`r mape_ranking[1,1]`** demonstrou a melhor métrica de **MAPE**, com o valor de **`r min(mape_ranking[,2])`**.
 
 Para analisarmos com mais detalhes o modelo com melhor performance, vamos carregar o objeto salvo anteriormente com todos os resultados do modelo.
 
@@ -209,12 +221,13 @@ best_model$accuracy
 
 ```{r best_model_final_projection, echo=TRUE, out.width='100%'}
 plot(best_model$model_final_projected, 
-     xlab="Tempo", 
-     ylab="Passageiros", 
-     bty="l",
+     xlab = "Tempo", 
+     ylab = "Indice", 
+     bty = "l",
      xlim = c(2005, 2019),
      ylim = c(0, 10), 
-     flty=2, main="Forecast from Polynomial regression model")
+     flty = 2, 
+     main = "Forecast from Polynomial regression model")
 axis(1, at=seq(2005, 2019, 1), labels=format(seq(2005, 2019, 1)))
 lines(best_model$model_final_projected$fitted, lwd=2, col="blue")
 ```

@@ -47,11 +47,11 @@ RunNaiveModel <- function (train_ts,
 
 # this function generates and saves the naive time series models to the
 # model's directory for later consuming
-GenerateNaiveTimeSeriesModel <- function (train_ts, test_ts) {
+GenerateNaiveTimeSeriesModel <- function (train_ts, test_ts, test_sample_size) {
   
   model_naive <- RunNaiveModel(train_ts,
                                test_ts,
-                               test_sample_size = 51)
+                               test_sample_size)
   saveRDS(model_naive, '../models/ts_naive_model.rds')
   
   # performing result's consolidation
@@ -95,13 +95,13 @@ RunLinearTimeSeriesModel <- function (train_ts,
 
 # this function generates and saves all linear time series models to the
 # model's directory for later consuming
-GenerateLinearTimeSeriesModels <- function (train_ts, test_ts) {
+GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size) {
   # Tendência Linear
   model_trend <- RunLinearTimeSeriesModel(train_ts,
                                           test_ts,
                                           formula_train = "train_ts ~ trend",
                                           formula_final = "target_ts ~ trend", 
-                                          test_sample_size = 51,
+                                          test_sample_size,
                                           number_of_periods_for_forecasing = 36,
                                           title = "Tendência Linear")
   saveRDS(model_trend, '../models/ts_linear_model_trend.rds')
@@ -111,7 +111,7 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts) {
                                                  test_ts,
                                                  formula_train = "train_ts ~ trend + I(trend^2)", 
                                                  formula_final = "target_ts ~ trend + I(trend^2)", 
-                                                 test_sample_size = 51,
+                                                 test_sample_size,
                                                  number_of_periods_for_forecasing = 36,
                                                  title = "Tendência Quadrática")
   saveRDS(model_trend_square, '../models/ts_linear_model_trend_square.rds')
@@ -121,7 +121,7 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts) {
                                            test_ts,
                                            formula_train = "train_ts ~ season", 
                                            formula_final = "target_ts ~ season", 
-                                           test_sample_size = 51,
+                                           test_sample_size,
                                            number_of_periods_for_forecasing = 36,
                                            title = "Sazonalidade")
   saveRDS(model_season, '../models/ts_linear_model_season.rds')
@@ -131,7 +131,7 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts) {
                                                  test_ts,
                                                  formula_train = "train_ts ~ trend + season", 
                                                  formula_final = "target_ts ~ trend + season", 
-                                                 test_sample_size = 51,
+                                                 test_sample_size,
                                                  number_of_periods_for_forecasing = 36,
                                                  title = "Tendência Linear com Sazonalidade")
   saveRDS(model_trend_season, '../models/ts_linear_model_trend_season.rds')
@@ -141,7 +141,7 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts) {
                                                         test_ts,
                                                         formula_train = "train_ts ~ season + trend + I(trend^2)", 
                                                         formula_final = "target_ts ~ season + trend + I(trend^2)", 
-                                                        test_sample_size = 51,
+                                                        test_sample_size,
                                                         number_of_periods_for_forecasing = 36,
                                                         title = "Tendência Quadrática com Sazonalidade")
   saveRDS(model_trend_square_season, '../models/ts_linear_model_trend_square_season.rds')
@@ -211,12 +211,12 @@ RunMovingAverageTimeSeriesModel <- function (train_ts,
 
 # this function generates and saves the moving average (MA) time series models 
 # to the model's directory for later consuming
-GenerateMovingAverageTimeSeriesModel <- function (target_ts, train_ts, test_ts) {
+GenerateMovingAverageTimeSeriesModel <- function (target_ts, train_ts, test_ts, test_sample_size) {
   
   model_ma <- RunMovingAverageTimeSeriesModel(train_ts, 
                                               test_ts, 
-                                              test_sample_size = 51,
-                                              train_sample_size = length(target_ts) - 51,
+                                              test_sample_size,
+                                              train_sample_size = length(target_ts) - test_sample_size,
                                               k_value = 12,
                                               order_value = 12,
                                               start_date = 2005,
@@ -265,7 +265,7 @@ RunExponentialsmoothingStateTimeSeriesModel <- function (target_ts,
 
 # this function generates and saves all linear time series models to the
 # model's directory for later consuming
-GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts, train_ts, test_ts) {
+GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts, train_ts, test_ts, test_sample_size) {
 
   methods_list <- c("ANN", "AAN", "ANA", "AAA", "MNN", 
                     "MAN", "MMN", "MNM", "MAM", "MMM", 
@@ -277,7 +277,7 @@ GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts, train_t
                                                          train_ts, 
                                                          test_ts, 
                                                          method = method_item,
-                                                         test_sample_size = 51,
+                                                         test_sample_size,
                                                          number_of_periods_for_forecasing = 36)
     model_file_name <- paste0('../models/ts_exponential_smoothing_model_', method_item,'.rds')
     saveRDS(model, model_file_name)
