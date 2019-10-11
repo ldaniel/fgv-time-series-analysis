@@ -8,6 +8,8 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.pos =  "h")
 knitr::opts_knit$set(root.dir = "./")
 
+options(encoding = 'UTF-8')
+
 # loading required libraries
 library(dplyr)
 library(zoo)
@@ -87,6 +89,20 @@ box(lty = '1373', col = 'black')
 
 # Executado os modelos de análise de séries temporais
 
+## Rodando e salvando o modelo Naive de séries temporais
+
+Para executarmos o modelo Naive de séries temporais, utilizamos a função **GenerateNaiveTimeSeriesModel** criada para rodar este modelo, gravando os resultados no diretório do projeto **\\models** para uso futuro.
+
+```{r generating_naive_model, echo=TRUE, out.width='100%'}
+naive_consolidation <- GenerateNaiveTimeSeriesModel(train_ts, test_ts)
+```
+
+Uma vez executada, a função retorna um preview com os resultados de MAPE para o modelo, mostrados a seguir.
+
+```{r consolidated_naive_model_preview, echo=TRUE, out.width= '100%'}
+kable(naive_consolidation)
+```
+
 ## Rodando e salvando os modelos lineares de séries temporais
 
 Para executarmos todos os modelos lineares de séries temporais, utilizamos a função **GenerateLinearTimeSeriesModels** criada para rodar cada um dos modelos desejados, gravando os resultados no diretório do projeto **\\models** para uso futuro.
@@ -99,6 +115,20 @@ Uma vez executada, a função retorna um preview com os resultados de MAPE para 
 
 ```{r consolidated_linear_models_preview, echo=TRUE, out.width= '100%'}
 kable(linear_consolidation)
+```
+
+## Rodando e salvando o modelo Moving Average (MA) de séries temporais
+
+Para executarmos o modelo Moving Average (MA) de séries temporais, utilizamos a função **GenerateMovingAverageTimeSeriesModel** criada para rodar este modelo, gravando os resultados no diretório do projeto **\\models** para uso futuro.
+
+```{r generating_ma_model, echo=TRUE, out.width='100%'}
+ma_consolidation <- GenerateMovingAverageTimeSeriesModel(target_ts, train_ts, test_ts)
+```
+
+Uma vez executada, a função retorna um preview com os resultados de MAPE para o modelo, mostrados a seguir.
+
+```{r consolidated_ma_model_preview, echo=TRUE, out.width='100%'}
+kable(ma_consolidation)
 ```
 
 ## Rodando e salvando os modelos de suavização exponencial de séries temporais
@@ -130,7 +160,10 @@ $$MAPE = \frac{1}{n} \sum_{d_i} (\frac{1}{q} \sum_{t_j}\left\lvert{\frac{gap_{i,
 Para analisar o desempenho dos modelos utilizados em nosso dataset de série temporal, vamos primeiramente classificar do melhor para o pior, baseado no resultado de **MAPE**.
 
 ```{r checking_all_mape_results, echo=TRUE, out.width='100%'}
-mape_ranking <- rbind(linear_consolidation, smoothing_consolidation) %>% 
+mape_ranking <- rbind(naive_consolidation,
+                      linear_consolidation,
+                      ma_consolidation,
+                      smoothing_consolidation) %>% 
         arrange(MAPE)
 kable(mape_ranking)
 ```
@@ -170,7 +203,7 @@ summary(best_model$model_projected)
 ### Checando as métricas do modelo
 
 ```{r best_model_metrics, echo=TRUE, out.width='100%'}
-best_model$model_projected_analisys
+best_model$accuracy
 ```
 
 ### Checando a projeção final do modelo
