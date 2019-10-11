@@ -14,13 +14,17 @@ ClearEnvironment <- function () {
 
 # this function will define the train and test periods based on the percentage
 # desired to split these datasets
-GetTrainTestDatasetsParameters <- function (target_base_date, percentage){
+GetTimeSeriesDateParameters <- function (target_base_date, percentage){
 
   split_index <- round(length(target_base_date) * percentage)
   
   parameters <- list()
-  parameters$start       <- as.numeric(format(as.Date(min(target_base_date), format="%d/%m/%Y"),"%Y"))
-  parameters$end         <- as.numeric(format(as.Date(max(target_base_date), format="%d/%m/%Y"),"%Y"))
+  parameters$start       <- c(as.numeric(format(as.Date(min(target_base_date), format="%d/%m/%Y"),"%Y")),
+                              as.numeric(format(as.Date(min(target_base_date), format="%d/%m/%Y"),"%m")))
+  parameters$end         <- c(as.numeric(format(as.Date(max(target_base_date), format="%d/%m/%Y"),"%Y")),
+                              as.numeric(format(as.Date(max(target_base_date), format="%d/%m/%Y"),"%m")))
+  parameters$start_year  <- as.numeric(format(as.Date(min(target_base_date), format="%d/%m/%Y"),"%Y"))
+  parameters$end_year    <- as.numeric(format(as.Date(max(target_base_date), format="%d/%m/%Y"),"%Y"))
   parameters$train_start <- c(as.numeric(format(as.Date(min(target_base_date), format="%d/%m/%Y"),"%Y")),
                               as.numeric(format(as.Date(min(target_base_date), format="%d/%m/%Y"),"%m")))
   parameters$train_end   <- c(as.numeric(format(as.Date(target_base_date[split_index], format="%d/%m/%Y"),"%Y")),
