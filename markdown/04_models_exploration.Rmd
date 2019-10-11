@@ -77,7 +77,7 @@ A seguir vemos o plot dos datasets de treino e teste.
 # plot of the training and testing temporal series
 plot(train_ts, 
      xlab = "Tempo", 
-     ylab = "Vendas", 
+     ylab = "Indices", 
      xaxt = "n",
      xlim = c(parameters$start_year, parameters$end_year),
      ylim = c(0, 10), 
