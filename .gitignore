@@ -36,5 +36,5 @@ rsconnect/
 
 Terouro Direto Explorer.Rproj
 
-data folder
-data/
+#data folder
+data/raw
