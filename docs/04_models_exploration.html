@@ -376,6 +376,9 @@ $(document).ready(function () {
     <li>
       <a href="04_models_exploration.html">Exploração dos Modelos</a>
     </li>
+    <li>
+      <a href="05_models_exploration.html">Exploração dos Modelos - Tesouro Direto</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -445,14 +448,14 @@ $(document).ready(function () {
 <p>A função <strong>ts</strong> vai converter um vetor de valores de uma base de dados em um objeto R de séries temporais. Devemos passar para a função a coluna alvo e os valores de data de início e fim do período de observação bem como sua frequência.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">target_data &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&#39;../data/processed/target_dataset.rds&#39;</span>)</a>
 <a class="sourceLine" id="cb1-2" title="2"></a>
-<a class="sourceLine" id="cb1-3" title="3">target_ts &lt;-<span class="st"> </span><span class="kw">ts</span>(target_data<span class="op">$</span>Sales, </a>
-<a class="sourceLine" id="cb1-4" title="4">                <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">2005</span>,<span class="dv">1</span>), </a>
-<a class="sourceLine" id="cb1-5" title="5">                <span class="dt">end =</span> <span class="kw">c</span>(<span class="dv">2010</span>, <span class="dv">4</span>), </a>
-<a class="sourceLine" id="cb1-6" title="6">                <span class="dt">frequency =</span> <span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb1-3" title="3">target_ts &lt;-<span class="st"> </span><span class="kw">ts</span>(target_data<span class="op">$</span>taxa_venda, </a>
+<a class="sourceLine" id="cb1-4" title="4">                <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">2005</span>, <span class="dv">8</span>), </a>
+<a class="sourceLine" id="cb1-5" title="5">                <span class="dt">end =</span> <span class="kw">c</span>(<span class="dv">2019</span>, <span class="dv">10</span>), </a>
+<a class="sourceLine" id="cb1-6" title="6">                <span class="dt">frequency =</span> <span class="dv">12</span>)</a>
 <a class="sourceLine" id="cb1-7" title="7"></a>
 <a class="sourceLine" id="cb1-8" title="8"><span class="kw">summary</span>(target_ts)</a></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   48617   52681   59440   64757   76835  103337</code></pre>
+##   2.703   5.468   6.174   6.106   6.825   8.923</code></pre>
 </div>
 <div id="criando-o-conjunto-de-dados-de-treino-e-teste" class="section level2">
 <h2><span class="header-section-number">1.2</span> Criando o conjunto de dados de treino e teste</h2>
@@ -461,29 +464,32 @@ $(document).ready(function () {
 <li><strong>Treino:</strong> estes dados serão a base principal para definir os coeficientes/parâmetros do modelo;</li>
 <li><strong>Teste:</strong> são dados que serão separados e não foram vistos pelo modelo e serão usados para testá-lo e comparar com as previsões (geralmente comparando os valores passo-a-passo).</li>
 </ul>
-<p>O tamanho do conjunto de testes é normalmente cerca de 20% da amostra total, embora esse percentual dependa do tamanho da amostra que você tenha e também quanto tempo adiante você deseja fazer a previsão. A base de testes deve ser idealmente pelo menos tão grande quanto o horizonte máximo de previsão necessário.</p>
+<p>O tamanho do conjunto de testes é normalmente cerca de 30% da amostra total, embora esse percentual dependa do tamanho da amostra que você tenha e também quanto tempo adiante você deseja fazer a previsão. A base de testes deve ser idealmente pelo menos tão grande quanto o horizonte máximo de previsão necessário.</p>
 <p>Diferente de outros métodos de previsões, como classificações e regressões sem a influência do tempo, em séries temporais não podemos dividir os dados de treino e teste com amostras aleatórias de qualquer parte dos dados, deve-se seguir o critério temporal da série, onde os dados de treino devem vir antes dos dados de teste.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># creating train and test sets ------------------------------------------------</span></a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="kw">GenerateTrainTestDatasets</span>(target_ts,</a>
-<a class="sourceLine" id="cb3-3" title="3">                          <span class="kw">c</span>(<span class="dv">2005</span>, <span class="dv">1</span>),</a>
-<a class="sourceLine" id="cb3-4" title="4">                          <span class="kw">c</span>(<span class="dv">2009</span>, <span class="dv">4</span>),</a>
-<a class="sourceLine" id="cb3-5" title="5">                          <span class="kw">c</span>(<span class="dv">2010</span>, <span class="dv">1</span>),</a>
-<a class="sourceLine" id="cb3-6" title="6">                          <span class="kw">c</span>(<span class="dv">2010</span>, <span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb3-3" title="3">                          <span class="kw">c</span>(<span class="dv">2005</span>, <span class="dv">8</span>),</a>
+<a class="sourceLine" id="cb3-4" title="4">                          <span class="kw">c</span>(<span class="dv">2015</span>, <span class="dv">7</span>),</a>
+<a class="sourceLine" id="cb3-5" title="5">                          <span class="kw">c</span>(<span class="dv">2015</span>, <span class="dv">8</span>),</a>
+<a class="sourceLine" id="cb3-6" title="6">                          <span class="kw">c</span>(<span class="dv">2019</span>, <span class="dv">10</span>))</a>
 <a class="sourceLine" id="cb3-7" title="7"></a>
-<a class="sourceLine" id="cb3-8" title="8">train_ts &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&#39;../data/processed/train_ts.rds&#39;</span>)</a>
-<a class="sourceLine" id="cb3-9" title="9">test_ts  &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&#39;../data/processed/test_ts.rds&#39;</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb3-8" title="8">test_sample_size =<span class="st"> </span><span class="dv">51</span></a>
+<a class="sourceLine" id="cb3-9" title="9"></a>
+<a class="sourceLine" id="cb3-10" title="10">train_ts &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&#39;../data/processed/train_ts.rds&#39;</span>)</a>
+<a class="sourceLine" id="cb3-11" title="11">test_ts  &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&#39;../data/processed/test_ts.rds&#39;</span>)</a></code></pre></div>
 <p>A seguir vemos o plot dos datasets de treino e teste.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># plot of the training and testing temporal series</span></a>
 <a class="sourceLine" id="cb4-2" title="2"><span class="kw">plot</span>(train_ts, </a>
 <a class="sourceLine" id="cb4-3" title="3">     <span class="dt">xlab =</span> <span class="st">&quot;Tempo&quot;</span>, </a>
 <a class="sourceLine" id="cb4-4" title="4">     <span class="dt">ylab =</span> <span class="st">&quot;Vendas&quot;</span>, </a>
-<a class="sourceLine" id="cb4-5" title="5">     <span class="dt">xaxt =</span> <span class="st">&quot;n&quot;</span>, </a>
-<a class="sourceLine" id="cb4-6" title="6">     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">48000</span>, <span class="dv">104000</span>), </a>
-<a class="sourceLine" id="cb4-7" title="7">     <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">2005</span>, <span class="dv">2011</span>), </a>
+<a class="sourceLine" id="cb4-5" title="5">     <span class="dt">xaxt =</span> <span class="st">&quot;n&quot;</span>,</a>
+<a class="sourceLine" id="cb4-6" title="6">     <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">2005</span>, <span class="dv">2019</span>),</a>
+<a class="sourceLine" id="cb4-7" title="7">     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">10</span>), </a>
 <a class="sourceLine" id="cb4-8" title="8">     <span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>)</a>
-<a class="sourceLine" id="cb4-9" title="9"><span class="kw">axis</span>(<span class="dv">1</span>, <span class="dt">at =</span> <span class="kw">seq</span>(<span class="dv">2005</span>, <span class="dv">2011</span>, <span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">format</span>(<span class="kw">seq</span>(<span class="dv">2005</span>, <span class="dv">2011</span>, <span class="dv">1</span>)))</a>
-<a class="sourceLine" id="cb4-10" title="10"><span class="kw">lines</span>(test_ts, <span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</a>
-<a class="sourceLine" id="cb4-11" title="11"><span class="kw">box</span>(<span class="dt">lty =</span> <span class="st">&#39;1373&#39;</span>, <span class="dt">col =</span> <span class="st">&#39;black&#39;</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb4-9" title="9"></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="kw">axis</span>(<span class="dv">1</span>, <span class="dt">at =</span> <span class="kw">seq</span>(<span class="dv">2005</span>, <span class="dv">2019</span>, <span class="dv">1</span>), <span class="dt">labels =</span> <span class="kw">format</span>(<span class="kw">seq</span>(<span class="dv">2005</span>, <span class="dv">2019</span>, <span class="dv">1</span>)))</a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="kw">lines</span>(test_ts, <span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="kw">box</span>(<span class="dt">lty =</span> <span class="st">&#39;1373&#39;</span>, <span class="dt">col =</span> <span class="st">&#39;black&#39;</span>)</a></code></pre></div>
 <p><img src="04_models_exploration_files/figure-html/plot_train_test_datasets-1.png" width="100%" /></p>
 <hr />
 </div>
@@ -493,7 +499,9 @@ $(document).ready(function () {
 <div id="rodando-e-salvando-o-modelo-naive-de-séries-temporais" class="section level2">
 <h2><span class="header-section-number">2.1</span> Rodando e salvando o modelo Naive de séries temporais</h2>
 <p>Para executarmos o modelo Naive de séries temporais, utilizamos a função <strong>GenerateNaiveTimeSeriesModel</strong> criada para rodar este modelo, gravando os resultados no diretório do projeto <strong>\models</strong> para uso futuro.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">naive_consolidation &lt;-<span class="st"> </span><span class="kw">GenerateNaiveTimeSeriesModel</span>(train_ts, test_ts)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">naive_consolidation &lt;-<span class="st"> </span><span class="kw">GenerateNaiveTimeSeriesModel</span>(train_ts, </a>
+<a class="sourceLine" id="cb5-2" title="2">                                                    test_ts, </a>
+<a class="sourceLine" id="cb5-3" title="3">                                                    test_sample_size)</a></code></pre></div>
 <p>Uma vez executada, a função retorna um preview com os resultados de MAPE para o modelo, mostrados a seguir.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">kable</span>(naive_consolidation)</a></code></pre></div>
 <table>
@@ -506,7 +514,7 @@ $(document).ready(function () {
 <tbody>
 <tr class="odd">
 <td align="left">Naive</td>
-<td align="right">31.04299</td>
+<td align="right">31.09829</td>
 </tr>
 </tbody>
 </table>
@@ -514,7 +522,9 @@ $(document).ready(function () {
 <div id="rodando-e-salvando-os-modelos-lineares-de-séries-temporais" class="section level2">
 <h2><span class="header-section-number">2.2</span> Rodando e salvando os modelos lineares de séries temporais</h2>
 <p>Para executarmos todos os modelos lineares de séries temporais, utilizamos a função <strong>GenerateLinearTimeSeriesModels</strong> criada para rodar cada um dos modelos desejados, gravando os resultados no diretório do projeto <strong>\models</strong> para uso futuro.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">linear_consolidation &lt;-<span class="st"> </span><span class="kw">GenerateLinearTimeSeriesModels</span>(train_ts, test_ts)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">linear_consolidation &lt;-<span class="st"> </span><span class="kw">GenerateLinearTimeSeriesModels</span>(train_ts, </a>
+<a class="sourceLine" id="cb7-2" title="2">                                                       test_ts, </a>
+<a class="sourceLine" id="cb7-3" title="3">                                                       test_sample_size)</a></code></pre></div>
 <p>Uma vez executada, a função retorna um preview com os resultados de MAPE para cada um dos modelos, mostrados a seguir.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">kable</span>(linear_consolidation)</a></code></pre></div>
 <table>
@@ -526,24 +536,24 @@ $(document).ready(function () {
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">Tendência Linear</td>
-<td align="right">15.860488</td>
+<td align="left">TendÃªncia Linear</td>
+<td align="right">20.50659</td>
 </tr>
 <tr class="even">
-<td align="left">Tendência Quadrática</td>
-<td align="right">20.114478</td>
+<td align="left">TendÃªncia QuadrÃ¡tica</td>
+<td align="right">51.48280</td>
 </tr>
 <tr class="odd">
 <td align="left">Sazonalidade</td>
-<td align="right">18.065528</td>
+<td align="right">29.84223</td>
 </tr>
 <tr class="even">
-<td align="left">Tendência Linear com Sazonalidade</td>
-<td align="right">6.360705</td>
+<td align="left">TendÃªncia Linear com Sazonalidade</td>
+<td align="right">20.43880</td>
 </tr>
 <tr class="odd">
-<td align="left">Tendência Quadrática com Sazonalidade</td>
-<td align="right">4.376970</td>
+<td align="left">TendÃªncia QuadrÃ¡tica com Sazonalidade</td>
+<td align="right">51.39168</td>
 </tr>
 </tbody>
 </table>
@@ -551,7 +561,10 @@ $(document).ready(function () {
 <div id="rodando-e-salvando-o-modelo-moving-average-ma-de-séries-temporais" class="section level2">
 <h2><span class="header-section-number">2.3</span> Rodando e salvando o modelo Moving Average (MA) de séries temporais</h2>
 <p>Para executarmos o modelo Moving Average (MA) de séries temporais, utilizamos a função <strong>GenerateMovingAverageTimeSeriesModel</strong> criada para rodar este modelo, gravando os resultados no diretório do projeto <strong>\models</strong> para uso futuro.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">ma_consolidation &lt;-<span class="st"> </span><span class="kw">GenerateMovingAverageTimeSeriesModel</span>(target_ts, train_ts, test_ts)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">ma_consolidation &lt;-<span class="st"> </span><span class="kw">GenerateMovingAverageTimeSeriesModel</span>(target_ts, </a>
+<a class="sourceLine" id="cb9-2" title="2">                                                         train_ts, </a>
+<a class="sourceLine" id="cb9-3" title="3">                                                         test_ts, </a>
+<a class="sourceLine" id="cb9-4" title="4">                                                         test_sample_size)</a></code></pre></div>
 <p>Uma vez executada, a função retorna um preview com os resultados de MAPE para o modelo, mostrados a seguir.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">kable</span>(ma_consolidation)</a></code></pre></div>
 <table>
@@ -564,7 +577,7 @@ $(document).ready(function () {
 <tbody>
 <tr class="odd">
 <td align="left">Moving Average (MA)</td>
-<td align="right">14.91866</td>
+<td align="right">26.08568</td>
 </tr>
 </tbody>
 </table>
@@ -572,7 +585,10 @@ $(document).ready(function () {
 <div id="rodando-e-salvando-os-modelos-de-suavização-exponencial-de-séries-temporais" class="section level2">
 <h2><span class="header-section-number">2.4</span> Rodando e salvando os modelos de suavização exponencial de séries temporais</h2>
 <p>Para executarmos todos os modelos de suavização exponencial de séries temporais, utilizamos a função <strong>GenerateExponentialsmoothingStateTimeSeriesModel</strong> criada para rodar cada um dos modelos desejados, gravando os resultados no diretório do projeto <strong>\models</strong> para uso futuro.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">smoothing_consolidation &lt;-<span class="st"> </span><span class="kw">GenerateExponentialsmoothingStateTimeSeriesModel</span>(target_ts, train_ts, test_ts)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">smoothing_consolidation &lt;-<span class="st"> </span><span class="kw">GenerateExponentialsmoothingStateTimeSeriesModel</span>(target_ts, </a>
+<a class="sourceLine" id="cb11-2" title="2">                                                                            train_ts, </a>
+<a class="sourceLine" id="cb11-3" title="3">                                                                            test_ts, </a>
+<a class="sourceLine" id="cb11-4" title="4">                                                                            test_sample_size)</a></code></pre></div>
 <p>Uma vez executada, a função retorna um preview com os resultados de MAPE para cada um dos modelos, mostrados a seguir.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">kable</span>(smoothing_consolidation)</a></code></pre></div>
 <table>
@@ -585,55 +601,55 @@ $(document).ready(function () {
 <tbody>
 <tr class="odd">
 <td align="left">ANN</td>
-<td align="right">15.552180</td>
+<td align="right">31.09789</td>
 </tr>
 <tr class="even">
 <td align="left">AAN</td>
-<td align="right">16.152241</td>
+<td align="right">30.92538</td>
 </tr>
 <tr class="odd">
 <td align="left">ANA</td>
-<td align="right">5.393514</td>
+<td align="right">29.97268</td>
 </tr>
 <tr class="even">
 <td align="left">AAA</td>
-<td align="right">4.141058</td>
+<td align="right">31.07335</td>
 </tr>
 <tr class="odd">
 <td align="left">MNN</td>
-<td align="right">15.465149</td>
+<td align="right">31.09789</td>
 </tr>
 <tr class="even">
 <td align="left">MAN</td>
-<td align="right">15.983205</td>
+<td align="right">30.01436</td>
 </tr>
 <tr class="odd">
 <td align="left">MMN</td>
-<td align="right">15.670065</td>
+<td align="right">33.82173</td>
 </tr>
 <tr class="even">
 <td align="left">MNM</td>
-<td align="right">5.641886</td>
+<td align="right">28.57836</td>
 </tr>
 <tr class="odd">
 <td align="left">MAM</td>
-<td align="right">4.616858</td>
+<td align="right">29.31366</td>
 </tr>
 <tr class="even">
 <td align="left">MMM</td>
-<td align="right">1.178023</td>
+<td align="right">17.05277</td>
 </tr>
 <tr class="odd">
 <td align="left">MNA</td>
-<td align="right">5.279835</td>
+<td align="right">29.79502</td>
 </tr>
 <tr class="even">
 <td align="left">MAA</td>
-<td align="right">4.575583</td>
+<td align="right">33.57409</td>
 </tr>
 <tr class="odd">
 <td align="left">ZZZ</td>
-<td align="right">5.279835</td>
+<td align="right">31.09789</td>
 </tr>
 </tbody>
 </table>
@@ -663,118 +679,118 @@ $(document).ready(function () {
 <tbody>
 <tr class="odd">
 <td align="left">MMM</td>
-<td align="right">1.178023</td>
+<td align="right">17.05277</td>
 </tr>
 <tr class="even">
-<td align="left">AAA</td>
-<td align="right">4.141058</td>
+<td align="left">TendÃªncia Linear com Sazonalidade</td>
+<td align="right">20.43880</td>
 </tr>
 <tr class="odd">
-<td align="left">Tendência Quadrática com Sazonalidade</td>
-<td align="right">4.376970</td>
+<td align="left">TendÃªncia Linear</td>
+<td align="right">20.50659</td>
 </tr>
 <tr class="even">
-<td align="left">MAA</td>
-<td align="right">4.575583</td>
-</tr>
-<tr class="odd">
-<td align="left">MAM</td>
-<td align="right">4.616858</td>
-</tr>
-<tr class="even">
-<td align="left">MNA</td>
-<td align="right">5.279835</td>
-</tr>
-<tr class="odd">
-<td align="left">ZZZ</td>
-<td align="right">5.279835</td>
-</tr>
-<tr class="even">
-<td align="left">ANA</td>
-<td align="right">5.393514</td>
+<td align="left">Moving Average (MA)</td>
+<td align="right">26.08568</td>
 </tr>
 <tr class="odd">
 <td align="left">MNM</td>
-<td align="right">5.641886</td>
+<td align="right">28.57836</td>
 </tr>
 <tr class="even">
-<td align="left">Tendência Linear com Sazonalidade</td>
-<td align="right">6.360705</td>
+<td align="left">MAM</td>
+<td align="right">29.31366</td>
 </tr>
 <tr class="odd">
-<td align="left">Moving Average (MA)</td>
-<td align="right">14.918658</td>
-</tr>
-<tr class="even">
-<td align="left">MNN</td>
-<td align="right">15.465149</td>
-</tr>
-<tr class="odd">
-<td align="left">ANN</td>
-<td align="right">15.552180</td>
-</tr>
-<tr class="even">
-<td align="left">MMN</td>
-<td align="right">15.670065</td>
-</tr>
-<tr class="odd">
-<td align="left">Tendência Linear</td>
-<td align="right">15.860488</td>
-</tr>
-<tr class="even">
-<td align="left">MAN</td>
-<td align="right">15.983205</td>
-</tr>
-<tr class="odd">
-<td align="left">AAN</td>
-<td align="right">16.152241</td>
+<td align="left">MNA</td>
+<td align="right">29.79502</td>
 </tr>
 <tr class="even">
 <td align="left">Sazonalidade</td>
-<td align="right">18.065528</td>
+<td align="right">29.84223</td>
 </tr>
 <tr class="odd">
-<td align="left">Tendência Quadrática</td>
-<td align="right">20.114478</td>
+<td align="left">ANA</td>
+<td align="right">29.97268</td>
+</tr>
+<tr class="even">
+<td align="left">MAN</td>
+<td align="right">30.01436</td>
+</tr>
+<tr class="odd">
+<td align="left">AAN</td>
+<td align="right">30.92538</td>
+</tr>
+<tr class="even">
+<td align="left">AAA</td>
+<td align="right">31.07335</td>
+</tr>
+<tr class="odd">
+<td align="left">ANN</td>
+<td align="right">31.09789</td>
+</tr>
+<tr class="even">
+<td align="left">ZZZ</td>
+<td align="right">31.09789</td>
+</tr>
+<tr class="odd">
+<td align="left">MNN</td>
+<td align="right">31.09789</td>
 </tr>
 <tr class="even">
 <td align="left">Naive</td>
-<td align="right">31.042988</td>
+<td align="right">31.09829</td>
+</tr>
+<tr class="odd">
+<td align="left">MAA</td>
+<td align="right">33.57409</td>
+</tr>
+<tr class="even">
+<td align="left">MMN</td>
+<td align="right">33.82173</td>
+</tr>
+<tr class="odd">
+<td align="left">TendÃªncia QuadrÃ¡tica com Sazonalidade</td>
+<td align="right">51.39168</td>
+</tr>
+<tr class="even">
+<td align="left">TendÃªncia QuadrÃ¡tica</td>
+<td align="right">51.48280</td>
 </tr>
 </tbody>
 </table>
-<p>O modelo de suavização exponencial <strong>MMM</strong> demonstrou a melhor métrica de <strong>MAPE</strong>, com o valor de <strong>1.1780228</strong>.</p>
+<p>O modelo de suavização exponencial <strong>MMM</strong> demonstrou a melhor métrica de <strong>MAPE</strong>, com o valor de <strong>17.0527736</strong>.</p>
 <p>Para analisarmos com mais detalhes o modelo com melhor performance, vamos carregar o objeto salvo anteriormente com todos os resultados do modelo.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">best_model &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&#39;../models/ts_exponential_smoothing_model_MMM.rds&#39;</span>)</a></code></pre></div>
 <div id="resultados-gerais-do-modelo-com-a-melhor-métrica-mape" class="section level2">
 <h2><span class="header-section-number">3.1</span> Resultados gerais do modelo com a melhor métrica MAPE</h2>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">summary</span>(best_model<span class="op">$</span>model)</a></code></pre></div>
-<pre><code>## ETS(M,Md,M) 
+<pre><code>## ETS(M,M,M) 
 ## 
 ## Call:
 ##  ets(y = train_ts, model = method) 
 ## 
 ##   Smoothing parameters:
-##     alpha = 0.3195 
-##     beta  = 0.2044 
+##     alpha = 0.9999 
+##     beta  = 0.0012 
 ##     gamma = 1e-04 
-##     phi   = 0.9794 
 ## 
 ##   Initial states:
-##     l = 57547.7123 
-##     b = 0.9985 
-##     s = 1.2956 0.9951 0.8651 0.8442
+##     l = 9.2849 
+##     b = 0.9953 
+##     s = 1.0032 1.0082 0.9782 0.9986 1.0034 1.0078
+##            0.9922 1.0052 1.0092 0.9995 0.9913 1.0031
 ## 
-##   sigma:  0.0305
+##   sigma:  0.0464
 ## 
 ##      AIC     AICc      BIC 
-## 368.9144 393.3588 378.8717 
+## 295.6226 301.6226 343.0100 
 ## 
 ## Training set error measures:
-##                    ME     RMSE      MAE       MPE     MAPE      MASE
-## Training set 457.1034 1445.081 1184.525 0.6853477 1.857958 0.3800817
-##                    ACF1
-## Training set -0.1332104</code></pre>
+##                       ME      RMSE       MAE        MPE     MAPE      MASE
+## Training set 0.006804592 0.2680829 0.1976282 0.08271809 3.129914 0.2192935
+##                   ACF1
+## Training set 0.2047014</code></pre>
 <div id="checando-autocorrelação-do-modelo" class="section level3">
 <h3><span class="header-section-number">3.1.1</span> Checando autocorrelação do modelo</h3>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">Acf</span>(best_model<span class="op">$</span>model<span class="op">$</span>residuals)</a></code></pre></div>
@@ -787,73 +803,121 @@ $(document).ready(function () {
 <pre><code>## 
 ##  Ljung-Box test
 ## 
-## data:  Residuals from ETS(M,Md,M)
-## Q* = 11.764, df = 3, p-value = 0.008239
+## data:  Residuals from ETS(M,M,M)
+## Q* = 34.878, df = 8, p-value = 2.815e-05
 ## 
-## Model df: 9.   Total lags used: 12</code></pre>
+## Model df: 16.   Total lags used: 24</code></pre>
 </div>
 <div id="checando-a-projeção-do-modelo" class="section level3">
 <h3><span class="header-section-number">3.1.3</span> Checando a projeção do modelo</h3>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">summary</span>(best_model<span class="op">$</span>model_projected)</a></code></pre></div>
 <pre><code>## 
-## Forecast method: ETS(M,Md,M)
+## Forecast method: ETS(M,M,M)
 ## 
 ## Model Information:
-## ETS(M,Md,M) 
+## ETS(M,M,M) 
 ## 
 ## Call:
 ##  ets(y = train_ts, model = method) 
 ## 
 ##   Smoothing parameters:
-##     alpha = 0.3195 
-##     beta  = 0.2044 
+##     alpha = 0.9999 
+##     beta  = 0.0012 
 ##     gamma = 1e-04 
-##     phi   = 0.9794 
 ## 
 ##   Initial states:
-##     l = 57547.7123 
-##     b = 0.9985 
-##     s = 1.2956 0.9951 0.8651 0.8442
+##     l = 9.2849 
+##     b = 0.9953 
+##     s = 1.0032 1.0082 0.9782 0.9986 1.0034 1.0078
+##            0.9922 1.0052 1.0092 0.9995 0.9913 1.0031
 ## 
-##   sigma:  0.0305
+##   sigma:  0.0464
 ## 
 ##      AIC     AICc      BIC 
-## 368.9144 393.3588 378.8717 
+## 295.6226 301.6226 343.0100 
 ## 
 ## Error measures:
-##                    ME     RMSE      MAE       MPE     MAPE      MASE
-## Training set 457.1034 1445.081 1184.525 0.6853477 1.857958 0.3800817
-##                    ACF1
-## Training set -0.1332104
+##                       ME      RMSE       MAE        MPE     MAPE      MASE
+## Training set 0.006804592 0.2680829 0.1976282 0.08271809 3.129914 0.2192935
+##                   ACF1
+## Training set 0.2047014
 ## 
 ## Forecasts:
-##         Point Forecast    Lo 95     Hi 95
-## 2010 Q1       62528.73 58787.56  66243.09
-## 2010 Q2       65637.52 61176.42  69969.17
-## 2010 Q3       77299.38 71248.87  83549.37
-## 2010 Q4      102985.99 92946.40 112997.98</code></pre>
+##          Point Forecast    Lo 95    Hi 95
+## Aug 2015       6.453022 5.871201 7.016236
+## Sep 2015       6.349240 5.552762 7.192986
+## Oct 2015       6.374592 5.387369 7.402275
+## Nov 2015       6.408624 5.284174 7.600683
+## Dec 2015       6.355417 5.123133 7.686222
+## Jan 2016       6.246203 4.932387 7.738724
+## Feb 2016       6.317315 4.898431 7.938386
+## Mar 2016       6.262768 4.786582 7.966910
+## Apr 2016       6.205689 4.661121 7.977971
+## May 2016       6.052440 4.474633 7.911464
+## Jun 2016       6.211387 4.528784 8.264669
+## Jul 2016       6.154310 4.407468 8.304818
+## Aug 2016       6.127165 4.353304 8.342891
+## Sep 2016       6.028624 4.208682 8.255493
+## Oct 2016       6.052696 4.174912 8.404933
+## Nov 2016       6.085010 4.127495 8.561519
+## Dec 2016       6.034490 4.039311 8.575607
+## Jan 2017       5.930790 3.964878 8.507061
+## Feb 2017       5.998312 3.968408 8.672760
+## Mar 2017       5.946519 3.857519 8.629314
+## Apr 2017       5.892322 3.779225 8.621989
+## May 2017       5.746812 3.637982 8.567861
+## Jun 2017       5.897732 3.685220 8.835592
+## Jul 2017       5.843538 3.595026 8.830439
+## Aug 2017       5.817764 3.562361 8.909363
+## Sep 2017       5.724199 3.429069 8.836696
+## Oct 2017       5.747054 3.422858 8.905689
+## Nov 2017       5.777737 3.416847 9.111530
+## Dec 2017       5.729768 3.352619 8.976676
+## Jan 2018       5.631305 3.282693 8.893689
+## Feb 2018       5.695416 3.268449 9.048002
+## Mar 2018       5.646239 3.205004 9.040819
+## Apr 2018       5.594779 3.142515 9.037394
+## May 2018       5.456617 3.023490 8.904781
+## Jun 2018       5.599916 3.108808 9.268489
+## Jul 2018       5.548458 3.042368 9.241010
+## Aug 2018       5.523986 3.003405 9.274066
+## Sep 2018       5.435145 2.952592 9.154466
+## Oct 2018       5.456847 2.936067 9.243931
+## Nov 2018       5.485980 2.892699 9.350085
+## Dec 2018       5.440433 2.869749 9.334423
+## Jan 2019       5.346942 2.813265 9.322579
+## Feb 2019       5.407817 2.801597 9.449427
+## Mar 2019       5.361123 2.779125 9.437340
+## Apr 2019       5.312261 2.700981 9.418776
+## May 2019       5.181076 2.634381 9.312281
+## Jun 2019       5.317139 2.671925 9.547820
+## Jul 2019       5.268279 2.619042 9.482133
+## Aug 2019       5.245042 2.590999 9.506364
+## Sep 2019       5.160688 2.531576 9.407566
+## Oct 2019       5.181294 2.530509 9.523927</code></pre>
 </div>
 <div id="checando-as-métricas-do-modelo" class="section level3">
 <h3><span class="header-section-number">3.1.4</span> Checando as métricas do modelo</h3>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">best_model<span class="op">$</span>accuracy</a></code></pre></div>
-<pre><code>##                     ME      RMSE       MAE        MPE     MAPE      MASE
-## Training set  457.1034 1445.0814 1184.5247  0.6853477 1.857958 0.3800817
-## Test set     -604.4060  967.8686  779.9098 -1.0081864 1.178023 0.2502518
-##                    ACF1  Theil&#39;s U
-## Training set -0.1332104         NA
-## Test set      0.1741220 0.03483014</code></pre>
+<pre><code>##                        ME      RMSE       MAE          MPE      MAPE
+## Training set  0.006804592 0.2680829 0.1976282   0.08271809  3.129914
+## Test set     -0.406870620 0.9581838 0.7377318 -12.40913825 17.052774
+##                   MASE      ACF1 Theil&#39;s U
+## Training set 0.2192935 0.2047014        NA
+## Test set     0.8186069 0.8740580  4.453102</code></pre>
 </div>
 <div id="checando-a-projeção-final-do-modelo" class="section level3">
 <h3><span class="header-section-number">3.1.5</span> Checando a projeção final do modelo</h3>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">plot</span>(best_model<span class="op">$</span>model_final_projected, </a>
-<a class="sourceLine" id="cb24-2" title="2">     <span class="dt">xlab=</span><span class="st">&quot;Tempo&quot;</span>, </a>
-<a class="sourceLine" id="cb24-3" title="3">     <span class="dt">ylab=</span><span class="st">&quot;Passageiros&quot;</span>, </a>
-<a class="sourceLine" id="cb24-4" title="4">     <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">48000</span>, <span class="dv">104000</span>), </a>
-<a class="sourceLine" id="cb24-5" title="5">     <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">2005</span>, <span class="dv">2011</span>), </a>
-<a class="sourceLine" id="cb24-6" title="6">     <span class="dt">bty=</span><span class="st">&quot;l&quot;</span>, </a>
-<a class="sourceLine" id="cb24-7" title="7">     <span class="dt">flty=</span><span class="dv">2</span>, <span class="dt">main=</span><span class="st">&quot;Forecast from Polynomial regression model&quot;</span>)</a>
-<a class="sourceLine" id="cb24-8" title="8"><span class="kw">axis</span>(<span class="dv">1</span>, <span class="dt">at=</span><span class="kw">seq</span>(<span class="dv">2005</span>, <span class="dv">2011</span>, <span class="dv">1</span>), <span class="dt">labels=</span><span class="kw">format</span>(<span class="kw">seq</span>(<span class="dv">2005</span>, <span class="dv">2011</span>, <span class="dv">1</span>)))</a>
-<a class="sourceLine" id="cb24-9" title="9"><span class="kw">lines</span>(best_model<span class="op">$</span>model_final_projected<span class="op">$</span>fitted, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb24-2" title="2">     <span class="dt">xlab =</span> <span class="st">&quot;Tempo&quot;</span>, </a>
+<a class="sourceLine" id="cb24-3" title="3">     <span class="dt">ylab =</span> <span class="st">&quot;Indice&quot;</span>, </a>
+<a class="sourceLine" id="cb24-4" title="4">     <span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>,</a>
+<a class="sourceLine" id="cb24-5" title="5">     <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">2005</span>, <span class="dv">2019</span>),</a>
+<a class="sourceLine" id="cb24-6" title="6">     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">10</span>), </a>
+<a class="sourceLine" id="cb24-7" title="7">     <span class="dt">flty =</span> <span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb24-8" title="8">     <span class="dt">main =</span> <span class="st">&quot;Forecast from Polynomial regression model&quot;</span>)</a>
+<a class="sourceLine" id="cb24-9" title="9"><span class="kw">axis</span>(<span class="dv">1</span>, <span class="dt">at=</span><span class="kw">seq</span>(<span class="dv">2005</span>, <span class="dv">2019</span>, <span class="dv">1</span>), <span class="dt">labels=</span><span class="kw">format</span>(<span class="kw">seq</span>(<span class="dv">2005</span>, <span class="dv">2019</span>, <span class="dv">1</span>)))</a>
+<a class="sourceLine" id="cb24-10" title="10"><span class="kw">lines</span>(best_model<span class="op">$</span>model_final_projected<span class="op">$</span>fitted, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</a></code></pre></div>
 <p><img src="04_models_exploration_files/figure-html/best_model_final_projection-1.png" width="100%" /></p>
 </div>
 </div>
