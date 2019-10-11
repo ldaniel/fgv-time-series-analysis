@@ -19,19 +19,16 @@ GetTrainTestDatasetsParameters <- function (target_base_date, percentage){
   split_index <- round(length(target_base_date) * percentage)
   
   parameters <- list()
-  
+  parameters$start       <- as.numeric(format(as.Date(min(target_base_date), format="%d/%m/%Y"),"%Y"))
+  parameters$end         <- as.numeric(format(as.Date(max(target_base_date), format="%d/%m/%Y"),"%Y"))
   parameters$train_start <- c(as.numeric(format(as.Date(min(target_base_date), format="%d/%m/%Y"),"%Y")),
                               as.numeric(format(as.Date(min(target_base_date), format="%d/%m/%Y"),"%m")))
-  
-  parameters$train_end <- c(as.numeric(format(as.Date(target_base_date[split_index], format="%d/%m/%Y"),"%Y")),
-                            as.numeric(format(as.Date(target_base_date[split_index], format="%d/%m/%Y"),"%m")))
-  
-  parameters$test_start <- c(as.numeric(format(as.Date(target_base_date[split_index + 1], format="%d/%m/%Y"),"%Y")),
-                             as.numeric(format(as.Date(target_base_date[split_index + 1], format="%d/%m/%Y"),"%m")))
-  
-  parameters$test_end <- c(as.numeric(format(as.Date(max(target_base_date), format="%d/%m/%Y"),"%Y")),
-                           as.numeric(format(as.Date(max(target_base_date), format="%d/%m/%Y"),"%m")))
-  
+  parameters$train_end   <- c(as.numeric(format(as.Date(target_base_date[split_index], format="%d/%m/%Y"),"%Y")),
+                              as.numeric(format(as.Date(target_base_date[split_index], format="%d/%m/%Y"),"%m")))
+  parameters$test_start  <- c(as.numeric(format(as.Date(target_base_date[split_index + 1], format="%d/%m/%Y"),"%Y")),
+                              as.numeric(format(as.Date(target_base_date[split_index + 1], format="%d/%m/%Y"),"%m")))
+  parameters$test_end    <- c(as.numeric(format(as.Date(max(target_base_date), format="%d/%m/%Y"),"%Y")),
+                              as.numeric(format(as.Date(max(target_base_date), format="%d/%m/%Y"),"%m")))
   parameters$test_sample_size <- length(target_base_date) - split_index
   
   return(parameters)
@@ -313,4 +310,4 @@ GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts, train_t
   }
   
   return(consolidation)
-} 
+}
