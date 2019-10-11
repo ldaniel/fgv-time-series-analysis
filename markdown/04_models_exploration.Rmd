@@ -29,15 +29,19 @@ Analisar séries temporais são úteis para verificar padrões e criar previsõe
 
 ## Carregando a base de dados processada
 
-Carregamos a base de dados alvo, previamente tratada durante os passos explicados na fase de **Data Preparation** (preparação de dados).
+Carregamos a base de dados alvo, previamente tratada durante os passos explicados na fase de **Data Preparation** (preparação de dados). 
 
-A função **ts** vai converter um vetor de valores de uma base de dados em um objeto R de séries temporais. Devemos passar para a função a coluna alvo e os valores de data de início e fim do período de observação bem como sua frequência.
+Utilizamos a função customizada **GetTimeSeriesDateParameters** para gerar todas as datas que serão utilizadas na análise de séries temporais para a base alvo de estudo. Nesta função, passamos o percentual para proporção desejada entre a base de treino e teste.
 
 ```{r data_load, echo=TRUE}
 target_data <- readRDS('../data/processed/target_dataset.rds')
-
 parameters <- GetTimeSeriesDateParameters(target_data$date, 0.7)
+parameters
+```
 
+A função **ts** vai converter um vetor de valores de uma base de dados em um objeto R de séries temporais. Devemos passar para a função a coluna alvo e os valores de data de início e fim do período de observação bem como sua frequência.
+
+```{r ts_creation, echo=TRUE}
 target_ts <- ts(target_data$taxa_venda, 
                 start = parameters$start, 
                 end = parameters$end, 
