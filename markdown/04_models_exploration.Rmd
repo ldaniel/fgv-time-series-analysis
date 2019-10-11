@@ -36,9 +36,11 @@ A função **ts** vai converter um vetor de valores de uma base de dados em um o
 ```{r data_load, echo=TRUE}
 target_data <- readRDS('../data/processed/target_dataset.rds')
 
+parameters <- GetTimeSeriesDateParameters(target_data$date, 0.7)
+
 target_ts <- ts(target_data$taxa_venda, 
-                start = c(2005, 8), 
-                end = c(2019, 10), 
+                start = parameters$start, 
+                end = parameters$end, 
                 frequency = 12)
 
 summary(target_ts)
@@ -57,9 +59,6 @@ Diferente de outros métodos de previsões, como classificações e regressões 
 
 ```{r create_train_test_datasets, echo=TRUE, out.width='100%'}
 # creating train and test sets ------------------------------------------------
-
-parameters <- GetTrainTestDatasetsParameters(target_data$date, 0.7)
-
 GenerateTrainTestDatasets(target_ts,
                           parameters$train_start,
                           parameters$train_end,
@@ -80,12 +79,12 @@ plot(train_ts,
      xlab = "Tempo", 
      ylab = "Vendas", 
      xaxt = "n",
-     xlim = c(parameters$start, parameters$end),
+     xlim = c(parameters$start_year, parameters$end_year),
      ylim = c(0, 10), 
      bty = "l")
 
-axis(1, at = seq(parameters$start, parameters$end, 1), 
-     labels = format(seq(parameters$start, parameters$end, 1)))
+axis(1, at = seq(parameters$start_year, parameters$end_year, 1), 
+     labels = format(seq(parameters$start_year, parameters$end_year, 1)))
 lines(test_ts, bty = "l", col = "red")
 box(lty = '1373', col = 'black')
 ```
@@ -228,11 +227,11 @@ plot(best_model$model_final_projected,
      xlab = "Tempo", 
      ylab = "Indice", 
      bty = "l",
-     xlim = c(parameters$start, parameters$end),
+     xlim = c(parameters$start_year, parameters$end_year),
      ylim = c(0, 10), 
      flty = 2, 
      main = "Forecast from Polynomial regression model")
-axis(1, at=seq(parameters$start, parameters$end, 1), 
-     labels=format(seq(parameters$start, parameters$end, 1)))
+axis(1, at=seq(parameters$start_year, parameters$end_year, 1), 
+     labels=format(seq(parameters$start_year, parameters$end_year, 1)))
 lines(best_model$model_final_projected$fitted, lwd=2, col="blue")
 ```
