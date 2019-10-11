@@ -12,7 +12,7 @@ ClearEnvironment <- function () {
 
 # model functions -------------------------------------------------------------
 
-# this function will define the all the required dates for the time series 
+# this function will define all required dates for the time series, including 
 # train and test periods based on the percentage desired to split these datasets
 GetTimeSeriesDateParameters <- function (target_base_date, percentage){
 
