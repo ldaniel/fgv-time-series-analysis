@@ -184,7 +184,11 @@ mape_ranking <- rbind(naive_consolidation,
                       linear_consolidation,
                       ma_consolidation,
                       smoothing_consolidation) %>% 
-        arrange(MAPE)
+        arrange(MAPE) %>% 
+        mutate(Rank_ID = row_number()) 
+
+mape_ranking <- mape_ranking[c(3,1,2)]
+
 kable(mape_ranking)
 ```
 
