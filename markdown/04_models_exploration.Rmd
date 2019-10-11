@@ -57,13 +57,16 @@ Diferente de outros métodos de previsões, como classificações e regressões 
 
 ```{r create_train_test_datasets, echo=TRUE, out.width='100%'}
 # creating train and test sets ------------------------------------------------
-GenerateTrainTestDatasets(target_ts,
-                          c(2005, 8),
-                          c(2015, 7),
-                          c(2015, 8),
-                          c(2019, 10))
 
-test_sample_size = 51
+parameters <- GetTrainTestDatasetsParameters(target_data$date, 0.7)
+
+GenerateTrainTestDatasets(target_ts,
+                          parameters$train_start,
+                          parameters$train_end,
+                          parameters$test_start,
+                          parameters$test_end)
+
+test_sample_size = parameters$test_sample_size
 
 train_ts <- readRDS('../data/processed/train_ts.rds')
 test_ts  <- readRDS('../data/processed/test_ts.rds')
