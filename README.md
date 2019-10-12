@@ -2,7 +2,7 @@
 
 Time series analysis comprises methods for analyzing time series data in order to extract meaningful statistics and other characteristics of the data. Time series forecasting is the use of a model to predict future values based on previously observed values.
 
-In this project, we developed a set of works to go further in Time Series Analysis.
+In this project, we developed a set of tasks to go further in Time Series Analysis.
 
 This website intends to present the work analysis for the *"Análise de Séries Temporais"* class assignment.
 
