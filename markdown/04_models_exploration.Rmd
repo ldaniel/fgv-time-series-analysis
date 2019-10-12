@@ -35,7 +35,7 @@ Utilizamos a função customizada **GetTimeSeriesDateParameters** para gerar tod
 
 ```{r data_load, echo=TRUE}
 target_data <- readRDS('../data/processed/target_dataset.rds')
-parameters <- GetTimeSeriesDateParameters(target_data$date, 0.7)
+parameters <- GetTimeSeriesDateParameters(target_data$date, 0.8)
 print(parameters)
 ```
 
@@ -84,7 +84,7 @@ plot(train_ts,
      ylab = "Indices", 
      xaxt = "n",
      xlim = c(parameters$start_year, parameters$end_year),
-     ylim = c(0, 10), 
+     ylim = c(0, max(train_ts)), 
      bty = "l")
 
 axis(1, at = seq(parameters$start_year, parameters$end_year, 1), 
@@ -238,7 +238,7 @@ plot(best_model$model_final_projected,
      ylab = "Indice", 
      bty = "l",
      xlim = c(parameters$start_year, parameters$end_year),
-     ylim = c(0, 10), 
+     ylim = c(0, max(best_model$model_final_projected$fitted) * 1.1), 
      flty = 2, 
      main = "Forecast from Polynomial regression model")
 axis(1, at=seq(parameters$start_year, parameters$end_year, 1), 

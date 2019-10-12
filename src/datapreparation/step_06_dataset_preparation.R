@@ -18,7 +18,7 @@ ipca_12m$Value  <- ipca_12m$Value / 100
 
 # Create Time Series ----------------------------------------------------------
 
-df <- filter(bond_data, titulo == "NTN-B Princ 2024-08-15") %>% 
+df <- filter(bond_data, titulo == "LTN 2021-01-01") %>% 
   select(dia, taxa_venda) %>% 
   arrange(dia)
 
@@ -35,4 +35,4 @@ df$date <- make_date(year(df$dia), month(df$dia), 1)
 df <- group_by(df, date) %>%
    summarise(taxa_venda = mean(taxa_venda))
  
-saveRDS(df, '../data/processed/target_dataset.rds')
+saveRDS(df, 'data/processed/target_dataset.rds')
