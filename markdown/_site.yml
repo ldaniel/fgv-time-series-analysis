@@ -18,8 +18,6 @@ navbar:
           href: 03_data_exploration.html
         - text: "Exploração dos Modelos"
           href: 04_models_exploration.html
-        - text: "Exploração dos Modelos - Tesouro Direto"
-          href: 05_models_exploration.html
     - text: "Relatório Final"
       icon: fa-file-invoice-dollar
       menu:
