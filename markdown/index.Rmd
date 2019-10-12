@@ -4,7 +4,7 @@ title: 'FGV MBA: Business Analytics & Big Data'
 
 # Time-Series-Analysis
 
-O objetivo deste website é apresentar a solução para o trabalho proposto no módulo de Análise de Séries Temporais do curso de MBA em Business Analytics e Big Data da FGV (turma Berrini)
+O objetivo deste website é apresentar a solução para o trabalho proposto no módulo de Análise de Séries Temporais do curso de MBA em Business Analytics e Big Data da FGV (turma Berrini).
 
 Utilize o menu acima para navegar pelo site e visualizar o relatório final.
 
