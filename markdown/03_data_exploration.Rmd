@@ -6,7 +6,7 @@ date: "Outubro de 2019"
 ```{r setup_exploration, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.pos =  "h")
-knitr::opts_knit$set(root.dir = "../")
+knitr::opts_knit$set(root.dir = "./")
 
 options(Encoding="UTF-8")
 
@@ -23,6 +23,7 @@ library(readxl)
 library(stringr)
 library(lubridate)
 library(reticulate)
+library(bizdays)
 
 # plotting libraries
 library(ggplot2)
@@ -37,7 +38,7 @@ source("../src/datapreparation/step_06_dataset_preparation.R")
 
 ```
 
-## Histórico da Taxa de Venda de Títulos de Índice de Preços (NTN-B)
+# Histórico da Taxa de Venda de Títulos de Índice de Preços (NTN-B)
 
 ```{r exploration_target_1, echo=FALSE, out.width = '100%'}
 ## Histórico da Taxa de Venda - NTN-B ----------------------------------------
@@ -61,7 +62,7 @@ plot_NTNB_premium_trend <- ggplotly(plot_NTNB_premium_trend)
 plot_NTNB_premium_trend
 ```
 
-## Histórico da Taxa de Venda de Títulos pré-fixados (LTN e NTN-F)
+# Histórico da Taxa de Venda de Títulos pré-fixados (LTN e NTN-F)
 
 ```{r exploration_target_2, echo=FALSE, out.width = '100%'}
 ## Histórico da Taxa de Venda - NTN-B ----------------------------------------
@@ -85,7 +86,7 @@ plot_prefix_trend <- ggplotly(plot_prefix_trend)
 plot_prefix_trend
 ```
 
-## Histórico do Preço de Venda de Títulos pós-fixados (LFT)
+# Histórico do Preço de Venda de Títulos pós-fixados (LFT)
 
 ```{r exploration_target_3, echo=FALSE, out.width = '100%'}
 plot_posfix_trend <- left_join(bond_data, bond_names, by = 'classe') %>%
@@ -106,7 +107,7 @@ plot_posfix_trend <- ggplotly(plot_posfix_trend)
 plot_posfix_trend
 ```
 
-## Histórico do IPCA 12 meses e Selic Anualizada.
+# Histórico do IPCA 12 meses e Selic Anualizada.
 
 ```{r exploration_target_4, echo=FALSE, out.width = '100%'}
 ## Histórico da Selic + Inflação -------------------------------------------

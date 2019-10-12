@@ -6,12 +6,63 @@ title: "Sobre os dados"
 
 ## Introdução
 
-To-do.
+O Tesouro Direto é um Programa do Tesouro Nacional desenvolvido em parceria com a B3 para venda de títulos públicos federais para pessoas físicas, de forma 100% online.
 
-## Descrição da tarefa
+Lançado em 2002, o Programa surgiu com o objetivo de democratizar o acesso aos títulos públicos, permitindo aplicações a partir R$ 30,00.
 
-To-do.
+O Tesouro Direto é uma excelente alternativa de investimento pois oferece títulos com diferentes tipos de rentabilidade (prefixada, ligada à variação da inflação ou à variação da taxa de juros básica da economia - Selic), diferentes prazos de vencimento e também diferentes fluxos de remuneração. Com tantas opções, fica fácil achar o título indicado para realizar seus objetivos!
 
-## Descrição dos dados
+Além de acessível e de apresentar muitas opções de investimento, o Tesouro Direto oferece boa rentabilidade e liquidez diária, mesmo sendo a aplicação de menor risco do mercado.
 
-To-do.
+## Como investir?
+
+Ao investir em um título público, você tem a opção de definir o valor da aplicação ou a quantidade de títulos que deseja. O próprio sistema ajusta o valor ou a quantidade de forma que seja respeitado o fracionamento dos títulos.
+
+Exemplos:
+
+Investimento por Valor Financeiro
+
+Em 25/11/2011, você quis investir R$ 500,00 de Tesouro Prefixado (LTN) com vencimento em 01/01/2015.
+
+- Preço unitário do Tesouro Prefixado (LTN) em 25/11/2011: R$ 730,48
+- Aplicação desejada: R$ 500,00
+- Preço da fração de 0,2 título: R$ 146,096
+- Fração de títulos equivalente a R$ 500,00: 0,68 título, o que não é viável.
+- Aplicação ajustada p/ menos: R$ 438,29 (equivale a 0,60 de Tesouro Prefixado (LTN)
+
+
+Investimento por Quantidade de Título Públicos
+
+Em 25/11/2011, você quis investir em 1,2 Tesouro Prefixado (LTN) com vencimento em 01/01/2015.
+
+- Preço unitário do Tesouro Prefixado (LTN) em 25/11/2011: R$ 730,48
+- Aplicação desejada: 1,2 Tesouro Prefixado (LTN)
+- Preço da fração de 0,2 título: R$ 146,096
+- Aplicação ajustada para compra de 1,2 Tesouro Prefixado (LTN): R$ 876,58
+
+##  Quais são os Títulos Públicos disponíveis?
+
+O objetivo do Tesouro Direto é disponibilizar títulos públicos para pessoas físicas com condições tão vantajosas quanto às que as Instituições Financeiras têm nos leilões tradicionais do Tesouro Nacional. Para isso, são ofertados os seguintes títulos:
+
+### Títulos Prefixados
+
+Você sabe exatamente a rentabilidade que irá receber na data de vencimento. Para cada unidade de título, o valor bruto a ser recebido no vencimento é de R$1.000,00.
+
+Por terem rentabilidade predefinida, seu rendimento é nominal. Isso significa que é necessário descontar a inflação para obter o rendimento real da aplicação.
+
+Nessa modalidade, há dois títulos disponíveis:
+
+- **Tesouro Prefixado (LTN):** Títulos com rentabilidade definida (taxa fixa) no momento da compra. Forma de pagamento: no vencimento. Com esse título, você receberá o valor investido acrescido da rentabilidade na data de vencimento ou de resgate.
+- **Tesouro Prefixado com juros semestrais (NTN-F):** Títulos com rentabilidade prefixada, acrescida de juros definidos no momento da compra. Forma de Pagamento: semestralmente (juros) e no vencimento (principal). Esse título faz pagamento de juros a cada seis meses. Isso significa que você recebe o rendimento ao longo do período da aplicação.
+
+### Títulos Pós-Fixados:
+
+O valor recebido na data de vencimento depende da taxa básica de juros (Selic) ou da inflação (IPCA). Assim, a rentabilidade da aplicação é composta por uma taxa predefinida no momento da compra do título mais a variação de uma dessas duas taxas (chamadas também de indexadores)
+
+Nessa modalidade, há três títulos disponíveis:
+
+- **Tesouro Selic (LFT):** Títulos com rentabilidade diária vinculada à taxa de juros básica da economia (taxa Selic). Forma de pagamento: no vencimento.
+- **Tesouro IPCA+ com Juros Semestrais (NTN-B):** Título com rentabilidade vinculada à variação do IPCA mais os juros definidos no momento da compra. Forma de Pagamento: semestralmente (juros) e no vencimento (principal).
+- **Tesouro IPCA+ (NTN-B Principal):** Título com rentabilidade ligada à variação do IPCA mais os juros definidos no momento da compra. Não há pagamento de cupom de juros semestral. Forma de Pagamento: no vencimento.
+
+Esse título também oferece rentabilidade real, mas faz o pagamento de uma só vez, no final da aplicação.
