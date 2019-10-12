@@ -224,6 +224,25 @@ checkresiduals(best_model$model, test = "LB")
 summary(best_model$model_projected)
 ```
 
+### Checando a aderencia do modelo na base de validação
+
+```{r best_model_aderencia, echo=TRUE, out.width='100%'}
+
+plot(best_model$model_projected, 
+     bty = "l",
+     ylim = c(0, max(best_model$model_final_projected$fitted) * 1.1), 
+     flty = 2,
+     main = str_to_title(str_replace_all(best_model$title,'ts|_',' ')))
+
+title(sub = 'Verificação do Modelo na base de validação', col.sub = 'blue',
+      xlab = "Tempo",
+      ylab = "Indice")
+
+lines(best_model$model_projected$fitted, lwd=2, col = "blue")
+lines(test_ts, col = 'red')
+
+```
+
 ### Checando as métricas do modelo
 
 ```{r best_model_metrics, echo=TRUE, out.width='100%'}
@@ -233,15 +252,17 @@ best_model$accuracy
 ### Checando a projeção final do modelo
 
 ```{r best_model_final_projection, echo=TRUE, out.width='100%'}
+
 plot(best_model$model_final_projected, 
-     xlab = "Tempo", 
-     ylab = "Indice", 
      bty = "l",
-     xlim = c(parameters$start_year, parameters$end_year),
      ylim = c(0, max(best_model$model_final_projected$fitted) * 1.1), 
      flty = 2, 
-     main = "Forecast from Polynomial regression model")
-axis(1, at=seq(parameters$start_year, parameters$end_year, 1), 
-     labels=format(seq(parameters$start_year, parameters$end_year, 1)))
+     main = str_to_title(str_replace_all(best_model$title,'ts|_',' ')))
+
+title(sub = 'Projeção do modelo com os parâmetros recalculados usando a base completa', col.sub = 'blue',
+      xlab = "Tempo",
+      ylab = "Indice")
+
 lines(best_model$model_final_projected$fitted, lwd=2, col="blue")
+
 ```
