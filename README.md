@@ -6,13 +6,14 @@ In this project, we developed a set of tasks to go further in Time Series Analys
 
 This website intends to present the work analysis for the *"Análise de Séries Temporais"* class assignment.
 
+```
 Escolher uma série temporal e realizar uma apresentação de 10 min:
 
 - Definir o problema de projeção
 - Descrever a série temporal
 - Estimar com os modelos observado em aula
 - Concluir sobre o melhor modelo
-
+```
 See the final website report at: [https://ldaniel.github.io/Time-Series-Analysis](https://ldaniel.github.io/Time-Series-Analysis).
 
 ## Professor
