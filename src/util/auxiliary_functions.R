@@ -338,9 +338,7 @@ GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts, train_t
   return(consolidation)
 }
 
-
 # plot model fit ----
-
 SaveFitPlot <- function(model) {
 
   png(paste('../images/', model$title, '.png'),

@@ -37,7 +37,7 @@ Utilizamos a função customizada **GetTimeSeriesDateParameters** para gerar tod
 
 ```{r data_load, echo=TRUE}
 target_data <- readRDS('../data/processed/target_dataset.rds')
-parameters <- GetTimeSeriesDateParameters(target_data$date, 0.85)
+parameters <- GetTimeSeriesDateParameters(target_data$date, 0.70)
 print(parameters)
 ```
 
