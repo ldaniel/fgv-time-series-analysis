@@ -23,8 +23,8 @@ GetTimeSeriesDateParameters <- function (target_base_date, percentage){
                               as.numeric(format(as.Date(min(target_base_date), format="%d/%m/%Y"),"%m")))
   parameters$end         <- c(as.numeric(format(as.Date(max(target_base_date), format="%d/%m/%Y"),"%Y")),
                               as.numeric(format(as.Date(max(target_base_date), format="%d/%m/%Y"),"%m")))
-  parameters$start_year  <- as.numeric(format(as.Date(min(target_base_date), format="%d/%m/%Y"),"%Y"))
-  parameters$end_year    <- as.numeric(format(as.Date(max(target_base_date), format="%d/%m/%Y"),"%Y"))
+  parameters$start_year  <-   as.numeric(format(as.Date(min(target_base_date), format="%d/%m/%Y"),"%Y"))
+  parameters$end_year    <-   as.numeric(format(as.Date(max(target_base_date), format="%d/%m/%Y"),"%Y"))
   parameters$train_start <- c(as.numeric(format(as.Date(min(target_base_date), format="%d/%m/%Y"),"%Y")),
                               as.numeric(format(as.Date(min(target_base_date), format="%d/%m/%Y"),"%m")))
   parameters$train_end   <- c(as.numeric(format(as.Date(target_base_date[split_index], format="%d/%m/%Y"),"%Y")),
@@ -121,14 +121,14 @@ RunLinearTimeSeriesModel <- function (train_ts,
 
 # this function generates and saves all linear time series models to the
 # model's directory for later consuming
-GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size) {
+GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size, number_of_periods_for_forecasting = 6) {
   # Tendência Linear
   model_trend <- RunLinearTimeSeriesModel(train_ts,
                                           test_ts,
                                           formula_train = "train_ts ~ trend",
                                           formula_final = "target_ts ~ trend", 
                                           test_sample_size,
-                                          number_of_periods_for_forecasting = 36,
+                                          number_of_periods_for_forecasting = number_of_periods_for_forecasting,
                                           title = "ts_linear_model_trend")
   saveRDS(model_trend, paste0('../models/', model_trend$title,'.rds'))
   
@@ -138,7 +138,7 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size)
                                                  formula_train = "train_ts ~ trend + I(trend^2)", 
                                                  formula_final = "target_ts ~ trend + I(trend^2)", 
                                                  test_sample_size,
-                                                 number_of_periods_for_forecasting = 36,
+                                                 number_of_periods_for_forecasting = number_of_periods_for_forecasting,
                                                  title = "ts_linear_model_trend_square")
   saveRDS(model_trend_square, paste0('../models/', model_trend_square$title,'.rds'))
 
@@ -148,7 +148,7 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size)
                                            formula_train = "train_ts ~ season", 
                                            formula_final = "target_ts ~ season", 
                                            test_sample_size,
-                                           number_of_periods_for_forecasting = 36,
+                                           number_of_periods_for_forecasting = number_of_periods_for_forecasting,
                                            title = "ts_linear_model_season")
   saveRDS(model_season, paste0('../models/', model_season$title,'.rds'))
   
@@ -158,7 +158,7 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size)
                                                  formula_train = "train_ts ~ trend + season", 
                                                  formula_final = "target_ts ~ trend + season", 
                                                  test_sample_size,
-                                                 number_of_periods_for_forecasting = 36,
+                                                 number_of_periods_for_forecasting = number_of_periods_for_forecasting,
                                                  title = "ts_linear_model_trend_season")
   saveRDS(model_trend_season, paste0('../models/', model_trend_season$title,'.rds'))
   
@@ -168,7 +168,7 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size)
                                                         formula_train = "train_ts ~ season + trend + I(trend^2)", 
                                                         formula_final = "target_ts ~ season + trend + I(trend^2)", 
                                                         test_sample_size,
-                                                        number_of_periods_for_forecasting = 36,
+                                                        number_of_periods_for_forecasting = number_of_periods_for_forecasting,
                                                         title = "ts_linear_model_trend_square_season")
   saveRDS(model_trend_square_season, paste0('../models/', model_trend_square_season$title,'.rds'))
   
@@ -296,7 +296,7 @@ RunExponentialsmoothingStateTimeSeriesModel <- function (target_ts,
 
 # this function generates and saves all linear time series models to the
 # model's directory for later consuming
-GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts, train_ts, test_ts, test_sample_size) {
+GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts, train_ts, test_ts, test_sample_size, number_of_periods_for_forecasting = 6) {
 
   methods_list <- c("ANN", "AAN", "ANA", "AAA", "MNN", 
                     "MAN", "MMN", "MNM", "MAM", "MMM", 
@@ -309,7 +309,7 @@ GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts, train_t
                                                          test_ts, 
                                                          method = method_item,
                                                          test_sample_size,
-                                                         number_of_periods_for_forecasting = 36)
+                                                         number_of_periods_for_forecasting = number_of_periods_for_forecasting)
     model_file_name <- paste0('../models/', model$title,'.rds')
     saveRDS(model, model_file_name)
     
