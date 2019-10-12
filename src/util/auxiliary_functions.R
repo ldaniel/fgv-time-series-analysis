@@ -81,11 +81,12 @@ GenerateNaiveTimeSeriesModel <- function (train_ts, test_ts, test_sample_size) {
   saveRDS(model_naive, paste0('../models/', model_naive$title,'.rds'))
   
   # performing result's consolidation
-  consolidation <- tibble(Model = character(), MAPE = numeric())
+  consolidation <- tibble(Model = character(), MAPE_Train = numeric(), MAPE_Test = numeric())
   
   consolidation <-  add_row(consolidation, 
                             Model = model_naive$title, 
-                            MAPE = model_naive$accuracy["Test set",'MAPE'])
+                            MAPE_Train = model_naive$accuracy["Training set",'MAPE'],
+                            MAPE_Test = model_naive$accuracy["Test set",'MAPE'])
 
   return(consolidation)
 }
@@ -131,6 +132,7 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size,
                                           number_of_periods_for_forecasting = number_of_periods_for_forecasting,
                                           title = "ts_linear_model_trend")
   saveRDS(model_trend, paste0('../models/', model_trend$title,'.rds'))
+  SaveFitPlot(model_trend)
   
   # Tendência Quadrática
   model_trend_square <- RunLinearTimeSeriesModel(train_ts,
@@ -141,6 +143,7 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size,
                                                  number_of_periods_for_forecasting = number_of_periods_for_forecasting,
                                                  title = "ts_linear_model_trend_square")
   saveRDS(model_trend_square, paste0('../models/', model_trend_square$title,'.rds'))
+  SaveFitPlot(model_trend_square)
 
   # Sazonalidade
   model_season <- RunLinearTimeSeriesModel(train_ts,
@@ -151,6 +154,7 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size,
                                            number_of_periods_for_forecasting = number_of_periods_for_forecasting,
                                            title = "ts_linear_model_season")
   saveRDS(model_season, paste0('../models/', model_season$title,'.rds'))
+  SaveFitPlot(model_season)
   
   # Tendência Linear com Sazonalidade
   model_trend_season <- RunLinearTimeSeriesModel(train_ts,
@@ -161,6 +165,7 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size,
                                                  number_of_periods_for_forecasting = number_of_periods_for_forecasting,
                                                  title = "ts_linear_model_trend_season")
   saveRDS(model_trend_season, paste0('../models/', model_trend_season$title,'.rds'))
+  SaveFitPlot(model_trend_season)
   
   # Tendência Quadrática com Sazonalidade
   model_trend_square_season <- RunLinearTimeSeriesModel(train_ts,
@@ -171,29 +176,35 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size,
                                                         number_of_periods_for_forecasting = number_of_periods_for_forecasting,
                                                         title = "ts_linear_model_trend_square_season")
   saveRDS(model_trend_square_season, paste0('../models/', model_trend_square_season$title,'.rds'))
+  SaveFitPlot(model_trend_square_season)
   
   # performing result's consolidation
-  consolidation <- tibble(Model = character(), MAPE = numeric())
+  consolidation <- tibble(Model = character(), MAPE_Train = numeric(), MAPE_Test = numeric())
   
   consolidation <-  add_row(consolidation, 
                             Model = model_trend$title, 
-                            MAPE = model_trend$accuracy["Test set",'MAPE'])
+                            MAPE_Train = model_trend$accuracy["Training set",'MAPE'],
+                            MAPE_Test = model_trend$accuracy["Test set",'MAPE'])
   
   consolidation <-  add_row(consolidation,
                             Model = model_trend_square$title, 
-                            MAPE = model_trend_square$accuracy["Test set",'MAPE'])
+                            MAPE_Train = model_trend_square$accuracy["Training set",'MAPE'],
+                            MAPE_Test = model_trend_square$accuracy["Test set",'MAPE'])
   
   consolidation <-  add_row(consolidation,
                             Model = model_season$title, 
-                            MAPE = model_season$accuracy["Test set",'MAPE'])
+                            MAPE_Train = model_season$accuracy["Training set",'MAPE'],
+                            MAPE_Test = model_season$accuracy["Test set",'MAPE'])
   
   consolidation <-  add_row(consolidation,
                             Model = model_trend_season$title, 
-                            MAPE = model_trend_season$accuracy["Test set",'MAPE'])
+                            MAPE_Train = model_trend_season$accuracy["Training set",'MAPE'],
+                            MAPE_Test = model_trend_season$accuracy["Test set",'MAPE'])
   
   consolidation <-  add_row(consolidation,
                             Model = model_trend_square_season$title, 
-                            MAPE = model_trend_square_season$accuracy["Test set",'MAPE'])
+                            MAPE_Train = model_trend_square_season$accuracy["Training set",'MAPE'],
+                            MAPE_Test = model_trend_square_season$accuracy["Test set",'MAPE'])
   
   return(consolidation)
 }
@@ -253,15 +264,17 @@ GenerateMovingAverageTimeSeriesModel <- function (target_ts,
                                               start_date = start_date_year,
                                               end_date = end_date_year,
                                               frequency = 12)
+  
   saveRDS(model_ma, paste0('../models/', model_ma$title,'.rds'))
   
   # performing result's consolidation
-  consolidation <- tibble(Model = character(), MAPE = numeric())
+  consolidation <- tibble(Model = character(), MAPE_Train = numeric(), MAPE_Test = numeric())
   
   consolidation <-  add_row(consolidation, 
                             Model = model_ma$title, 
-                            MAPE = model_ma$test_accuracy["Test set",'MAPE'])
-  
+                            MAPE_Train = model_ma$train_accuracy["Test set",'MAPE'],
+                            MAPE_Test = model_ma$test_accuracy["Test set",'MAPE'])
+
   return(consolidation)
 } 
 
@@ -301,7 +314,8 @@ GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts, train_t
   methods_list <- c("ANN", "AAN", "ANA", "AAA", "MNN", 
                     "MAN", "MMN", "MNM", "MAM", "MMM", 
                     "MNA", "MAA", "ZZZ")
-  consolidation <- tibble(Model = character(), MAPE = numeric())
+
+  consolidation <- tibble(Model = character(), MAPE_Train = numeric(), MAPE_Test = numeric())
   
   for (method_item in methods_list) {
     model <- RunExponentialsmoothingStateTimeSeriesModel(target_ts,
@@ -311,12 +325,53 @@ GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts, train_t
                                                          test_sample_size,
                                                          number_of_periods_for_forecasting = number_of_periods_for_forecasting)
     model_file_name <- paste0('../models/', model$title,'.rds')
+    
     saveRDS(model, model_file_name)
+    SaveFitPlot(model)
     
     consolidation <-  add_row(consolidation,
-                              Model = model$title, 
-                              MAPE = model$accuracy["Test set",'MAPE'])
-  }
+                              Model = model$title,
+                              MAPE_Train = model$accuracy["Training set",'MAPE'],
+                              MAPE_Test = model$accuracy["Test set",'MAPE'])
+    }
   
   return(consolidation)
+}
+
+
+# plot model fit ----
+
+SaveFitPlot <- function(model) {
+
+  png(paste('../images/', model$title, '.png'),
+      width = 640, 
+      height = 640)
+  
+  plot(model$model_projected, 
+       bty = "l",
+       ylim = c(0, 10), 
+       flty = 2,
+       main = str_to_upper(str_replace_all(model$title,'ts|_',' ')))
+  
+  title(sub = paste('MAPE: ', round(model$accuracy['Test set', 'MAPE'], 5)), 
+        col.sub = 'blue',
+        xlab = "Tempo",
+        ylab = "Indice")
+  
+  title( 
+    col.sub = 'blue',
+    xlab = "Tempo",
+    ylab = "Indice")
+  
+  lines(model$model_projected$fitted, lwd=2, col = "blue")
+  lines(test_ts, col = 'red')
+
+}
+
+GenerateFitPlotGIF <- function() {
+  png_files <- list.files('../images/', full.names = TRUE)
+  gif_file <- tempfile(fileext = ".gif")
+  gif_file <- '../gifs/model_fit.gif'
+  
+  gifski(png_files, gif_file)
 }

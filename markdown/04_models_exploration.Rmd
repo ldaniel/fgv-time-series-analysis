@@ -15,6 +15,8 @@ library(forecast)
 library(lubridate)
 library(readxl)
 library(knitr)
+library(stringr)
+library(gifski)
 ```
 
 ```{r scripts_evaluation, include=FALSE}
@@ -35,7 +37,7 @@ Utilizamos a função customizada **GetTimeSeriesDateParameters** para gerar tod
 
 ```{r data_load, echo=TRUE}
 target_data <- readRDS('../data/processed/target_dataset.rds')
-parameters <- GetTimeSeriesDateParameters(target_data$date, 0.8)
+parameters <- GetTimeSeriesDateParameters(target_data$date, 0.85)
 print(parameters)
 ```
 
@@ -57,7 +59,7 @@ Quando vamos criar um modelo de previsão de séries temporais o ideal é separa
 - **Treino:** estes dados serão a base principal para definir os coeficientes/parâmetros do modelo;
 - **Teste:** são dados que serão separados e não foram vistos pelo modelo e serão usados para testá-lo e comparar com as previsões (geralmente comparando os valores passo-a-passo).
 
-O tamanho do conjunto de testes é normalmente cerca de 30% da amostra total, embora esse percentual dependa do tamanho da amostra que você tenha e também quanto tempo adiante você deseja fazer a previsão. A base de testes deve ser idealmente pelo menos tão grande quanto o horizonte máximo de previsão necessário.
+O tamanho do conjunto de testes é normalmente cerca de 20% a 30% da amostra total, embora esse percentual dependa do tamanho da amostra que você tenha e também quanto tempo adiante você deseja fazer a previsão. A base de testes deve ser idealmente pelo menos tão grande quanto o horizonte máximo de previsão necessário.
 
 Diferente de outros métodos de previsões, como classificações e regressões sem a influência do tempo, em séries temporais não podemos dividir os dados de treino e teste com amostras aleatórias de qualquer parte dos dados, deve-se seguir o critério temporal da série, onde os dados de treino devem vir antes dos dados de teste.
 
@@ -177,22 +179,22 @@ O cálculo dessa métrica pega o valor absoluto do erro dividido pelo preço rea
 
 $$MAPE = \frac{1}{n} \sum_{d_i} (\frac{1}{q} \sum_{t_j}\left\lvert{\frac{gap_{i,j}-s_{i,j}}{gap_{i,j}}}\right\rvert)$$
 
-Para analisar o desempenho dos modelos utilizados em nosso dataset de série temporal, vamos primeiramente classificar do melhor para o pior, baseado no resultado de **MAPE**.
+Para analisar o desempenho dos modelos utilizados em nosso dataset de série temporal, vamos primeiramente classificar do melhor para o pior, baseado no resultado de **MAPE na base de teste**.
 
 ```{r checking_all_mape_results, echo=TRUE, out.width='100%'}
 mape_ranking <- rbind(naive_consolidation,
                       linear_consolidation,
                       ma_consolidation,
                       smoothing_consolidation) %>% 
-        arrange(MAPE) %>% 
+        arrange(MAPE_Test) %>% 
         mutate(Rank_ID = row_number()) 
 
-mape_ranking <- mape_ranking[c(3,1,2)]
+mape_ranking <- mape_ranking[c(4,1,2,3)]
 
 kable(mape_ranking)
 ```
 
-O modelo **`r mape_ranking[1,2]`** demonstrou a melhor métrica de **MAPE**, com o valor de **`r min(mape_ranking[,3])`**.
+O modelo **`r mape_ranking[1,2]`** demonstrou a melhor métrica de **MAPE**, com o valor de **`r min(mape_ranking[,4])`**.
 
 Para analisarmos com mais detalhes o modelo com melhor performance, vamos carregar o objeto salvo anteriormente com todos os resultados do modelo.
 
@@ -224,7 +226,16 @@ checkresiduals(best_model$model, test = "LB")
 summary(best_model$model_projected)
 ```
 
-### Checando a aderencia do modelo na base de validação
+### Checando a aderencia do melhor modelo na base de validação
+
+```{r generate_gif, include=FALSE}
+# chmando fun
+GenerateFitPlotGIF()
+```
+
+![Animação do fit de na base de testes de todos os modelos lineares e exponenciais calculados.](https://raw.githubusercontent.com/ldaniel/Time-Series-Analysis/master/gifs/model_fit.gif)
+
+### Checando a aderencia do melhor modelo na base de validação
 
 ```{r best_model_aderencia, echo=TRUE, out.width='100%'}
 
@@ -232,9 +243,10 @@ plot(best_model$model_projected,
      bty = "l",
      ylim = c(0, max(best_model$model_final_projected$fitted) * 1.1), 
      flty = 2,
-     main = str_to_title(str_replace_all(best_model$title,'ts|_',' ')))
+     main = str_to_upper(str_replace_all(best_model$title,'ts|_',' ')))
 
-title(sub = 'Verificação do Modelo na base de validação', col.sub = 'blue',
+title(sub = paste('MAPE: ', round(filter(mape_ranking, Model == best_model$title)$MAPE_Test, 5)),
+      col.sub = 'blue',
       xlab = "Tempo",
       ylab = "Indice")
 
