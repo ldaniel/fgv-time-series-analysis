@@ -13,6 +13,7 @@ library(stringr)
 library(lubridate)
 library(reticulate)
 library(bizdays)
+library(gifski)
 
 # plotting libraries
 library(ggplot2)
