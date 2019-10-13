@@ -228,7 +228,7 @@ summary(best_model$model_projected)
 
 ### Checando a aderencia do melhor modelo na base de validação
 
-```{r generate_gif, echo=TRUE, eval=FALSE}
+```{r generate_gif, echo=TRUE, eval=TRUE}
 # call function go create a GIF based on the plotted models
 GenerateFitPlotGIF()
 ```

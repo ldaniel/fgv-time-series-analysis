@@ -361,7 +361,7 @@ GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts,
 SaveFitPlot <- function(model, max_ylim) {
 
   png(paste0('../images/',model$title,'.png'),
-      width = 640, 
+      width = 896, 
       height = 640)
   
   plot(model$model_projected, 
