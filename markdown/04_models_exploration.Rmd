@@ -235,7 +235,7 @@ GenerateFitPlotGIF()
 
 ![Animação do fit de na base de testes de todos os modelos lineares e exponenciais calculados.](https://raw.githubusercontent.com/ldaniel/Time-Series-Analysis/master/gifs/model_fit.gif)
 
-### Checando a aderencia do melhor modelo na base de validação
+### Checando a aderência do melhor modelo na base de validação
 
 ```{r best_model_aderencia, echo=TRUE, out.width='100%'}
 
@@ -252,7 +252,6 @@ title(sub = paste('MAPE: ', round(filter(mape_ranking, Model == best_model$title
 
 lines(best_model$model_projected$fitted, lwd=2, col = "blue")
 lines(test_ts, col = 'red')
-
 ```
 
 ### Checando as métricas do modelo
@@ -276,5 +275,4 @@ title(sub = 'Projeção do modelo com os parâmetros recalculados usando a base 
       ylab = "Indice")
 
 lines(best_model$model_final_projected$fitted, lwd=2, col="blue")
-
 ```
