@@ -11,11 +11,6 @@ selic_target$Value  <- selic_target$Value / 100
 ipca_12m        <- filter(ipca_12m, Date >= make_date(2002, 1, 1))
 ipca_12m$Value  <- ipca_12m$Value / 100
 
-## saving processed dataset -----
-# if (!file.exists('./data/processed/target_dataset.rds')) {
-#   saveRDS(target_dataset, './data/processed/target_dataset.rds')
-# }
-
 # Create Time Series ----------------------------------------------------------
 
 df <- filter(bond_data, titulo == "LTN 2021-01-01") %>% 
@@ -35,4 +30,4 @@ df$date <- make_date(year(df$dia), month(df$dia), 1)
 df <- group_by(df, date) %>%
    summarise(taxa_venda = mean(taxa_venda))
  
-saveRDS(df, 'data/processed/target_dataset.rds')
+saveRDS(df, '../data/processed/target_dataset.rds')
