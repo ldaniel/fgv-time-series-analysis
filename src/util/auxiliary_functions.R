@@ -380,6 +380,7 @@ SaveFitPlot <- function(model, max_ylim) {
   lines(model$model_projected$fitted, lwd=2, col = "blue")
   lines(test_ts, col = 'red')
 
+  dev.off()  
 }
 
 # this function will create a gif animation based on a set of images
