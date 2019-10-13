@@ -92,24 +92,6 @@ Com base no output acima, temos:
 
 O **alpha**, **beta** e o **gamma** são os fatores de suavização (*smoothing factor*) respectivamente para o nivel, tendência e sazonalidade.
 
-### Checando autocorrelação do modelo
-
-Observando o plot de autocorrelação gerado, percebemos que os resíduos do modelo não são autocorrelacionados.
-
-```{r best_model_Acf, echo=TRUE, out.width='100%'}
-Acf(best_model$model$residuals)
-```
-
-### Checando resíduos e aderência do modelo
-
-Observando o resultado do plot e análise de resíduos temos **p-value = 2.005e-05**, ou seja, podemos rejeitar a hipótese nula assumindo 5% de chance de cometer um erro de projeção. Portanto, os valores ainda apresentam dependência uns com os outros.
-
-Desta maneira, não existe representatividade estatística relevante para o túnel de confiança deste modelo, uma vez que a distribuição dos resíduos não se comporta conforme a curva gaussiana.
-
-```{r best_model_residuals, echo=TRUE, out.width='100%'}
-checkresiduals(best_model$model, test = "LB")
-```
-
 ```{r best_model_aderencia, echo=TRUE, out.width='100%'}
 
 plot(best_model$model_projected, 
@@ -127,7 +109,7 @@ lines(best_model$model_projected$fitted, lwd=2, col = "blue")
 lines(test_ts, col = 'red')
 ```
 
-### Checando as métricas do modelo
+### Checando as métricas de acurácia do modelo
 
 Conforme observado na checagem das métricas, tivemos um erro entre a base de treino e teste de aproximadamente **`r round(best_model$accuracy["Test set", "MAPE"] - best_model$accuracy["Training set", "MAPE"], 3) `** pontos base.
 
@@ -136,6 +118,22 @@ best_model$accuracy
 ```
 
 *******************************************************************************
+
+### Checando autocorrelação nos residuos do modelo
+
+Observando o plot de autocorrelação gerado, percebemos que os resíduos do modelo não são autocorrelacionados.
+
+```{r best_model_Acf, echo=TRUE, out.width='100%'}
+Acf(best_model$model$residuals)
+```
+
+Observando o resultado do plot e análise de resíduos temos **p-value = 2.005e-05**, ou seja, podemos rejeitar a hipótese nula assumindo 5% de chance de cometer um erro de projeção. Portanto, os valores ainda apresentam dependência uns com os outros.
+
+Desta maneira, não existe representatividade estatística relevante para o túnel de confiança deste modelo, uma vez que a distribuição dos resíduos não se comporta conforme a curva gaussiana.
+
+```{r best_model_residuals, echo=TRUE, out.width='100%'}
+checkresiduals(best_model$model, test = "LB")
+```
 
 # Considerações finais
 
