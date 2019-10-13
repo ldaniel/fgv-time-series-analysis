@@ -246,12 +246,13 @@ plot(best_model$model_projected,
      bty = "l",
      ylim = c(0, max(best_model$model_final_projected$fitted) * 1.1), 
      flty = 2,
+     ylab = 'Indice',
      main = str_to_upper(str_replace_all(best_model$title,'ts|_',' ')))
 
-title(sub = paste('MAPE: ', round(filter(mape_ranking, Model == best_model$title)$MAPE_Test, 5)),
+title(sub = paste('MAPE na base de teste: ', round(filter(mape_ranking, Model == best_model$title)$MAPE_Test, 5)),
       col.sub = 'blue',
-      xlab = "Tempo",
-      ylab = "Indice")
+      cex.sub = 1.5,
+      adj = 0.5)
 
 lines(best_model$model_projected$fitted, lwd=2, col = "blue")
 lines(test_ts, col = 'red')

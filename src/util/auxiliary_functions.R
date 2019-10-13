@@ -377,16 +377,15 @@ SaveFitPlot <- function(model, max_ylim) {
        bty = "l",
        ylim = c(0, max_ylim), 
        flty = 2,
-       xlab = '',
+       ylab = 'Indice',
        main = str_to_upper(str_replace_all(model$title,'ts|_',' ')),
        cex.main = 2)
   
-  title(sub = paste('MAPE: ', round(model$accuracy['Test set', 'MAPE'], 5)), 
+  title(sub = paste('MAPE na base de teste: ', round(model$accuracy['Test set', 'MAPE'], 5)),
         col.sub = 'blue',
-        ylab = "Indice",
-        xlab = '',
-        cex.sub = 1.7)
-  
+        cex.sub = 1.5,
+        adj.sub = 0.5)
+
   title(col.sub = 'blue', xlab = "Tempo", ylab = "Indice")
   
   lines(model$model_projected$fitted, lwd=2, col = "blue")
@@ -397,9 +396,9 @@ SaveFitPlot <- function(model, max_ylim) {
 
 # this function will create a gif animation based on a set of images
 GenerateFitPlotGIF <- function() {
-  png_files <- list.files('../images/', full.names = TRUE)
+  png_files <- list.files('./images/', full.names = TRUE)
   gif_file <- tempfile(fileext = ".gif")
-  gif_file <- '../gifs/model_fit.gif'
+  gif_file <- './gifs/model_fit.gif'
   
   gifski(png_files, gif_file)
 }
