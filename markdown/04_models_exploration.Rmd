@@ -202,6 +202,15 @@ Para analisarmos com mais detalhes o modelo com melhor performance, vamos carreg
 best_model <- readRDS(paste0('../models/', mape_ranking[1,2], '.rds'))
 ```
 
+## Checando a aderencia do melhor modelo na base de validação
+
+```{r generate_gif, echo=TRUE, eval=FALSE}
+# call function go create a GIF based on the plotted models
+GenerateFitPlotGIF()
+```
+
+![Animação do fit de na base de testes de todos os modelos lineares e exponenciais calculados.](https://raw.githubusercontent.com/ldaniel/Time-Series-Analysis/master/gifs/model_fit.gif)
+
 ## Resultados gerais do modelo com a melhor métrica MAPE
 
 ```{r best_model_summary, echo=TRUE, out.width='100%'}
@@ -226,14 +235,6 @@ checkresiduals(best_model$model, test = "LB")
 summary(best_model$model_projected)
 ```
 
-### Checando a aderencia do melhor modelo na base de validação
-
-```{r generate_gif, echo=TRUE, eval=FALSE}
-# call function go create a GIF based on the plotted models
-GenerateFitPlotGIF()
-```
-
-![Animação do fit de na base de testes de todos os modelos lineares e exponenciais calculados.](https://raw.githubusercontent.com/ldaniel/Time-Series-Analysis/master/gifs/model_fit.gif)
 
 ### Checando a aderência do melhor modelo na base de validação
 

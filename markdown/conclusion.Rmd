@@ -9,9 +9,12 @@ knitr::opts_chunk$set(fig.pos =  "h")
 knitr::opts_knit$set(root.dir = "./")
 
 # loading required libraries
-library(forecast)
+library(dplyr)
 library(lubridate)
-library(readxl)
+library(knitr)
+library(stringr)
+library(zoo)
+library(forecast)
 ```
 
 ```{r scripts_evaluation, include=FALSE}
@@ -29,13 +32,87 @@ ClearEnvironment()
 
 *******************************************************************************
 
-# Tópico
+# Avaliando os modelos utilizados e seus resultados
 
-## Subtópico
+O modelo **MAM** demonstrou a melhor métrica de **MAPE**, com o valor de **8.958037**.
 
-```{r data_load, echo=TRUE}
-# to-do
+Para analisarmos com mais detalhes o modelo com melhor performance, vamos carregar o objeto salvo anteriormente com todos os resultados do modelo.
+
+```{r loading_best_model, echo=TRUE, out.width='100%'}
+best_model <- readRDS(paste0('../models/ts_exponential_smoothing_model_MAM.rds'))
 ```
+
+## Checando a aderencia do melhor modelo na base de validação
+
+![Animação do fit de na base de testes de todos os modelos lineares e exponenciais calculados.](https://raw.githubusercontent.com/ldaniel/Time-Series-Analysis/master/gifs/model_fit.gif)
+
+## Resultados gerais do modelo com a melhor métrica MAPE
+
+```{r best_model_summary, echo=TRUE, out.width='100%'}
+summary(best_model$model)
+```
+
+### Checando autocorrelação do modelo
+
+```{r best_model_Acf, echo=TRUE, out.width='100%'}
+Acf(best_model$model$residuals)
+```
+
+### Checando resíduos do modelo
+
+```{r best_model_residuals, echo=TRUE, out.width='100%'}
+checkresiduals(best_model$model, test = "LB")
+```
+
+### Checando a projeção do modelo
+
+```{r best_model_projection, echo=TRUE, out.width='100%'}
+summary(best_model$model_projected)
+```
+
+
+### Checando a aderência do melhor modelo na base de validação
+
+```{r best_model_aderencia, echo=TRUE, out.width='100%'}
+
+plot(best_model$model_projected, 
+     bty = "l",
+     ylim = c(0, max(best_model$model_final_projected$fitted) * 1.1), 
+     flty = 2,
+     main = str_to_upper(str_replace_all(best_model$title,'ts|_',' ')))
+
+title(sub = paste('MAPE: ', round(filter(mape_ranking, Model == best_model$title)$MAPE_Test, 5)),
+      col.sub = 'blue',
+      xlab = "Tempo",
+      ylab = "Indice")
+
+lines(best_model$model_projected$fitted, lwd=2, col = "blue")
+lines(test_ts, col = 'red')
+```
+
+### Checando as métricas do modelo
+
+```{r best_model_metrics, echo=TRUE, out.width='100%'}
+best_model$accuracy
+```
+
+### Checando a projeção final do modelo
+
+```{r best_model_final_projection, echo=TRUE, out.width='100%'}
+
+plot(best_model$model_final_projected, 
+     bty = "l",
+     ylim = c(0, max(best_model$model_final_projected$fitted) * 1.1), 
+     flty = 2, 
+     main = str_to_title(str_replace_all(best_model$title,'ts|_',' ')))
+
+title(sub = 'Projeção do modelo com os parâmetros recalculados usando a base completa', col.sub = 'blue',
+      xlab = "Tempo",
+      ylab = "Indice")
+
+lines(best_model$model_final_projected$fitted, lwd=2, col="blue")
+```
+
 
 *******************************************************************************
 

@@ -34,10 +34,12 @@ source("../src/util/auxiliary_functions.R")
 source("../src/datapreparation/step_03_data_ingestion.R")
 source("../src/datapreparation/step_04_data_cleaning.R")
 source("../src/datapreparation/step_05_data_enhancement.R")
-source("../src/datapreparation/step_06_dataset_preparation.R")
+#source("../src/datapreparation/step_06_dataset_preparation.R")
 ```
 
 # Análise inicial dos tipos de Tesouro Direto
+
+O Tesouro Nacional disponibiliza uma variedade de títulos com diferentes características. Nos tópicos a seguir, foram realizadas explorações visuais iniciais a fim de auxiliar na escolha do estudo de caso para este trabalho. 
 
 ## Histórico da Taxa de Venda de Títulos de Índice de Preços (NTN-B)
 
@@ -128,3 +130,9 @@ plot_selic_inflation <- ggplotly(plot_selic_inflation)
 
 plot_selic_inflation
 ```
+
+# Título escolhido para o trabalho
+
+Foi escolhido o **LTN 2021-01-01** (Tesouro Pré-Fixado) por ser um título menos volátil às divulgações dos índices da inflação e estar mais atrelado à trajetória da expectativa da meta **SELIC** definida pelo COPOM (Comitê de Política Monetária). Adicionalmente, este título possui um histórico suficiente para um bom estudo de caso.
+
+Para a preparação do dataset final do caso de estudo, ao invés de trabalhar com a média diária foi utilizada a média mensal.
