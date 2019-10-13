@@ -20,7 +20,10 @@ library(forecast)
 ```{r scripts_evaluation, include=FALSE}
 # loading required steps before performing the analysis
 source("../src/util/auxiliary_functions.R")
+
 ClearEnvironment()
+
+test_ts  <- readRDS('../data/processed/test_ts.rds')
 ```
 
 # Objetivos
@@ -44,7 +47,7 @@ best_model <- readRDS(paste0('../models/ts_exponential_smoothing_model_MAM.rds')
 
 ## Checando a aderencia do melhor modelo na base de validação
 
-![Animação do fit de na base de testes de todos os modelos lineares e exponenciais calculados.](https://raw.githubusercontent.com/ldaniel/Time-Series-Analysis/master/gifs/model_fit.gif)
+<img width="50%" src="https://raw.githubusercontent.com/ldaniel/Time-Series-Analysis/master/images/ts_exponential_smoothing_model_MAM.png"/><img width="50%" src="https://raw.githubusercontent.com/ldaniel/Time-Series-Analysis/master/gifs/model_fit.gif"/>
 
 ## Resultados gerais do modelo com a melhor métrica MAPE
 
@@ -81,7 +84,7 @@ plot(best_model$model_projected,
      flty = 2,
      main = str_to_upper(str_replace_all(best_model$title,'ts|_',' ')))
 
-title(sub = paste('MAPE: ', round(filter(mape_ranking, Model == best_model$title)$MAPE_Test, 5)),
+title(sub = paste('MAPE: ', round(best_model$accuracy["Test set", "MAPE"], 5)),
       col.sub = 'blue',
       xlab = "Tempo",
       ylab = "Indice")

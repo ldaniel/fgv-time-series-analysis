@@ -15,7 +15,7 @@ ClearEnvironment <- function () {
 # this function will define all required dates for the time series, including 
 # train and test periods based on the percentage desired to split these datasets
 GetTimeSeriesDateParameters <- function (target_base_date, percentage){
-
+  
   split_index <- round(length(target_base_date) * percentage)
   
   parameters <- list()
@@ -59,7 +59,7 @@ GenerateTrainTestDatasets <- function (target_ts,
 RunNaiveModel <- function (train_ts, 
                            test_ts, 
                            test_sample_size) {
-
+  
   model <- naive(train_ts, level = 0, h = test_sample_size)
   model_accuracy <- accuracy(model, test_ts)
   
@@ -67,7 +67,7 @@ RunNaiveModel <- function (train_ts,
   modelresults$title <- "ts_naive_model"
   modelresults$model <- model
   modelresults$accuracy <- model_accuracy
-
+  
   return(modelresults)
 }
 
@@ -87,7 +87,7 @@ GenerateNaiveTimeSeriesModel <- function (train_ts, test_ts, test_sample_size) {
                             Model = model_naive$title, 
                             MAPE_Train = model_naive$accuracy["Training set",'MAPE'],
                             MAPE_Test = model_naive$accuracy["Test set",'MAPE'])
-
+  
   return(consolidation)
 }
 
@@ -151,7 +151,7 @@ GenerateLinearTimeSeriesModels <- function (train_ts,
                                                  title = "ts_linear_model_trend_square")
   saveRDS(model_trend_square, paste0('../models/', model_trend_square$title,'.rds'))
   SaveFitPlot(model_trend_square, max_ylim)
-
+  
   # Sazonalidade
   model_season <- RunLinearTimeSeriesModel(train_ts,
                                            test_ts,
@@ -284,7 +284,7 @@ GenerateMovingAverageTimeSeriesModel <- function (target_ts,
                             Model = model_ma$title, 
                             MAPE_Train = model_ma$train_accuracy["Test set",'MAPE'],
                             MAPE_Test = model_ma$test_accuracy["Test set",'MAPE'])
-
+  
   return(consolidation)
 } 
 
@@ -324,39 +324,42 @@ GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts,
                                                               test_ts, 
                                                               test_sample_size, 
                                                               number_of_periods_for_forecasting = 6) {
-
   
-  model_list <- expand.grid(c('A', 'M', 'N'),
-                            c('A', 'M', 'N'),
-                            c('A', 'M', 'N'))
+  # methods_list <- expand.grid(c('A', 'M'),
+  #                             c('A', 'M', 'N'),
+  #                             c('A', 'M', 'N'))
+  # 
+  # methods_list <- dplyr::mutate(methods_list,
+  #                               model = paste(Var1, Var2, Var3, sep = ''))$model
+  # 
+  # methods_list <- append(methods_list, 'ZZZ')
   
-  model_list <- dplyr::mutate(model_list,
-                              model = paste(Var1, Var2, Var3, sep = ''))$model
+  methods_list <- c("ANN", "AAN", "ANA", "AAA", "MNN", 
+                    "MAN", "MMN", "MNM", "MAM", "MMM", 
+                    "MNA", "MAA", "ZZZ")
   
-  model_list <- append(model_list, 'ZZZ')
-
   consolidation <- tibble(Model = character(), MAPE_Train = numeric(), MAPE_Test = numeric())
   
   max_ylim <- max(target_ts, train_ts)
   
   for (method_item in methods_list) {
-    model <- RunExponentialsmoothingStateTimeSeriesModel(target_ts,
-                                                         train_ts, 
-                                                         test_ts, 
-                                                         method = method_item,
-                                                         test_sample_size,
-                                                         number_of_periods_for_forecasting = 
-                                                           number_of_periods_for_forecasting)
-    model_file_name <- paste0('../models/', model$title,'.rds')
-    
-    saveRDS(model, model_file_name)
-    SaveFitPlot(model, max_ylim)
-    
-    consolidation <-  add_row(consolidation,
-                              Model = model$title,
-                              MAPE_Train = model$accuracy["Training set",'MAPE'],
-                              MAPE_Test = model$accuracy["Test set",'MAPE'])
-    }
+      model <- RunExponentialsmoothingStateTimeSeriesModel(target_ts,
+                                                           train_ts, 
+                                                           test_ts, 
+                                                           method = method_item,
+                                                           test_sample_size,
+                                                           number_of_periods_for_forecasting = 
+                                                             number_of_periods_for_forecasting)
+      model_file_name <- paste0('../models/', model$title,'.rds')
+      
+      saveRDS(model, model_file_name)
+      SaveFitPlot(model, max_ylim)
+      
+      consolidation <-  add_row(consolidation,
+                                Model = model$title,
+                                MAPE_Train = model$accuracy["Training set",'MAPE'],
+                                MAPE_Test = model$accuracy["Test set",'MAPE'])
+  }
   
   return(consolidation)
 }
@@ -365,7 +368,7 @@ GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts,
 
 # this function will plot the fit a given model
 SaveFitPlot <- function(model, max_ylim) {
-
+  
   png(paste0('../images/',model$title,'.png'),
       width = 896, 
       height = 640)
@@ -374,18 +377,19 @@ SaveFitPlot <- function(model, max_ylim) {
        bty = "l",
        ylim = c(0, max_ylim), 
        flty = 2,
-       main = str_to_upper(str_replace_all(model$title,'ts|_',' ')))
+       main = str_to_upper(str_replace_all(model$title,'ts|_',' ')),
+       cex.main = 2)
   
   title(sub = paste('MAPE: ', round(model$accuracy['Test set', 'MAPE'], 5)), 
         col.sub = 'blue',
-        xlab = "Tempo",
-        ylab = "Indice")
+        ylab = "Indice",
+        cex.sub = 1.7)
   
   title(col.sub = 'blue', xlab = "Tempo", ylab = "Indice")
   
   lines(model$model_projected$fitted, lwd=2, col = "blue")
   lines(test_ts, col = 'red')
-
+  
   dev.off()  
 }
 

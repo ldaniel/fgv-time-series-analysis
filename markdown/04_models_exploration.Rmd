@@ -1,5 +1,8 @@
 ---
 title: "Exploração dos Modelos"
+output:
+  html_document:
+    df_print: paged
 date: "Outubro de 2019"
 ---
 
@@ -234,18 +237,6 @@ checkresiduals(best_model$model, test = "LB")
 ```{r best_model_projection, echo=TRUE, out.width='100%'}
 summary(best_model$model_projected)
 ```
-
-<<<<<<< HEAD
-=======
-### Checando a aderencia do melhor modelo na base de validação
-
-```{r generate_gif, echo=TRUE, eval=TRUE}
-# call function go create a GIF based on the plotted models
-GenerateFitPlotGIF()
-```
-
-![Animação do fit de na base de testes de todos os modelos lineares e exponenciais calculados.](https://raw.githubusercontent.com/ldaniel/Time-Series-Analysis/master/gifs/model_fit.gif)
->>>>>>> e512cd33bdebccb7fa8297a8baa863b5ad5d7fad
 
 ### Checando a aderência do melhor modelo na base de validação
 

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Conclusão</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FGV MBA</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-hand-holding-usd"></span>
+     
+    Cenário Proposto
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="01_about_the_data.html">Sobre os dados</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Análise Inicial</li>
+    <li>
+      <a href="02_data_preparation.html">Preparação dos Dados</a>
+    </li>
+    <li>
+      <a href="03_data_exploration.html">Exploração dos Dados</a>
+    </li>
+    <li>
+      <a href="04_models_exploration.html">Exploração dos Modelos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-file-invoice-dollar"></span>
+     
+    Relatório Final
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="conclusion.html">Conclusão</a>
+    </li>
+    <li>
+      <a href="references.html">Referências</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Conclusão</h1>
+<h4 class="date">Outubro de 2019</h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#objetivos"><span class="toc-section-number">1</span> Objetivos</a></li>
+<li><a href="#avaliando-os-modelos-utilizados-e-seus-resultados"><span class="toc-section-number">2</span> Avaliando os modelos utilizados e seus resultados</a><ul>
+<li><a href="#checando-a-aderencia-do-melhor-modelo-na-base-de-validação"><span class="toc-section-number">2.1</span> Checando a aderencia do melhor modelo na base de validação</a></li>
+<li><a href="#resultados-gerais-do-modelo-com-a-melhor-métrica-mape"><span class="toc-section-number">2.2</span> Resultados gerais do modelo com a melhor métrica MAPE</a><ul>
+<li><a href="#checando-autocorrelação-do-modelo"><span class="toc-section-number">2.2.1</span> Checando autocorrelação do modelo</a></li>
+<li><a href="#checando-resíduos-do-modelo"><span class="toc-section-number">2.2.2</span> Checando resíduos do modelo</a></li>
+<li><a href="#checando-a-projeção-do-modelo"><span class="toc-section-number">2.2.3</span> Checando a projeção do modelo</a></li>
+<li><a href="#checando-a-aderência-do-melhor-modelo-na-base-de-validação"><span class="toc-section-number">2.2.4</span> Checando a aderência do melhor modelo na base de validação</a></li>
+<li><a href="#checando-as-métricas-do-modelo"><span class="toc-section-number">2.2.5</span> Checando as métricas do modelo</a></li>
+<li><a href="#checando-a-projeção-final-do-modelo"><span class="toc-section-number">2.2.6</span> Checando a projeção final do modelo</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#considerações-finais"><span class="toc-section-number">3</span> Considerações finais</a></li>
+</ul>
+</div>
+
+<div id="objetivos" class="section level1">
+<h1><span class="header-section-number">1</span> Objetivos</h1>
+<ul>
+<li>Definir o problema de projeção;</li>
+<li>Descrever a série temporal;</li>
+<li>Estimar com os modelos observado em aula;</li>
+<li>Concluir sobre o melhor modelo.</li>
+</ul>
+<hr />
+</div>
+<div id="avaliando-os-modelos-utilizados-e-seus-resultados" class="section level1">
+<h1><span class="header-section-number">2</span> Avaliando os modelos utilizados e seus resultados</h1>
+<p>O modelo <strong>MAM</strong> demonstrou a melhor métrica de <strong>MAPE</strong>, com o valor de <strong>8.958037</strong>.</p>
+<p>Para analisarmos com mais detalhes o modelo com melhor performance, vamos carregar o objeto salvo anteriormente com todos os resultados do modelo.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">best_model &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="kw">paste0</span>(<span class="st">&#39;../models/ts_exponential_smoothing_model_MAM.rds&#39;</span>))</a></code></pre></div>
+<div id="checando-a-aderencia-do-melhor-modelo-na-base-de-validação" class="section level2">
+<h2><span class="header-section-number">2.1</span> Checando a aderencia do melhor modelo na base de validação</h2>
+<p><img width="50%" src="https://raw.githubusercontent.com/ldaniel/Time-Series-Analysis/master/images/ts_exponential_smoothing_model_MAM.png"/><img width="50%" src="https://raw.githubusercontent.com/ldaniel/Time-Series-Analysis/master/gifs/model_fit.gif"/></p>
+</div>
+<div id="resultados-gerais-do-modelo-com-a-melhor-métrica-mape" class="section level2">
+<h2><span class="header-section-number">2.2</span> Resultados gerais do modelo com a melhor métrica MAPE</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">summary</span>(best_model<span class="op">$</span>model)</a></code></pre></div>
+<pre><code>## ETS(M,A,M) 
+## 
+## Call:
+##  ets(y = train_ts, model = method) 
+## 
+##   Smoothing parameters:
+##     alpha = 0.9442 
+##     beta  = 4e-04 
+##     gamma = 0.0039 
+## 
+##   Initial states:
+##     l = 14.7695 
+##     b = -0.164 
+##     s = 1.0047 1.0211 1.0476 1.0338 1.0169 1.0271
+##            0.981 0.9767 0.9929 0.9819 0.9526 0.9637
+## 
+##   sigma:  0.0496
+## 
+##      AIC     AICc      BIC 
+## 112.4614 141.6042 140.7419 
+## 
+## Training set error measures:
+##                      ME     RMSE       MAE         MPE     MAPE      MASE
+## Training set 0.01167671 0.486805 0.3682654 0.001297779 2.997105 0.1479532
+##                   ACF1
+## Training set 0.4978577</code></pre>
+<div id="checando-autocorrelação-do-modelo" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Checando autocorrelação do modelo</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">Acf</span>(best_model<span class="op">$</span>model<span class="op">$</span>residuals)</a></code></pre></div>
+<p><img src="conclusion_files/figure-html/best_model_Acf-1.png" width="100%" /></p>
+</div>
+<div id="checando-resíduos-do-modelo" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Checando resíduos do modelo</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">checkresiduals</span>(best_model<span class="op">$</span>model, <span class="dt">test =</span> <span class="st">&quot;LB&quot;</span>)</a></code></pre></div>
+<p><img src="conclusion_files/figure-html/best_model_residuals-1.png" width="100%" /></p>
+<pre><code>## 
+##  Ljung-Box test
+## 
+## data:  Residuals from ETS(M,A,M)
+## Q* = 24.457, df = 3, p-value = 2.005e-05
+## 
+## Model df: 16.   Total lags used: 19</code></pre>
+</div>
+<div id="checando-a-projeção-do-modelo" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> Checando a projeção do modelo</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">summary</span>(best_model<span class="op">$</span>model_projected)</a></code></pre></div>
+<pre><code>## 
+## Forecast method: ETS(M,A,M)
+## 
+## Model Information:
+## ETS(M,A,M) 
+## 
+## Call:
+##  ets(y = train_ts, model = method) 
+## 
+##   Smoothing parameters:
+##     alpha = 0.9442 
+##     beta  = 4e-04 
+##     gamma = 0.0039 
+## 
+##   Initial states:
+##     l = 14.7695 
+##     b = -0.164 
+##     s = 1.0047 1.0211 1.0476 1.0338 1.0169 1.0271
+##            0.981 0.9767 0.9929 0.9819 0.9526 0.9637
+## 
+##   sigma:  0.0496
+## 
+##      AIC     AICc      BIC 
+## 112.4614 141.6042 140.7419 
+## 
+## Error measures:
+##                      ME     RMSE       MAE         MPE     MAPE      MASE
+## Training set 0.01167671 0.486805 0.3682654 0.001297779 2.997105 0.1479532
+##                   ACF1
+## Training set 0.4978577
+## 
+## Forecasts:
+##          Point Forecast    Lo 95    Hi 95
+## Jun 2018       8.442854 7.622432 9.263276
+## Jul 2018       8.144859 7.045331 9.244388
+## Aug 2018       8.021042 6.693408 9.348675
+## Sep 2018       8.228316 6.645732 9.810900
+## Oct 2018       7.981957 6.250634 9.713279
+## Nov 2018       7.946001 6.038928 9.853074
+## Dec 2018       7.878624 5.813585 9.943662
+## Jan 2019       7.511565 5.381797 9.641333
+## Feb 2019       7.225532 5.025261 9.425804
+## Mar 2019       6.771317 4.569070 8.973564
+## Apr 2019       6.538113 4.277011 8.799214
+## May 2019       6.578786 4.168021 8.989552
+## Jun 2019       6.490090 3.976486 9.003694
+## Jul 2019       6.223993 3.683051 8.764935
+## Aug 2019       6.091451 3.475036 8.707865
+## Sep 2019       6.208364 3.407065 9.009663
+## Oct 2019       5.981558 3.149769 8.813346</code></pre>
+</div>
+<div id="checando-a-aderência-do-melhor-modelo-na-base-de-validação" class="section level3">
+<h3><span class="header-section-number">2.2.4</span> Checando a aderência do melhor modelo na base de validação</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">plot</span>(best_model<span class="op">$</span>model_projected, </a>
+<a class="sourceLine" id="cb9-2" title="2">     <span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>,</a>
+<a class="sourceLine" id="cb9-3" title="3">     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(best_model<span class="op">$</span>model_final_projected<span class="op">$</span>fitted) <span class="op">*</span><span class="st"> </span><span class="fl">1.1</span>), </a>
+<a class="sourceLine" id="cb9-4" title="4">     <span class="dt">flty =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb9-5" title="5">     <span class="dt">main =</span> <span class="kw">str_to_upper</span>(<span class="kw">str_replace_all</span>(best_model<span class="op">$</span>title,<span class="st">&#39;ts|_&#39;</span>,<span class="st">&#39; &#39;</span>)))</a>
+<a class="sourceLine" id="cb9-6" title="6"></a>
+<a class="sourceLine" id="cb9-7" title="7"><span class="kw">title</span>(<span class="dt">sub =</span> <span class="kw">paste</span>(<span class="st">&#39;MAPE: &#39;</span>, <span class="kw">round</span>(best_model<span class="op">$</span>accuracy[<span class="st">&quot;Test set&quot;</span>, <span class="st">&quot;MAPE&quot;</span>], <span class="dv">5</span>)),</a>
+<a class="sourceLine" id="cb9-8" title="8">      <span class="dt">col.sub =</span> <span class="st">&#39;blue&#39;</span>,</a>
+<a class="sourceLine" id="cb9-9" title="9">      <span class="dt">xlab =</span> <span class="st">&quot;Tempo&quot;</span>,</a>
+<a class="sourceLine" id="cb9-10" title="10">      <span class="dt">ylab =</span> <span class="st">&quot;Indice&quot;</span>)</a>
+<a class="sourceLine" id="cb9-11" title="11"></a>
+<a class="sourceLine" id="cb9-12" title="12"><span class="kw">lines</span>(best_model<span class="op">$</span>model_projected<span class="op">$</span>fitted, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a>
+<a class="sourceLine" id="cb9-13" title="13"><span class="kw">lines</span>(test_ts, <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>)</a></code></pre></div>
+<p><img src="conclusion_files/figure-html/best_model_aderencia-1.png" width="100%" /></p>
+</div>
+<div id="checando-as-métricas-do-modelo" class="section level3">
+<h3><span class="header-section-number">2.2.5</span> Checando as métricas do modelo</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">best_model<span class="op">$</span>accuracy</a></code></pre></div>
+<pre><code>##                      ME      RMSE       MAE         MPE     MAPE      MASE
+## Training set 0.01167671 0.4868050 0.3682654 0.001297779 2.997105 0.1479532
+## Test set     0.22663207 0.7975745 0.6593151 1.067556556 8.958037 0.2648845
+##                   ACF1 Theil&#39;s U
+## Training set 0.4978577        NA
+## Test set     0.7576739  1.749004</code></pre>
+</div>
+<div id="checando-a-projeção-final-do-modelo" class="section level3">
+<h3><span class="header-section-number">2.2.6</span> Checando a projeção final do modelo</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">plot</span>(best_model<span class="op">$</span>model_final_projected, </a>
+<a class="sourceLine" id="cb12-2" title="2">     <span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>,</a>
+<a class="sourceLine" id="cb12-3" title="3">     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(best_model<span class="op">$</span>model_final_projected<span class="op">$</span>fitted) <span class="op">*</span><span class="st"> </span><span class="fl">1.1</span>), </a>
+<a class="sourceLine" id="cb12-4" title="4">     <span class="dt">flty =</span> <span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb12-5" title="5">     <span class="dt">main =</span> <span class="kw">str_to_title</span>(<span class="kw">str_replace_all</span>(best_model<span class="op">$</span>title,<span class="st">&#39;ts|_&#39;</span>,<span class="st">&#39; &#39;</span>)))</a>
+<a class="sourceLine" id="cb12-6" title="6"></a>
+<a class="sourceLine" id="cb12-7" title="7"><span class="kw">title</span>(<span class="dt">sub =</span> <span class="st">&#39;Projeção do modelo com os parâmetros recalculados usando a base completa&#39;</span>, <span class="dt">col.sub =</span> <span class="st">&#39;blue&#39;</span>,</a>
+<a class="sourceLine" id="cb12-8" title="8">      <span class="dt">xlab =</span> <span class="st">&quot;Tempo&quot;</span>,</a>
+<a class="sourceLine" id="cb12-9" title="9">      <span class="dt">ylab =</span> <span class="st">&quot;Indice&quot;</span>)</a>
+<a class="sourceLine" id="cb12-10" title="10"></a>
+<a class="sourceLine" id="cb12-11" title="11"><span class="kw">lines</span>(best_model<span class="op">$</span>model_final_projected<span class="op">$</span>fitted, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</a></code></pre></div>
+<p><img src="conclusion_files/figure-html/best_model_final_projection-1.png" width="100%" /></p>
+<hr />
+</div>
+</div>
+</div>
+<div id="considerações-finais" class="section level1">
+<h1><span class="header-section-number">3</span> Considerações finais</h1>
+<p>To-do.</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
