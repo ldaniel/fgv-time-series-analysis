@@ -377,6 +377,7 @@ SaveFitPlot <- function(model, max_ylim) {
        bty = "l",
        ylim = c(0, max_ylim), 
        flty = 2,
+       xlab = '',
        main = str_to_upper(str_replace_all(model$title,'ts|_',' ')),
        cex.main = 2)
   
