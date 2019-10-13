@@ -16,6 +16,7 @@
 
 # RStudio files
 .Rproj.user/
+
 # produced vignettes
 vignettes/*.html
 vignettes/*.pdf
@@ -33,8 +34,6 @@ vignettes/*.pdf
 
 # Shiny token, see https://shiny.rstudio.com/articles/shinyapps.html
 rsconnect/
-
-Terouro Direto Explorer.Rproj
 
 #data folder
 data/raw
