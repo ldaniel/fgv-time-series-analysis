@@ -122,7 +122,10 @@ RunLinearTimeSeriesModel <- function (train_ts,
 
 # this function generates and saves all linear time series models to the
 # model's directory for later consuming
-GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size, number_of_periods_for_forecasting = 6) {
+GenerateLinearTimeSeriesModels <- function (train_ts, 
+                                            test_ts, 
+                                            test_sample_size, number_of_periods_for_forecasting = 6) {
+  
   max_ylim <-  max(train_ts, test_ts)
   
   # Tendência Linear
@@ -131,7 +134,8 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size,
                                           formula_train = "train_ts ~ trend",
                                           formula_final = "target_ts ~ trend", 
                                           test_sample_size,
-                                          number_of_periods_for_forecasting = number_of_periods_for_forecasting,
+                                          number_of_periods_for_forecasting = 
+                                            number_of_periods_for_forecasting,
                                           title = "ts_linear_model_trend")
   saveRDS(model_trend, paste0('../models/', model_trend$title,'.rds'))
   SaveFitPlot(model_trend, max_ylim)
@@ -142,7 +146,8 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size,
                                                  formula_train = "train_ts ~ trend + I(trend^2)", 
                                                  formula_final = "target_ts ~ trend + I(trend^2)", 
                                                  test_sample_size,
-                                                 number_of_periods_for_forecasting = number_of_periods_for_forecasting,
+                                                 number_of_periods_for_forecasting = 
+                                                   number_of_periods_for_forecasting,
                                                  title = "ts_linear_model_trend_square")
   saveRDS(model_trend_square, paste0('../models/', model_trend_square$title,'.rds'))
   SaveFitPlot(model_trend_square, max_ylim)
@@ -153,7 +158,8 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size,
                                            formula_train = "train_ts ~ season", 
                                            formula_final = "target_ts ~ season", 
                                            test_sample_size,
-                                           number_of_periods_for_forecasting = number_of_periods_for_forecasting,
+                                           number_of_periods_for_forecasting = 
+                                             number_of_periods_for_forecasting,
                                            title = "ts_linear_model_season")
   saveRDS(model_season, paste0('../models/', model_season$title,'.rds'))
   SaveFitPlot(model_season, max_ylim)
@@ -164,7 +170,8 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size,
                                                  formula_train = "train_ts ~ trend + season", 
                                                  formula_final = "target_ts ~ trend + season", 
                                                  test_sample_size,
-                                                 number_of_periods_for_forecasting = number_of_periods_for_forecasting,
+                                                 number_of_periods_for_forecasting = 
+                                                   number_of_periods_for_forecasting,
                                                  title = "ts_linear_model_trend_season")
   saveRDS(model_trend_season, paste0('../models/', model_trend_season$title,'.rds'))
   SaveFitPlot(model_trend_season, max_ylim)
@@ -175,7 +182,8 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size,
                                                         formula_train = "train_ts ~ season + trend + I(trend^2)", 
                                                         formula_final = "target_ts ~ season + trend + I(trend^2)", 
                                                         test_sample_size,
-                                                        number_of_periods_for_forecasting = number_of_periods_for_forecasting,
+                                                        number_of_periods_for_forecasting = 
+                                                          number_of_periods_for_forecasting,
                                                         title = "ts_linear_model_trend_square_season")
   saveRDS(model_trend_square_season, paste0('../models/', model_trend_square_season$title,'.rds'))
   SaveFitPlot(model_trend_square_season, max_ylim)
@@ -311,7 +319,11 @@ RunExponentialsmoothingStateTimeSeriesModel <- function (target_ts,
 
 # this function generates and saves all linear time series models to the
 # model's directory for later consuming
-GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts, train_ts, test_ts, test_sample_size, number_of_periods_for_forecasting = 6) {
+GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts, 
+                                                              train_ts, 
+                                                              test_ts, 
+                                                              test_sample_size, 
+                                                              number_of_periods_for_forecasting = 6) {
 
   methods_list <- c("ANN", "AAN", "ANA", "AAA", "MNN", 
                     "MAN", "MMN", "MNM", "MAM", "MMM", 
@@ -327,7 +339,8 @@ GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts, train_t
                                                          test_ts, 
                                                          method = method_item,
                                                          test_sample_size,
-                                                         number_of_periods_for_forecasting = number_of_periods_for_forecasting)
+                                                         number_of_periods_for_forecasting = 
+                                                           number_of_periods_for_forecasting)
     model_file_name <- paste0('../models/', model$title,'.rds')
     
     saveRDS(model, model_file_name)
@@ -342,7 +355,9 @@ GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts, train_t
   return(consolidation)
 }
 
-# plot model fit ----
+# plot model fit functions ----------------------------------------------------
+
+# this function will plot the fit a given model
 SaveFitPlot <- function(model, max_ylim) {
 
   png(paste('../images/', model$title, '.png'),
@@ -360,16 +375,14 @@ SaveFitPlot <- function(model, max_ylim) {
         xlab = "Tempo",
         ylab = "Indice")
   
-  title( 
-    col.sub = 'blue',
-    xlab = "Tempo",
-    ylab = "Indice")
+  title(col.sub = 'blue', xlab = "Tempo", ylab = "Indice")
   
   lines(model$model_projected$fitted, lwd=2, col = "blue")
   lines(test_ts, col = 'red')
 
 }
 
+# this function will create a gif animation based on a set of images
 GenerateFitPlotGIF <- function() {
   png_files <- list.files('../images/', full.names = TRUE)
   gif_file <- tempfile(fileext = ".gif")
