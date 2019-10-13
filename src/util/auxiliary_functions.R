@@ -325,9 +325,15 @@ GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts,
                                                               test_sample_size, 
                                                               number_of_periods_for_forecasting = 6) {
 
-  methods_list <- c("ANN", "AAN", "ANA", "AAA", "MNN", 
-                    "MAN", "MMN", "MNM", "MAM", "MMM", 
-                    "MNA", "MAA", "ZZZ")
+  
+  model_list <- expand.grid(c('A', 'M', 'N'),
+                            c('A', 'M', 'N'),
+                            c('A', 'M', 'N'))
+  
+  model_list <- dplyr::mutate(model_list,
+                              model = paste(Var1, Var2, Var3, sep = ''))$model
+  
+  model_list <- append(model_list, 'ZZZ')
 
   consolidation <- tibble(Model = character(), MAPE_Train = numeric(), MAPE_Test = numeric())
   
@@ -361,7 +367,7 @@ GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts,
 SaveFitPlot <- function(model, max_ylim) {
 
   png(paste0('../images/',model$title,'.png'),
-      width = 640, 
+      width = 896, 
       height = 640)
   
   plot(model$model_projected, 
