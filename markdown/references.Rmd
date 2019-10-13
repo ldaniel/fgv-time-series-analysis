@@ -1,10 +1,12 @@
 ---
 title: "Referências"
-date: "Outrubro de 2019"
+date: "Outubro de 2019"
 ---
 
 # Referências utilizadas neste trabalho
 
-- [**Princípios básicos para criar previsões de Séries Temporais**](https://medium.com/ensina-ai/princ%C3%ADpios-b%C3%A1sicos-para-criar-previs%C3%B5es-de-s%C3%A9ries-temporais-e58c451a25b) --Leandro Rabelo
+- [**Fonte de dados**](http://sisweb.tesouro.gov.br/apex/f?p=2031:2) --Tesouro Nacional
 - [**Conheça o Tesouro Direto**](https://www.tesourodireto.com.br/conheca/conheca-o-tesouro-direto.htm) --Tesouro Nacional
+- [**Princípios básicos para criar previsões de Séries Temporais**](https://medium.com/ensina-ai/princ%C3%ADpios-b%C3%A1sicos-para-criar-previs%C3%B5es-de-s%C3%A9ries-temporais-e58c451a25b) --Leandro Rabelo
 - [**Gifski on CRAN: the fastest GIF encoder in the universe**](https://ropensci.org/technotes/2018/07/23/gifski-release/) --Jeroen Ooms
+- [**Bradesco corta previsão da Selic a 4,5% no final de 2019 **](https://www1.folha.uol.com.br/mercado/2019/10/bradesco-corta-previsao-da-selic-a-45-no-final-de-2019.shtml) --Folha de São Paulo

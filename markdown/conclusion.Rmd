@@ -135,7 +135,23 @@ Conforme observado na checagem das métricas, tivemos um erro entre a base de tr
 best_model$accuracy
 ```
 
-### Checando a projeção final do modelo
+*******************************************************************************
+
+# Considerações finais
+
+Apesar de não estarmos projetando a SELIC, nosso caso de estudo é baseado em um título pré-fixado de curto prazo (com vencimento em 2021) que naturalmente é extremamente correlacionado com a meta SELIC.
+
+Desta forma, nossa projeção para os próximos 6 meses encontra-se na tabela abaixo.
+
+```{r model_final_projected, echo=TRUE, out.width='100%'}
+kable(best_model$model_final_projected)
+```
+
+Em nossa projeção, o valor para dezembro de 2019 ficou em **4.55%** a.a., alinhado com as expectativas do mercado.
+
+![Matéria pubicada na Folha de São Paulo, em 11/10/2019, sobre a projeção da SELIC para o final de 2019.](https://raw.githubusercontent.com/ldaniel/Time-Series-Analysis/master/images/noticia_projecao_selic_folha.jpeg)
+
+Abaixo, visualização da projeção do modelo.
 
 ```{r best_model_final_projection, echo=TRUE, out.width='100%'}
 
@@ -152,9 +168,3 @@ title(sub = 'Projeção do modelo com os parâmetros recalculados usando a base 
 lines(best_model$model_final_projected$fitted, lwd=2, col="blue")
 ```
 
-
-*******************************************************************************
-
-# Considerações finais
-
-To-do.

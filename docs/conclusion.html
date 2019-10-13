@@ -415,18 +415,16 @@ $(document).ready(function () {
 <div id="TOC">
 <ul>
 <li><a href="#objetivos"><span class="toc-section-number">1</span> Objetivos</a></li>
-<li><a href="#avaliando-os-modelos-utilizados-e-seus-resultados"><span class="toc-section-number">2</span> Avaliando os modelos utilizados e seus resultados</a><ul>
-<li><a href="#checando-a-aderencia-do-melhor-modelo-na-base-de-validação"><span class="toc-section-number">2.1</span> Checando a aderencia do melhor modelo na base de validação</a></li>
-<li><a href="#resultados-gerais-do-modelo-com-a-melhor-métrica-mape"><span class="toc-section-number">2.2</span> Resultados gerais do modelo com a melhor métrica MAPE</a><ul>
-<li><a href="#checando-autocorrelação-do-modelo"><span class="toc-section-number">2.2.1</span> Checando autocorrelação do modelo</a></li>
-<li><a href="#checando-resíduos-do-modelo"><span class="toc-section-number">2.2.2</span> Checando resíduos do modelo</a></li>
-<li><a href="#checando-a-projeção-do-modelo"><span class="toc-section-number">2.2.3</span> Checando a projeção do modelo</a></li>
-<li><a href="#checando-a-aderência-do-melhor-modelo-na-base-de-validação"><span class="toc-section-number">2.2.4</span> Checando a aderência do melhor modelo na base de validação</a></li>
-<li><a href="#checando-as-métricas-do-modelo"><span class="toc-section-number">2.2.5</span> Checando as métricas do modelo</a></li>
-<li><a href="#checando-a-projeção-final-do-modelo"><span class="toc-section-number">2.2.6</span> Checando a projeção final do modelo</a></li>
+<li><a href="#definindo-o-problema-de-projeção"><span class="toc-section-number">2</span> Definindo o problema de projeção</a></li>
+<li><a href="#conclusão-sobre-o-melhor-modelo"><span class="toc-section-number">3</span> Conclusão sobre o melhor modelo</a><ul>
+<li><a href="#checando-a-aderencia-do-melhor-modelo-na-base-de-validação"><span class="toc-section-number">3.1</span> Checando a aderencia do melhor modelo na base de validação</a></li>
+<li><a href="#resultados-gerais-do-modelo-com-a-melhor-métrica-mape"><span class="toc-section-number">3.2</span> Resultados gerais do modelo com a melhor métrica MAPE</a><ul>
+<li><a href="#checando-autocorrelação-do-modelo"><span class="toc-section-number">3.2.1</span> Checando autocorrelação do modelo</a></li>
+<li><a href="#checando-resíduos-e-aderência-do-modelo"><span class="toc-section-number">3.2.2</span> Checando resíduos e aderência do modelo</a></li>
+<li><a href="#checando-as-métricas-do-modelo"><span class="toc-section-number">3.2.3</span> Checando as métricas do modelo</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#considerações-finais"><span class="toc-section-number">3</span> Considerações finais</a></li>
+<li><a href="#considerações-finais"><span class="toc-section-number">4</span> Considerações finais</a></li>
 </ul>
 </div>
 
@@ -440,17 +438,33 @@ $(document).ready(function () {
 </ul>
 <hr />
 </div>
-<div id="avaliando-os-modelos-utilizados-e-seus-resultados" class="section level1">
-<h1><span class="header-section-number">2</span> Avaliando os modelos utilizados e seus resultados</h1>
-<p>O modelo <strong>MAM</strong> demonstrou a melhor métrica de <strong>MAPE</strong>, com o valor de <strong>8.958037</strong>.</p>
+<div id="definindo-o-problema-de-projeção" class="section level1">
+<h1><span class="header-section-number">2</span> Definindo o problema de projeção</h1>
+<p>As séries não apresentam nenhum tipo de sazonalidade aparente.</p>
+<p>A base de teste inicia-se exatamente no período conturbado do impeachment de 2016, quando foi observado uma alta repentina nas taxas de juros negociada. Este período não foi capturado pelos modelos no momento de treino dos mesmos. Estas características aumentam consideravelmente a complexidade do exercício.</p>
+<p>Considerando que as taxas de juros são influenciadas pela SELIC e expectativa de inflação, não é possível fazer uma projeção de longo caso olhando apenas para a série temporal.</p>
+<hr />
+</div>
+<div id="conclusão-sobre-o-melhor-modelo" class="section level1">
+<h1><span class="header-section-number">3</span> Conclusão sobre o melhor modelo</h1>
+<p>O modelo de suavização exponencial <strong>MAM</strong> (ou seja, <em>Erro Multiplicativo, Tendência Aditiva e Sazonalidade Multiplicativa</em>), demonstrou a melhor métrica de <strong>MAPE</strong>, com o valor de <strong>8.958037</strong> na base de teste (<em>out-of-sample</em>). Apesar de aparentemente a série não possuir sazonalidade, o melhor modelo matemático encontrado apresentou <strong>sazonalidade multiplicativa</strong>.</p>
 <p>Para analisarmos com mais detalhes o modelo com melhor performance, vamos carregar o objeto salvo anteriormente com todos os resultados do modelo.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">best_model &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="kw">paste0</span>(<span class="st">&#39;../models/ts_exponential_smoothing_model_MAM.rds&#39;</span>))</a></code></pre></div>
 <div id="checando-a-aderencia-do-melhor-modelo-na-base-de-validação" class="section level2">
-<h2><span class="header-section-number">2.1</span> Checando a aderencia do melhor modelo na base de validação</h2>
+<h2><span class="header-section-number">3.1</span> Checando a aderencia do melhor modelo na base de validação</h2>
+<p>Abaixo, temos uma comparação visual da aderência (<em>fit</em>) entre o modelo com a melhor performance (esquerda) e todos os demais modelos testados (direita).</p>
 <p><img width="50%" src="https://raw.githubusercontent.com/ldaniel/Time-Series-Analysis/master/images/ts_exponential_smoothing_model_MAM.png"/><img width="50%" src="https://raw.githubusercontent.com/ldaniel/Time-Series-Analysis/master/gifs/model_fit.gif"/></p>
 </div>
 <div id="resultados-gerais-do-modelo-com-a-melhor-métrica-mape" class="section level2">
-<h2><span class="header-section-number">2.2</span> Resultados gerais do modelo com a melhor métrica MAPE</h2>
+<h2><span class="header-section-number">3.2</span> Resultados gerais do modelo com a melhor métrica MAPE</h2>
+<p>O <strong>MAM</strong> é o modelo que considera tanto a tendência e sazonalidade mudando ao longo do tempo por quantidades constante e percentual respectivamente e erro multiplicativo.</p>
+<p>A seguir, temos as fórmulas para geração do modelo <strong>MAM</strong>:</p>
+<p><span class="math display">\[F_{T+k} = (L_t + \phi kT_t)S_{t+k-m}\]</span></p>
+<p>Nível (level):</p>
+<p><span class="math display">\[L_t = \alpha y_t / S_{t-m} + (1-\alpha)(L_{t-1} + \phi T_{t-1})\]</span></p>
+<p>Tendência (trend):</p>
+<p><span class="math display">\[T_t = \beta(L_t - L_{t-1}) + (1-\beta)\phi T_{t-1}\]</span></p>
+<p>Sazonalidade (season): <span class="math display">\[S_t = \gamma(y_t / \Phi L_t) + (1-\gamma)S_{t-m}\]</span></p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">summary</span>(best_model<span class="op">$</span>model)</a></code></pre></div>
 <pre><code>## ETS(M,A,M) 
 ## 
@@ -478,13 +492,23 @@ $(document).ready(function () {
 ## Training set 0.01167671 0.486805 0.3682654 0.001297779 2.997105 0.1479532
 ##                   ACF1
 ## Training set 0.4978577</code></pre>
+<p>Com base no output acima, temos:</p>
+<ul>
+<li><strong>Nível:</strong> alpha = 0.9442</li>
+<li><strong>Tendência:</strong> beta = 4e-04</li>
+<li><strong>Sazonalidade:</strong> gamma = 0.0039</li>
+</ul>
+<p>O <strong>alpha</strong>, <strong>beta</strong> e o <strong>gamma</strong> são os fatores de suavização (<em>smoothing factor</em>) respectivamente para o nivel, tendência e sazonalidade.</p>
 <div id="checando-autocorrelação-do-modelo" class="section level3">
-<h3><span class="header-section-number">2.2.1</span> Checando autocorrelação do modelo</h3>
+<h3><span class="header-section-number">3.2.1</span> Checando autocorrelação do modelo</h3>
+<p>Observando o plot de autocorrelação gerado, percebemos que os resíduos do modelo não são autocorrelacionados.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">Acf</span>(best_model<span class="op">$</span>model<span class="op">$</span>residuals)</a></code></pre></div>
 <p><img src="conclusion_files/figure-html/best_model_Acf-1.png" width="100%" /></p>
 </div>
-<div id="checando-resíduos-do-modelo" class="section level3">
-<h3><span class="header-section-number">2.2.2</span> Checando resíduos do modelo</h3>
+<div id="checando-resíduos-e-aderência-do-modelo" class="section level3">
+<h3><span class="header-section-number">3.2.2</span> Checando resíduos e aderência do modelo</h3>
+<p>Observando o resultado do plot e análise de resíduos temos <strong>p-value = 2.005e-05</strong>, ou seja, podemos rejeitar a hipótese nula assumindo 5% de chance de cometer um erro de projeção. Portanto, os valores ainda apresentam dependência uns com os outros.</p>
+<p>Desta maneira, não existe representatividade estatística relevante para o túnel de confiança deste modelo, uma vez que a distribuição dos resíduos não se comporta conforme a curva gaussiana.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">checkresiduals</span>(best_model<span class="op">$</span>model, <span class="dt">test =</span> <span class="st">&quot;LB&quot;</span>)</a></code></pre></div>
 <p><img src="conclusion_files/figure-html/best_model_residuals-1.png" width="100%" /></p>
 <pre><code>## 
@@ -494,109 +518,106 @@ $(document).ready(function () {
 ## Q* = 24.457, df = 3, p-value = 2.005e-05
 ## 
 ## Model df: 16.   Total lags used: 19</code></pre>
-</div>
-<div id="checando-a-projeção-do-modelo" class="section level3">
-<h3><span class="header-section-number">2.2.3</span> Checando a projeção do modelo</h3>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">summary</span>(best_model<span class="op">$</span>model_projected)</a></code></pre></div>
-<pre><code>## 
-## Forecast method: ETS(M,A,M)
-## 
-## Model Information:
-## ETS(M,A,M) 
-## 
-## Call:
-##  ets(y = train_ts, model = method) 
-## 
-##   Smoothing parameters:
-##     alpha = 0.9442 
-##     beta  = 4e-04 
-##     gamma = 0.0039 
-## 
-##   Initial states:
-##     l = 14.7695 
-##     b = -0.164 
-##     s = 1.0047 1.0211 1.0476 1.0338 1.0169 1.0271
-##            0.981 0.9767 0.9929 0.9819 0.9526 0.9637
-## 
-##   sigma:  0.0496
-## 
-##      AIC     AICc      BIC 
-## 112.4614 141.6042 140.7419 
-## 
-## Error measures:
-##                      ME     RMSE       MAE         MPE     MAPE      MASE
-## Training set 0.01167671 0.486805 0.3682654 0.001297779 2.997105 0.1479532
-##                   ACF1
-## Training set 0.4978577
-## 
-## Forecasts:
-##          Point Forecast    Lo 95    Hi 95
-## Jun 2018       8.442854 7.622432 9.263276
-## Jul 2018       8.144859 7.045331 9.244388
-## Aug 2018       8.021042 6.693408 9.348675
-## Sep 2018       8.228316 6.645732 9.810900
-## Oct 2018       7.981957 6.250634 9.713279
-## Nov 2018       7.946001 6.038928 9.853074
-## Dec 2018       7.878624 5.813585 9.943662
-## Jan 2019       7.511565 5.381797 9.641333
-## Feb 2019       7.225532 5.025261 9.425804
-## Mar 2019       6.771317 4.569070 8.973564
-## Apr 2019       6.538113 4.277011 8.799214
-## May 2019       6.578786 4.168021 8.989552
-## Jun 2019       6.490090 3.976486 9.003694
-## Jul 2019       6.223993 3.683051 8.764935
-## Aug 2019       6.091451 3.475036 8.707865
-## Sep 2019       6.208364 3.407065 9.009663
-## Oct 2019       5.981558 3.149769 8.813346</code></pre>
-</div>
-<div id="checando-a-aderência-do-melhor-modelo-na-base-de-validação" class="section level3">
-<h3><span class="header-section-number">2.2.4</span> Checando a aderência do melhor modelo na base de validação</h3>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">plot</span>(best_model<span class="op">$</span>model_projected, </a>
-<a class="sourceLine" id="cb9-2" title="2">     <span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>,</a>
-<a class="sourceLine" id="cb9-3" title="3">     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(best_model<span class="op">$</span>model_final_projected<span class="op">$</span>fitted) <span class="op">*</span><span class="st"> </span><span class="fl">1.1</span>), </a>
-<a class="sourceLine" id="cb9-4" title="4">     <span class="dt">flty =</span> <span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb9-5" title="5">     <span class="dt">main =</span> <span class="kw">str_to_upper</span>(<span class="kw">str_replace_all</span>(best_model<span class="op">$</span>title,<span class="st">&#39;ts|_&#39;</span>,<span class="st">&#39; &#39;</span>)))</a>
-<a class="sourceLine" id="cb9-6" title="6"></a>
-<a class="sourceLine" id="cb9-7" title="7"><span class="kw">title</span>(<span class="dt">sub =</span> <span class="kw">paste</span>(<span class="st">&#39;MAPE: &#39;</span>, <span class="kw">round</span>(best_model<span class="op">$</span>accuracy[<span class="st">&quot;Test set&quot;</span>, <span class="st">&quot;MAPE&quot;</span>], <span class="dv">5</span>)),</a>
-<a class="sourceLine" id="cb9-8" title="8">      <span class="dt">col.sub =</span> <span class="st">&#39;blue&#39;</span>,</a>
-<a class="sourceLine" id="cb9-9" title="9">      <span class="dt">xlab =</span> <span class="st">&quot;Tempo&quot;</span>,</a>
-<a class="sourceLine" id="cb9-10" title="10">      <span class="dt">ylab =</span> <span class="st">&quot;Indice&quot;</span>)</a>
-<a class="sourceLine" id="cb9-11" title="11"></a>
-<a class="sourceLine" id="cb9-12" title="12"><span class="kw">lines</span>(best_model<span class="op">$</span>model_projected<span class="op">$</span>fitted, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a>
-<a class="sourceLine" id="cb9-13" title="13"><span class="kw">lines</span>(test_ts, <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">plot</span>(best_model<span class="op">$</span>model_projected, </a>
+<a class="sourceLine" id="cb7-2" title="2">     <span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>,</a>
+<a class="sourceLine" id="cb7-3" title="3">     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(best_model<span class="op">$</span>model_final_projected<span class="op">$</span>fitted) <span class="op">*</span><span class="st"> </span><span class="fl">1.1</span>), </a>
+<a class="sourceLine" id="cb7-4" title="4">     <span class="dt">flty =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb7-5" title="5">     <span class="dt">main =</span> <span class="kw">str_to_upper</span>(<span class="kw">str_replace_all</span>(best_model<span class="op">$</span>title,<span class="st">&#39;ts|_&#39;</span>,<span class="st">&#39; &#39;</span>)))</a>
+<a class="sourceLine" id="cb7-6" title="6"></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="kw">title</span>(<span class="dt">sub =</span> <span class="kw">paste</span>(<span class="st">&#39;MAPE: &#39;</span>, <span class="kw">round</span>(best_model<span class="op">$</span>accuracy[<span class="st">&quot;Test set&quot;</span>, <span class="st">&quot;MAPE&quot;</span>], <span class="dv">5</span>)),</a>
+<a class="sourceLine" id="cb7-8" title="8">      <span class="dt">col.sub =</span> <span class="st">&#39;blue&#39;</span>,</a>
+<a class="sourceLine" id="cb7-9" title="9">      <span class="dt">xlab =</span> <span class="st">&quot;Tempo&quot;</span>,</a>
+<a class="sourceLine" id="cb7-10" title="10">      <span class="dt">ylab =</span> <span class="st">&quot;Indice&quot;</span>)</a>
+<a class="sourceLine" id="cb7-11" title="11"></a>
+<a class="sourceLine" id="cb7-12" title="12"><span class="kw">lines</span>(best_model<span class="op">$</span>model_projected<span class="op">$</span>fitted, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a>
+<a class="sourceLine" id="cb7-13" title="13"><span class="kw">lines</span>(test_ts, <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>)</a></code></pre></div>
 <p><img src="conclusion_files/figure-html/best_model_aderencia-1.png" width="100%" /></p>
 </div>
 <div id="checando-as-métricas-do-modelo" class="section level3">
-<h3><span class="header-section-number">2.2.5</span> Checando as métricas do modelo</h3>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">best_model<span class="op">$</span>accuracy</a></code></pre></div>
+<h3><span class="header-section-number">3.2.3</span> Checando as métricas do modelo</h3>
+<p>Conforme observado na checagem das métricas, tivemos um erro entre a base de treino e teste de aproximadamente <strong>5.961</strong> pontos base.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">best_model<span class="op">$</span>accuracy</a></code></pre></div>
 <pre><code>##                      ME      RMSE       MAE         MPE     MAPE      MASE
 ## Training set 0.01167671 0.4868050 0.3682654 0.001297779 2.997105 0.1479532
 ## Test set     0.22663207 0.7975745 0.6593151 1.067556556 8.958037 0.2648845
 ##                   ACF1 Theil&#39;s U
 ## Training set 0.4978577        NA
 ## Test set     0.7576739  1.749004</code></pre>
-</div>
-<div id="checando-a-projeção-final-do-modelo" class="section level3">
-<h3><span class="header-section-number">2.2.6</span> Checando a projeção final do modelo</h3>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">plot</span>(best_model<span class="op">$</span>model_final_projected, </a>
-<a class="sourceLine" id="cb12-2" title="2">     <span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>,</a>
-<a class="sourceLine" id="cb12-3" title="3">     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(best_model<span class="op">$</span>model_final_projected<span class="op">$</span>fitted) <span class="op">*</span><span class="st"> </span><span class="fl">1.1</span>), </a>
-<a class="sourceLine" id="cb12-4" title="4">     <span class="dt">flty =</span> <span class="dv">2</span>, </a>
-<a class="sourceLine" id="cb12-5" title="5">     <span class="dt">main =</span> <span class="kw">str_to_title</span>(<span class="kw">str_replace_all</span>(best_model<span class="op">$</span>title,<span class="st">&#39;ts|_&#39;</span>,<span class="st">&#39; &#39;</span>)))</a>
-<a class="sourceLine" id="cb12-6" title="6"></a>
-<a class="sourceLine" id="cb12-7" title="7"><span class="kw">title</span>(<span class="dt">sub =</span> <span class="st">&#39;Projeção do modelo com os parâmetros recalculados usando a base completa&#39;</span>, <span class="dt">col.sub =</span> <span class="st">&#39;blue&#39;</span>,</a>
-<a class="sourceLine" id="cb12-8" title="8">      <span class="dt">xlab =</span> <span class="st">&quot;Tempo&quot;</span>,</a>
-<a class="sourceLine" id="cb12-9" title="9">      <span class="dt">ylab =</span> <span class="st">&quot;Indice&quot;</span>)</a>
-<a class="sourceLine" id="cb12-10" title="10"></a>
-<a class="sourceLine" id="cb12-11" title="11"><span class="kw">lines</span>(best_model<span class="op">$</span>model_final_projected<span class="op">$</span>fitted, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</a></code></pre></div>
-<p><img src="conclusion_files/figure-html/best_model_final_projection-1.png" width="100%" /></p>
 <hr />
 </div>
 </div>
 </div>
 <div id="considerações-finais" class="section level1">
-<h1><span class="header-section-number">3</span> Considerações finais</h1>
-<p>To-do.</p>
+<h1><span class="header-section-number">4</span> Considerações finais</h1>
+<p>Apesar de não estarmos projetando a SELIC, nosso caso de estudo é baseado em um título pré-fixado de curto prazo (com vencimento em 2021) que naturalmente é extremamente correlacionado com a meta SELIC.</p>
+<p>Desta forma, nossa projeção para os próximos 6 meses encontra-se na tabela abaixo.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">kable</span>(best_model<span class="op">$</span>model_final_projected)</a></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">Point Forecast</th>
+<th align="right">Lo 95</th>
+<th align="right">Hi 95</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Nov 2019</td>
+<td align="right">4.789489</td>
+<td align="right">4.289487</td>
+<td align="right">5.289491</td>
+</tr>
+<tr class="even">
+<td>Dec 2019</td>
+<td align="right">4.553862</td>
+<td align="right">3.820743</td>
+<td align="right">5.286981</td>
+</tr>
+<tr class="odd">
+<td>Jan 2020</td>
+<td align="right">4.222614</td>
+<td align="right">3.315486</td>
+<td align="right">5.129741</td>
+</tr>
+<tr class="even">
+<td>Feb 2020</td>
+<td align="right">3.921198</td>
+<td align="right">2.862471</td>
+<td align="right">4.979925</td>
+</tr>
+<tr class="odd">
+<td>Mar 2020</td>
+<td align="right">3.607804</td>
+<td align="right">2.423497</td>
+<td align="right">4.792111</td>
+</tr>
+<tr class="even">
+<td>Apr 2020</td>
+<td align="right">3.408454</td>
+<td align="right">2.076698</td>
+<td align="right">4.740211</td>
+</tr>
+</tbody>
+</table>
+<p>Em nossa projeção, o valor para dezembro de 2019 ficou em <strong>4.55%</strong> a.a., alinhado com as expectativas do mercado.</p>
+<div class="figure">
+<img src="https://raw.githubusercontent.com/ldaniel/Time-Series-Analysis/master/images/noticia_projecao_selic_folha.jpeg" alt="Matéria pubicada na Folha de São Paulo, em 11/10/2019, sobre a projeção da SELIC para o final de 2019." />
+<p class="caption">Matéria pubicada na Folha de São Paulo, em 11/10/2019, sobre a projeção da SELIC para o final de 2019.</p>
+</div>
+<p>Abaixo, visualização da projeção do modelo.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">plot</span>(best_model<span class="op">$</span>model_final_projected, </a>
+<a class="sourceLine" id="cb11-2" title="2">     <span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>,</a>
+<a class="sourceLine" id="cb11-3" title="3">     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(best_model<span class="op">$</span>model_final_projected<span class="op">$</span>fitted) <span class="op">*</span><span class="st"> </span><span class="fl">1.1</span>), </a>
+<a class="sourceLine" id="cb11-4" title="4">     <span class="dt">flty =</span> <span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb11-5" title="5">     <span class="dt">main =</span> <span class="kw">str_to_title</span>(<span class="kw">str_replace_all</span>(best_model<span class="op">$</span>title,<span class="st">&#39;ts|_&#39;</span>,<span class="st">&#39; &#39;</span>)))</a>
+<a class="sourceLine" id="cb11-6" title="6"></a>
+<a class="sourceLine" id="cb11-7" title="7"><span class="kw">title</span>(<span class="dt">sub =</span> <span class="st">&#39;Projeção do modelo com os parâmetros recalculados usando a base completa&#39;</span>, <span class="dt">col.sub =</span> <span class="st">&#39;blue&#39;</span>,</a>
+<a class="sourceLine" id="cb11-8" title="8">      <span class="dt">xlab =</span> <span class="st">&quot;Tempo&quot;</span>,</a>
+<a class="sourceLine" id="cb11-9" title="9">      <span class="dt">ylab =</span> <span class="st">&quot;Indice&quot;</span>)</a>
+<a class="sourceLine" id="cb11-10" title="10"></a>
+<a class="sourceLine" id="cb11-11" title="11"><span class="kw">lines</span>(best_model<span class="op">$</span>model_final_projected<span class="op">$</span>fitted, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</a></code></pre></div>
+<p><img src="conclusion_files/figure-html/best_model_final_projection-1.png" width="100%" /></p>
 </div>
 
 
