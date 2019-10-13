@@ -21,6 +21,8 @@
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -425,14 +427,14 @@ $(document).ready(function () {
 <li><a href="#rodando-e-salvando-os-modelos-de-suavização-exponencial-de-séries-temporais"><span class="toc-section-number">2.4</span> Rodando e salvando os modelos de suavização exponencial de séries temporais</a></li>
 </ul></li>
 <li><a href="#avaliando-os-modelos-utilizados-e-seus-resultados"><span class="toc-section-number">3</span> Avaliando os modelos utilizados e seus resultados</a><ul>
-<li><a href="#resultados-gerais-do-modelo-com-a-melhor-métrica-mape"><span class="toc-section-number">3.1</span> Resultados gerais do modelo com a melhor métrica MAPE</a><ul>
-<li><a href="#checando-autocorrelação-do-modelo"><span class="toc-section-number">3.1.1</span> Checando autocorrelação do modelo</a></li>
-<li><a href="#checando-resíduos-do-modelo"><span class="toc-section-number">3.1.2</span> Checando resíduos do modelo</a></li>
-<li><a href="#checando-a-projeção-do-modelo"><span class="toc-section-number">3.1.3</span> Checando a projeção do modelo</a></li>
-<li><a href="#checando-a-aderencia-do-melhor-modelo-na-base-de-validação"><span class="toc-section-number">3.1.4</span> Checando a aderencia do melhor modelo na base de validação</a></li>
-<li><a href="#checando-a-aderencia-do-melhor-modelo-na-base-de-validação-1"><span class="toc-section-number">3.1.5</span> Checando a aderencia do melhor modelo na base de validação</a></li>
-<li><a href="#checando-as-métricas-do-modelo"><span class="toc-section-number">3.1.6</span> Checando as métricas do modelo</a></li>
-<li><a href="#checando-a-projeção-final-do-modelo"><span class="toc-section-number">3.1.7</span> Checando a projeção final do modelo</a></li>
+<li><a href="#checando-a-aderencia-do-melhor-modelo-na-base-de-validação"><span class="toc-section-number">3.1</span> Checando a aderencia do melhor modelo na base de validação</a></li>
+<li><a href="#resultados-gerais-do-modelo-com-a-melhor-métrica-mape"><span class="toc-section-number">3.2</span> Resultados gerais do modelo com a melhor métrica MAPE</a><ul>
+<li><a href="#checando-autocorrelação-do-modelo"><span class="toc-section-number">3.2.1</span> Checando autocorrelação do modelo</a></li>
+<li><a href="#checando-resíduos-do-modelo"><span class="toc-section-number">3.2.2</span> Checando resíduos do modelo</a></li>
+<li><a href="#checando-a-projeção-do-modelo"><span class="toc-section-number">3.2.3</span> Checando a projeção do modelo</a></li>
+<li><a href="#checando-a-aderência-do-melhor-modelo-na-base-de-validação"><span class="toc-section-number">3.2.4</span> Checando a aderência do melhor modelo na base de validação</a></li>
+<li><a href="#checando-as-métricas-do-modelo"><span class="toc-section-number">3.2.5</span> Checando as métricas do modelo</a></li>
+<li><a href="#checando-a-projeção-final-do-modelo"><span class="toc-section-number">3.2.6</span> Checando a projeção final do modelo</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -859,12 +861,27 @@ $(document).ready(function () {
 </tr>
 </tbody>
 </table>
-<p>O modelo <strong>ts_exponential_smoothing_model_MAM</strong> demonstrou a melhor métrica de <strong>MAPE</strong>, com o valor de <strong>8.9580367</strong>.</p>
+O modelo **
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Model"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"ts_exponential_smoothing_model_MAM"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>** demonstrou a melhor métrica de <strong>MAPE</strong>, com o valor de <strong>8.9580367</strong>.</p>
 <p>Para analisarmos com mais detalhes o modelo com melhor performance, vamos carregar o objeto salvo anteriormente com todos os resultados do modelo.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">best_model &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="kw">paste0</span>(<span class="st">&#39;../models/&#39;</span>, mape_ranking[<span class="dv">1</span>,<span class="dv">2</span>], <span class="st">&#39;.rds&#39;</span>))</a></code></pre></div>
+<div id="checando-a-aderencia-do-melhor-modelo-na-base-de-validação" class="section level2">
+<h2><span class="header-section-number">3.1</span> Checando a aderencia do melhor modelo na base de validação</h2>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="co"># call function go create a GIF based on the plotted models</span></a>
+<a class="sourceLine" id="cb17-2" title="2"><span class="kw">GenerateFitPlotGIF</span>()</a></code></pre></div>
+<div class="figure">
+<img src="https://raw.githubusercontent.com/ldaniel/Time-Series-Analysis/master/gifs/model_fit.gif" alt="Animação do fit de na base de testes de todos os modelos lineares e exponenciais calculados." />
+<p class="caption">Animação do fit de na base de testes de todos os modelos lineares e exponenciais calculados.</p>
+</div>
+</div>
 <div id="resultados-gerais-do-modelo-com-a-melhor-métrica-mape" class="section level2">
-<h2><span class="header-section-number">3.1</span> Resultados gerais do modelo com a melhor métrica MAPE</h2>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">summary</span>(best_model<span class="op">$</span>model)</a></code></pre></div>
+<h2><span class="header-section-number">3.2</span> Resultados gerais do modelo com a melhor métrica MAPE</h2>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">summary</span>(best_model<span class="op">$</span>model)</a></code></pre></div>
 <pre><code>## ETS(M,A,M) 
 ## 
 ## Call:
@@ -892,13 +909,13 @@ $(document).ready(function () {
 ##                   ACF1
 ## Training set 0.4978577</code></pre>
 <div id="checando-autocorrelação-do-modelo" class="section level3">
-<h3><span class="header-section-number">3.1.1</span> Checando autocorrelação do modelo</h3>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">Acf</span>(best_model<span class="op">$</span>model<span class="op">$</span>residuals)</a></code></pre></div>
+<h3><span class="header-section-number">3.2.1</span> Checando autocorrelação do modelo</h3>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">Acf</span>(best_model<span class="op">$</span>model<span class="op">$</span>residuals)</a></code></pre></div>
 <p><img src="04_models_exploration_files/figure-html/best_model_Acf-1.png" width="100%" /></p>
 </div>
 <div id="checando-resíduos-do-modelo" class="section level3">
-<h3><span class="header-section-number">3.1.2</span> Checando resíduos do modelo</h3>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">checkresiduals</span>(best_model<span class="op">$</span>model, <span class="dt">test =</span> <span class="st">&quot;LB&quot;</span>)</a></code></pre></div>
+<h3><span class="header-section-number">3.2.2</span> Checando resíduos do modelo</h3>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="kw">checkresiduals</span>(best_model<span class="op">$</span>model, <span class="dt">test =</span> <span class="st">&quot;LB&quot;</span>)</a></code></pre></div>
 <p><img src="04_models_exploration_files/figure-html/best_model_residuals-1.png" width="100%" /></p>
 <pre><code>## 
 ##  Ljung-Box test
@@ -909,8 +926,8 @@ $(document).ready(function () {
 ## Model df: 16.   Total lags used: 19</code></pre>
 </div>
 <div id="checando-a-projeção-do-modelo" class="section level3">
-<h3><span class="header-section-number">3.1.3</span> Checando a projeção do modelo</h3>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw">summary</span>(best_model<span class="op">$</span>model_projected)</a></code></pre></div>
+<h3><span class="header-section-number">3.2.3</span> Checando a projeção do modelo</h3>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="kw">summary</span>(best_model<span class="op">$</span>model_projected)</a></code></pre></div>
 <pre><code>## 
 ## Forecast method: ETS(M,A,M)
 ## 
@@ -962,17 +979,8 @@ $(document).ready(function () {
 ## Sep 2019       6.208364 3.407065 9.009663
 ## Oct 2019       5.981558 3.149769 8.813346</code></pre>
 </div>
-<div id="checando-a-aderencia-do-melhor-modelo-na-base-de-validação" class="section level3">
-<h3><span class="header-section-number">3.1.4</span> Checando a aderencia do melhor modelo na base de validação</h3>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="co"># call function go create a GIF based on the plotted models</span></a>
-<a class="sourceLine" id="cb24-2" title="2"><span class="kw">GenerateFitPlotGIF</span>()</a></code></pre></div>
-<div class="figure">
-<img src="https://raw.githubusercontent.com/ldaniel/Time-Series-Analysis/master/gifs/model_fit.gif" alt="Animação do fit de na base de testes de todos os modelos lineares e exponenciais calculados." />
-<p class="caption">Animação do fit de na base de testes de todos os modelos lineares e exponenciais calculados.</p>
-</div>
-</div>
-<div id="checando-a-aderencia-do-melhor-modelo-na-base-de-validação-1" class="section level3">
-<h3><span class="header-section-number">3.1.5</span> Checando a aderencia do melhor modelo na base de validação</h3>
+<div id="checando-a-aderência-do-melhor-modelo-na-base-de-validação" class="section level3">
+<h3><span class="header-section-number">3.2.4</span> Checando a aderência do melhor modelo na base de validação</h3>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="kw">plot</span>(best_model<span class="op">$</span>model_projected, </a>
 <a class="sourceLine" id="cb25-2" title="2">     <span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>,</a>
 <a class="sourceLine" id="cb25-3" title="3">     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(best_model<span class="op">$</span>model_final_projected<span class="op">$</span>fitted) <span class="op">*</span><span class="st"> </span><span class="fl">1.1</span>), </a>
@@ -989,7 +997,7 @@ $(document).ready(function () {
 <p><img src="04_models_exploration_files/figure-html/best_model_aderencia-1.png" width="100%" /></p>
 </div>
 <div id="checando-as-métricas-do-modelo" class="section level3">
-<h3><span class="header-section-number">3.1.6</span> Checando as métricas do modelo</h3>
+<h3><span class="header-section-number">3.2.5</span> Checando as métricas do modelo</h3>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">best_model<span class="op">$</span>accuracy</a></code></pre></div>
 <pre><code>##                      ME      RMSE       MAE         MPE     MAPE      MASE
 ## Training set 0.01167671 0.4868050 0.3682654 0.001297779 2.997105 0.1479532
@@ -999,7 +1007,7 @@ $(document).ready(function () {
 ## Test set     0.7576739  1.749004</code></pre>
 </div>
 <div id="checando-a-projeção-final-do-modelo" class="section level3">
-<h3><span class="header-section-number">3.1.7</span> Checando a projeção final do modelo</h3>
+<h3><span class="header-section-number">3.2.6</span> Checando a projeção final do modelo</h3>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="kw">plot</span>(best_model<span class="op">$</span>model_final_projected, </a>
 <a class="sourceLine" id="cb28-2" title="2">     <span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>,</a>
 <a class="sourceLine" id="cb28-3" title="3">     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(best_model<span class="op">$</span>model_final_projected<span class="op">$</span>fitted) <span class="op">*</span><span class="st"> </span><span class="fl">1.1</span>), </a>
