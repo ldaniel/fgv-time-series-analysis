@@ -197,7 +197,7 @@ mape_ranking <- mape_ranking[c(4,1,2,3)]
 kable(mape_ranking)
 ```
 
-O modelo **`r mape_ranking[1,2]`** demonstrou a melhor métrica de **MAPE**, com o valor de **`r min(mape_ranking[,4])`**.
+O modelo **`r mape_ranking[[1,2]]`** demonstrou a melhor métrica de **MAPE**, com o valor de **`r min(mape_ranking[,4])`**.
 
 Para analisarmos com mais detalhes o modelo com melhor performance, vamos carregar o objeto salvo anteriormente com todos os resultados do modelo.
 

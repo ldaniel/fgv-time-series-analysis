@@ -861,13 +861,7 @@ $(document).ready(function () {
 </tr>
 </tbody>
 </table>
-O modelo **
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Model"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"ts_exponential_smoothing_model_MAM"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-<p>** demonstrou a melhor métrica de <strong>MAPE</strong>, com o valor de <strong>8.9580367</strong>.</p>
+<p>O modelo <strong>ts_exponential_smoothing_model_MAM</strong> demonstrou a melhor métrica de <strong>MAPE</strong>, com o valor de <strong>8.9580367</strong>.</p>
 <p>Para analisarmos com mais detalhes o modelo com melhor performance, vamos carregar o objeto salvo anteriormente com todos os resultados do modelo.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">best_model &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="kw">paste0</span>(<span class="st">&#39;../models/&#39;</span>, mape_ranking[<span class="dv">1</span>,<span class="dv">2</span>], <span class="st">&#39;.rds&#39;</span>))</a></code></pre></div>
 <div id="checando-a-aderencia-do-melhor-modelo-na-base-de-validação" class="section level2">
