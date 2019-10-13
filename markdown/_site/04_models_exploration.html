@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Exploração dos Modelos</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">FGV MBA</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+    Home
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-hand-holding-usd"></span>
+     
+    Cenário Proposto
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="01_about_the_data.html">Sobre os dados</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Análise Inicial</li>
+    <li>
+      <a href="02_data_preparation.html">Preparação dos Dados</a>
+    </li>
+    <li>
+      <a href="03_data_exploration.html">Exploração dos Dados</a>
+    </li>
+    <li>
+      <a href="04_models_exploration.html">Exploração dos Modelos</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-file-invoice-dollar"></span>
+     
+    Relatório Final
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="conclusion.html">Conclusão</a>
+    </li>
+    <li>
+      <a href="references.html">Referências</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Exploração dos Modelos</h1>
+<h4 class="date">Outubro de 2019</h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#criando-os-datasets-de-séries-temporais"><span class="toc-section-number">1</span> Criando os datasets de séries temporais</a><ul>
+<li><a href="#carregando-a-base-de-dados-processada"><span class="toc-section-number">1.1</span> Carregando a base de dados processada</a></li>
+<li><a href="#criando-o-conjunto-de-dados-de-treino-e-teste"><span class="toc-section-number">1.2</span> Criando o conjunto de dados de treino e teste</a></li>
+</ul></li>
+<li><a href="#executado-os-modelos-de-análise-de-séries-temporais"><span class="toc-section-number">2</span> Executado os modelos de análise de séries temporais</a><ul>
+<li><a href="#rodando-e-salvando-o-modelo-naive-de-séries-temporais"><span class="toc-section-number">2.1</span> Rodando e salvando o modelo Naive de séries temporais</a></li>
+<li><a href="#rodando-e-salvando-os-modelos-lineares-de-séries-temporais"><span class="toc-section-number">2.2</span> Rodando e salvando os modelos lineares de séries temporais</a></li>
+<li><a href="#rodando-e-salvando-o-modelo-moving-average-ma-de-séries-temporais"><span class="toc-section-number">2.3</span> Rodando e salvando o modelo Moving Average (MA) de séries temporais</a></li>
+<li><a href="#rodando-e-salvando-os-modelos-de-suavização-exponencial-de-séries-temporais"><span class="toc-section-number">2.4</span> Rodando e salvando os modelos de suavização exponencial de séries temporais</a></li>
+</ul></li>
+<li><a href="#avaliando-os-modelos-utilizados-e-seus-resultados"><span class="toc-section-number">3</span> Avaliando os modelos utilizados e seus resultados</a><ul>
+<li><a href="#resultados-gerais-do-modelo-com-a-melhor-métrica-mape"><span class="toc-section-number">3.1</span> Resultados gerais do modelo com a melhor métrica MAPE</a><ul>
+<li><a href="#checando-autocorrelação-do-modelo"><span class="toc-section-number">3.1.1</span> Checando autocorrelação do modelo</a></li>
+<li><a href="#checando-resíduos-do-modelo"><span class="toc-section-number">3.1.2</span> Checando resíduos do modelo</a></li>
+<li><a href="#checando-a-projeção-do-modelo"><span class="toc-section-number">3.1.3</span> Checando a projeção do modelo</a></li>
+<li><a href="#checando-a-aderencia-do-melhor-modelo-na-base-de-validação"><span class="toc-section-number">3.1.4</span> Checando a aderencia do melhor modelo na base de validação</a></li>
+<li><a href="#checando-a-aderencia-do-melhor-modelo-na-base-de-validação-1"><span class="toc-section-number">3.1.5</span> Checando a aderencia do melhor modelo na base de validação</a></li>
+<li><a href="#checando-as-métricas-do-modelo"><span class="toc-section-number">3.1.6</span> Checando as métricas do modelo</a></li>
+<li><a href="#checando-a-projeção-final-do-modelo"><span class="toc-section-number">3.1.7</span> Checando a projeção final do modelo</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="criando-os-datasets-de-séries-temporais" class="section level1">
+<h1><span class="header-section-number">1</span> Criando os datasets de séries temporais</h1>
+<p>Analisar séries temporais são úteis para verificar padrões e criar previsões de movimentos futuros. Baseado na base de dados alvo de nossa análise, iremos transformá-la em um dataset de série temporal e na sequência criar as bases de treino e teste.</p>
+<div id="carregando-a-base-de-dados-processada" class="section level2">
+<h2><span class="header-section-number">1.1</span> Carregando a base de dados processada</h2>
+<p>Carregamos a base de dados alvo, previamente tratada durante os passos explicados na fase de <strong>Data Preparation</strong> (preparação de dados).</p>
+<p>Utilizamos a função customizada <strong>GetTimeSeriesDateParameters</strong> para gerar todas as datas que serão utilizadas na análise de séries temporais para a base alvo de estudo. Nesta função, passamos o percentual para proporção desejada entre a base de treino e teste.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">target_data &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&#39;../data/processed/target_dataset.rds&#39;</span>)</a>
+<a class="sourceLine" id="cb1-2" title="2">parameters &lt;-<span class="st"> </span><span class="kw">GetTimeSeriesDateParameters</span>(target_data<span class="op">$</span>date, <span class="fl">0.70</span>)</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">print</span>(parameters)</a></code></pre></div>
+<pre><code>## $start
+## [1] 2015    3
+## 
+## $end
+## [1] 2019   10
+## 
+## $start_year
+## [1] 2015
+## 
+## $end_year
+## [1] 2019
+## 
+## $train_start
+## [1] 2015    3
+## 
+## $train_end
+## [1] 2018    5
+## 
+## $test_start
+## [1] 2018    6
+## 
+## $test_end
+## [1] 2019   10
+## 
+## $test_sample_size
+## [1] 17</code></pre>
+<p>A função <strong>ts</strong> vai converter um vetor de valores de uma base de dados em um objeto R de séries temporais. Devemos passar para a função a coluna alvo e os valores de data de início e fim do período de observação bem como sua frequência.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">target_ts &lt;-<span class="st"> </span><span class="kw">ts</span>(target_data<span class="op">$</span>taxa_venda, </a>
+<a class="sourceLine" id="cb3-2" title="2">                <span class="dt">start =</span> parameters<span class="op">$</span>start, </a>
+<a class="sourceLine" id="cb3-3" title="3">                <span class="dt">end =</span> parameters<span class="op">$</span>end, </a>
+<a class="sourceLine" id="cb3-4" title="4">                <span class="dt">frequency =</span> <span class="dv">12</span>)</a>
+<a class="sourceLine" id="cb3-5" title="5"></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="kw">summary</span>(target_ts)</a></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   4.926   8.469   9.953  10.433  12.633  16.395</code></pre>
+</div>
+<div id="criando-o-conjunto-de-dados-de-treino-e-teste" class="section level2">
+<h2><span class="header-section-number">1.2</span> Criando o conjunto de dados de treino e teste</h2>
+<p>Quando vamos criar um modelo de previsão de séries temporais o ideal é separar os dados em duas partes:</p>
+<ul>
+<li><strong>Treino:</strong> estes dados serão a base principal para definir os coeficientes/parâmetros do modelo;</li>
+<li><strong>Teste:</strong> são dados que serão separados e não foram vistos pelo modelo e serão usados para testá-lo e comparar com as previsões (geralmente comparando os valores passo-a-passo).</li>
+</ul>
+<p>O tamanho do conjunto de testes é normalmente cerca de 20% a 30% da amostra total, embora esse percentual dependa do tamanho da amostra que você tenha e também quanto tempo adiante você deseja fazer a previsão. A base de testes deve ser idealmente pelo menos tão grande quanto o horizonte máximo de previsão necessário.</p>
+<p>Diferente de outros métodos de previsões, como classificações e regressões sem a influência do tempo, em séries temporais não podemos dividir os dados de treino e teste com amostras aleatórias de qualquer parte dos dados, deve-se seguir o critério temporal da série, onde os dados de treino devem vir antes dos dados de teste.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># creating train and test sets ------------------------------------------------</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw">GenerateTrainTestDatasets</span>(target_ts,</a>
+<a class="sourceLine" id="cb5-3" title="3">                          parameters<span class="op">$</span>train_start,</a>
+<a class="sourceLine" id="cb5-4" title="4">                          parameters<span class="op">$</span>train_end,</a>
+<a class="sourceLine" id="cb5-5" title="5">                          parameters<span class="op">$</span>test_start,</a>
+<a class="sourceLine" id="cb5-6" title="6">                          parameters<span class="op">$</span>test_end)</a>
+<a class="sourceLine" id="cb5-7" title="7"></a>
+<a class="sourceLine" id="cb5-8" title="8">test_sample_size =<span class="st"> </span>parameters<span class="op">$</span>test_sample_size</a>
+<a class="sourceLine" id="cb5-9" title="9"></a>
+<a class="sourceLine" id="cb5-10" title="10">train_ts &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&#39;../data/processed/train_ts.rds&#39;</span>)</a>
+<a class="sourceLine" id="cb5-11" title="11">test_ts  &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&#39;../data/processed/test_ts.rds&#39;</span>)</a></code></pre></div>
+<p>A seguir vemos o plot dos datasets de treino e teste.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># plot of the training and testing temporal series</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="kw">plot</span>(train_ts, </a>
+<a class="sourceLine" id="cb6-3" title="3">     <span class="dt">xlab =</span> <span class="st">&quot;Tempo&quot;</span>, </a>
+<a class="sourceLine" id="cb6-4" title="4">     <span class="dt">ylab =</span> <span class="st">&quot;Indices&quot;</span>, </a>
+<a class="sourceLine" id="cb6-5" title="5">     <span class="dt">xaxt =</span> <span class="st">&quot;n&quot;</span>,</a>
+<a class="sourceLine" id="cb6-6" title="6">     <span class="dt">xlim =</span> <span class="kw">c</span>(parameters<span class="op">$</span>start_year, parameters<span class="op">$</span>end_year),</a>
+<a class="sourceLine" id="cb6-7" title="7">     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(train_ts)), </a>
+<a class="sourceLine" id="cb6-8" title="8">     <span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>)</a>
+<a class="sourceLine" id="cb6-9" title="9"></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="kw">axis</span>(<span class="dv">1</span>, <span class="dt">at =</span> <span class="kw">seq</span>(parameters<span class="op">$</span>start_year, parameters<span class="op">$</span>end_year, <span class="dv">1</span>), </a>
+<a class="sourceLine" id="cb6-11" title="11">     <span class="dt">labels =</span> <span class="kw">format</span>(<span class="kw">seq</span>(parameters<span class="op">$</span>start_year, parameters<span class="op">$</span>end_year, <span class="dv">1</span>)))</a>
+<a class="sourceLine" id="cb6-12" title="12"><span class="kw">lines</span>(test_ts, <span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</a>
+<a class="sourceLine" id="cb6-13" title="13"><span class="kw">box</span>(<span class="dt">lty =</span> <span class="st">&#39;1373&#39;</span>, <span class="dt">col =</span> <span class="st">&#39;black&#39;</span>)</a></code></pre></div>
+<p><img src="04_models_exploration_files/figure-html/plot_train_test_datasets-1.png" width="100%" /></p>
+<hr />
+</div>
+</div>
+<div id="executado-os-modelos-de-análise-de-séries-temporais" class="section level1">
+<h1><span class="header-section-number">2</span> Executado os modelos de análise de séries temporais</h1>
+<div id="rodando-e-salvando-o-modelo-naive-de-séries-temporais" class="section level2">
+<h2><span class="header-section-number">2.1</span> Rodando e salvando o modelo Naive de séries temporais</h2>
+<p>Para executarmos o modelo Naive de séries temporais, utilizamos a função <strong>GenerateNaiveTimeSeriesModel</strong> criada para rodar este modelo, gravando os resultados no diretório do projeto <strong>\models</strong> para uso futuro.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">naive_consolidation &lt;-<span class="st"> </span><span class="kw">GenerateNaiveTimeSeriesModel</span>(train_ts, </a>
+<a class="sourceLine" id="cb7-2" title="2">                                                    test_ts, </a>
+<a class="sourceLine" id="cb7-3" title="3">                                                    test_sample_size)</a></code></pre></div>
+<p>Uma vez executada, a função retorna um preview com os resultados de MAPE para o modelo, mostrados a seguir.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">kable</span>(naive_consolidation)</a></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Model</th>
+<th align="right">MAPE_Train</th>
+<th align="right">MAPE_Test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ts_naive_model</td>
+<td align="right">3.543476</td>
+<td align="right">25.18999</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="rodando-e-salvando-os-modelos-lineares-de-séries-temporais" class="section level2">
+<h2><span class="header-section-number">2.2</span> Rodando e salvando os modelos lineares de séries temporais</h2>
+<p>Para executarmos todos os modelos lineares de séries temporais, utilizamos a função <strong>GenerateLinearTimeSeriesModels</strong> criada para rodar cada um dos modelos desejados, gravando os resultados no diretório do projeto <strong>\models</strong> para uso futuro.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">linear_consolidation &lt;-<span class="st"> </span><span class="kw">GenerateLinearTimeSeriesModels</span>(train_ts, </a>
+<a class="sourceLine" id="cb9-2" title="2">                                                       test_ts, </a>
+<a class="sourceLine" id="cb9-3" title="3">                                                       test_sample_size)</a></code></pre></div>
+<p>Uma vez executada, a função retorna um preview com os resultados de MAPE para cada um dos modelos, mostrados a seguir.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">kable</span>(linear_consolidation)</a></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Model</th>
+<th align="right">MAPE_Train</th>
+<th align="right">MAPE_Test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ts_linear_model_trend</td>
+<td align="right">6.377961</td>
+<td align="right">10.02708</td>
+</tr>
+<tr class="even">
+<td align="left">ts_linear_model_trend_square</td>
+<td align="right">7.062046</td>
+<td align="right">51.85623</td>
+</tr>
+<tr class="odd">
+<td align="left">ts_linear_model_season</td>
+<td align="right">18.002127</td>
+<td align="right">66.36612</td>
+</tr>
+<tr class="even">
+<td align="left">ts_linear_model_trend_season</td>
+<td align="right">7.137634</td>
+<td align="right">14.34463</td>
+</tr>
+<tr class="odd">
+<td align="left">ts_linear_model_trend_square_season</td>
+<td align="right">6.635861</td>
+<td align="right">49.02732</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="rodando-e-salvando-o-modelo-moving-average-ma-de-séries-temporais" class="section level2">
+<h2><span class="header-section-number">2.3</span> Rodando e salvando o modelo Moving Average (MA) de séries temporais</h2>
+<p>Para executarmos o modelo Moving Average (MA) de séries temporais, utilizamos a função <strong>GenerateMovingAverageTimeSeriesModel</strong> criada para rodar este modelo, gravando os resultados no diretório do projeto <strong>\models</strong> para uso futuro.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">ma_consolidation &lt;-<span class="st"> </span><span class="kw">GenerateMovingAverageTimeSeriesModel</span>(target_ts, </a>
+<a class="sourceLine" id="cb11-2" title="2">                                                         train_ts, </a>
+<a class="sourceLine" id="cb11-3" title="3">                                                         test_ts, </a>
+<a class="sourceLine" id="cb11-4" title="4">                                                         test_sample_size,</a>
+<a class="sourceLine" id="cb11-5" title="5">                                                         parameters<span class="op">$</span>start_year,</a>
+<a class="sourceLine" id="cb11-6" title="6">                                                         parameters<span class="op">$</span>end_year)</a></code></pre></div>
+<p>Uma vez executada, a função retorna um preview com os resultados de MAPE para o modelo, mostrados a seguir.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">kable</span>(ma_consolidation)</a></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Model</th>
+<th align="right">MAPE_Train</th>
+<th align="right">MAPE_Test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ts_moving_average_model</td>
+<td align="right">12.3794</td>
+<td align="right">29.92407</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="rodando-e-salvando-os-modelos-de-suavização-exponencial-de-séries-temporais" class="section level2">
+<h2><span class="header-section-number">2.4</span> Rodando e salvando os modelos de suavização exponencial de séries temporais</h2>
+<p>Para executarmos todos os modelos de suavização exponencial de séries temporais, utilizamos a função <strong>GenerateExponentialsmoothingStateTimeSeriesModel</strong> criada para rodar cada um dos modelos desejados, gravando os resultados no diretório do projeto <strong>\models</strong> para uso futuro.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1">smoothing_consolidation &lt;-<span class="st"> </span><span class="kw">GenerateExponentialsmoothingStateTimeSeriesModel</span>(target_ts, </a>
+<a class="sourceLine" id="cb13-2" title="2">                                                                            train_ts, </a>
+<a class="sourceLine" id="cb13-3" title="3">                                                                            test_ts, </a>
+<a class="sourceLine" id="cb13-4" title="4">                                                                            test_sample_size)</a></code></pre></div>
+<p>Uma vez executada, a função retorna um preview com os resultados de MAPE para cada um dos modelos, mostrados a seguir.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">kable</span>(smoothing_consolidation)</a></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Model</th>
+<th align="right">MAPE_Train</th>
+<th align="right">MAPE_Test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ts_exponential_smoothing_model_ANN</td>
+<td align="right">3.452853</td>
+<td align="right">25.189623</td>
+</tr>
+<tr class="even">
+<td align="left">ts_exponential_smoothing_model_AAN</td>
+<td align="right">3.290830</td>
+<td align="right">35.440315</td>
+</tr>
+<tr class="odd">
+<td align="left">ts_exponential_smoothing_model_ANA</td>
+<td align="right">3.132936</td>
+<td align="right">30.428342</td>
+</tr>
+<tr class="even">
+<td align="left">ts_exponential_smoothing_model_AAA</td>
+<td align="right">3.128303</td>
+<td align="right">12.294188</td>
+</tr>
+<tr class="odd">
+<td align="left">ts_exponential_smoothing_model_MNN</td>
+<td align="right">3.457771</td>
+<td align="right">25.189623</td>
+</tr>
+<tr class="even">
+<td align="left">ts_exponential_smoothing_model_MAN</td>
+<td align="right">3.238995</td>
+<td align="right">34.959426</td>
+</tr>
+<tr class="odd">
+<td align="left">ts_exponential_smoothing_model_MMN</td>
+<td align="right">3.262919</td>
+<td align="right">26.787589</td>
+</tr>
+<tr class="even">
+<td align="left">ts_exponential_smoothing_model_MNM</td>
+<td align="right">6.277865</td>
+<td align="right">27.739553</td>
+</tr>
+<tr class="odd">
+<td align="left">ts_exponential_smoothing_model_MAM</td>
+<td align="right">2.997105</td>
+<td align="right">8.958037</td>
+</tr>
+<tr class="even">
+<td align="left">ts_exponential_smoothing_model_MMM</td>
+<td align="right">2.993363</td>
+<td align="right">24.220235</td>
+</tr>
+<tr class="odd">
+<td align="left">ts_exponential_smoothing_model_MNA</td>
+<td align="right">2.929558</td>
+<td align="right">27.474490</td>
+</tr>
+<tr class="even">
+<td align="left">ts_exponential_smoothing_model_MAA</td>
+<td align="right">3.156637</td>
+<td align="right">15.608693</td>
+</tr>
+<tr class="odd">
+<td align="left">ts_exponential_smoothing_model_ZZZ</td>
+<td align="right">3.457771</td>
+<td align="right">25.189623</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div>
+</div>
+<div id="avaliando-os-modelos-utilizados-e-seus-resultados" class="section level1">
+<h1><span class="header-section-number">3</span> Avaliando os modelos utilizados e seus resultados</h1>
+<p>Para análise inicial dos modelos será utilizado como base a métrica <strong>MAPE</strong> (Mean Absolute Percentage Error, ou Erro Percentual Médio Absoluto).</p>
+<p>Essa métrica é interessante de ser usada, geralmente em relatórios gerenciais, pois o erro é medido em termos percentuais e pode-se comparar o erro percentual do modelo de um produto X com o erro percentual de um produto Y.</p>
+<p>O cálculo dessa métrica pega o valor absoluto do erro dividido pelo preço real e posteriormente é calculada a média:</p>
+<p><span class="math display">\[MAPE = \frac{1}{n} \sum_{d_i} (\frac{1}{q} \sum_{t_j}\left\lvert{\frac{gap_{i,j}-s_{i,j}}{gap_{i,j}}}\right\rvert)\]</span></p>
+<p>Para analisar o desempenho dos modelos utilizados em nosso dataset de série temporal, vamos primeiramente classificar do melhor para o pior, baseado no resultado de <strong>MAPE na base de teste</strong>.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">mape_ranking &lt;-<span class="st"> </span><span class="kw">rbind</span>(naive_consolidation,</a>
+<a class="sourceLine" id="cb15-2" title="2">                      linear_consolidation,</a>
+<a class="sourceLine" id="cb15-3" title="3">                      ma_consolidation,</a>
+<a class="sourceLine" id="cb15-4" title="4">                      smoothing_consolidation) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-5" title="5"><span class="st">        </span><span class="kw">arrange</span>(MAPE_Test) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-6" title="6"><span class="st">        </span><span class="kw">mutate</span>(<span class="dt">Rank_ID =</span> <span class="kw">row_number</span>()) </a>
+<a class="sourceLine" id="cb15-7" title="7"></a>
+<a class="sourceLine" id="cb15-8" title="8">mape_ranking &lt;-<span class="st"> </span>mape_ranking[<span class="kw">c</span>(<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)]</a>
+<a class="sourceLine" id="cb15-9" title="9"></a>
+<a class="sourceLine" id="cb15-10" title="10"><span class="kw">kable</span>(mape_ranking)</a></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Rank_ID</th>
+<th align="left">Model</th>
+<th align="right">MAPE_Train</th>
+<th align="right">MAPE_Test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">ts_exponential_smoothing_model_MAM</td>
+<td align="right">2.997105</td>
+<td align="right">8.958037</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="left">ts_linear_model_trend</td>
+<td align="right">6.377961</td>
+<td align="right">10.027077</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="left">ts_exponential_smoothing_model_AAA</td>
+<td align="right">3.128303</td>
+<td align="right">12.294188</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="left">ts_linear_model_trend_season</td>
+<td align="right">7.137634</td>
+<td align="right">14.344627</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="left">ts_exponential_smoothing_model_MAA</td>
+<td align="right">3.156637</td>
+<td align="right">15.608693</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="left">ts_exponential_smoothing_model_MMM</td>
+<td align="right">2.993363</td>
+<td align="right">24.220235</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="left">ts_exponential_smoothing_model_ANN</td>
+<td align="right">3.452853</td>
+<td align="right">25.189623</td>
+</tr>
+<tr class="even">
+<td align="right">8</td>
+<td align="left">ts_exponential_smoothing_model_MNN</td>
+<td align="right">3.457771</td>
+<td align="right">25.189623</td>
+</tr>
+<tr class="odd">
+<td align="right">9</td>
+<td align="left">ts_exponential_smoothing_model_ZZZ</td>
+<td align="right">3.457771</td>
+<td align="right">25.189623</td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="left">ts_naive_model</td>
+<td align="right">3.543476</td>
+<td align="right">25.189991</td>
+</tr>
+<tr class="odd">
+<td align="right">11</td>
+<td align="left">ts_exponential_smoothing_model_MMN</td>
+<td align="right">3.262919</td>
+<td align="right">26.787589</td>
+</tr>
+<tr class="even">
+<td align="right">12</td>
+<td align="left">ts_exponential_smoothing_model_MNA</td>
+<td align="right">2.929558</td>
+<td align="right">27.474490</td>
+</tr>
+<tr class="odd">
+<td align="right">13</td>
+<td align="left">ts_exponential_smoothing_model_MNM</td>
+<td align="right">6.277865</td>
+<td align="right">27.739553</td>
+</tr>
+<tr class="even">
+<td align="right">14</td>
+<td align="left">ts_moving_average_model</td>
+<td align="right">12.379401</td>
+<td align="right">29.924069</td>
+</tr>
+<tr class="odd">
+<td align="right">15</td>
+<td align="left">ts_exponential_smoothing_model_ANA</td>
+<td align="right">3.132936</td>
+<td align="right">30.428342</td>
+</tr>
+<tr class="even">
+<td align="right">16</td>
+<td align="left">ts_exponential_smoothing_model_MAN</td>
+<td align="right">3.238995</td>
+<td align="right">34.959426</td>
+</tr>
+<tr class="odd">
+<td align="right">17</td>
+<td align="left">ts_exponential_smoothing_model_AAN</td>
+<td align="right">3.290830</td>
+<td align="right">35.440315</td>
+</tr>
+<tr class="even">
+<td align="right">18</td>
+<td align="left">ts_linear_model_trend_square_season</td>
+<td align="right">6.635861</td>
+<td align="right">49.027322</td>
+</tr>
+<tr class="odd">
+<td align="right">19</td>
+<td align="left">ts_linear_model_trend_square</td>
+<td align="right">7.062046</td>
+<td align="right">51.856233</td>
+</tr>
+<tr class="even">
+<td align="right">20</td>
+<td align="left">ts_linear_model_season</td>
+<td align="right">18.002127</td>
+<td align="right">66.366120</td>
+</tr>
+</tbody>
+</table>
+<p>O modelo <strong>ts_exponential_smoothing_model_MAM</strong> demonstrou a melhor métrica de <strong>MAPE</strong>, com o valor de <strong>8.9580367</strong>.</p>
+<p>Para analisarmos com mais detalhes o modelo com melhor performance, vamos carregar o objeto salvo anteriormente com todos os resultados do modelo.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">best_model &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="kw">paste0</span>(<span class="st">&#39;../models/&#39;</span>, mape_ranking[<span class="dv">1</span>,<span class="dv">2</span>], <span class="st">&#39;.rds&#39;</span>))</a></code></pre></div>
+<div id="resultados-gerais-do-modelo-com-a-melhor-métrica-mape" class="section level2">
+<h2><span class="header-section-number">3.1</span> Resultados gerais do modelo com a melhor métrica MAPE</h2>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">summary</span>(best_model<span class="op">$</span>model)</a></code></pre></div>
+<pre><code>## ETS(M,A,M) 
+## 
+## Call:
+##  ets(y = train_ts, model = method) 
+## 
+##   Smoothing parameters:
+##     alpha = 0.9442 
+##     beta  = 4e-04 
+##     gamma = 0.0039 
+## 
+##   Initial states:
+##     l = 14.7695 
+##     b = -0.164 
+##     s = 1.0047 1.0211 1.0476 1.0338 1.0169 1.0271
+##            0.981 0.9767 0.9929 0.9819 0.9526 0.9637
+## 
+##   sigma:  0.0496
+## 
+##      AIC     AICc      BIC 
+## 112.4614 141.6042 140.7419 
+## 
+## Training set error measures:
+##                      ME     RMSE       MAE         MPE     MAPE      MASE
+## Training set 0.01167671 0.486805 0.3682654 0.001297779 2.997105 0.1479532
+##                   ACF1
+## Training set 0.4978577</code></pre>
+<div id="checando-autocorrelação-do-modelo" class="section level3">
+<h3><span class="header-section-number">3.1.1</span> Checando autocorrelação do modelo</h3>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">Acf</span>(best_model<span class="op">$</span>model<span class="op">$</span>residuals)</a></code></pre></div>
+<p><img src="04_models_exploration_files/figure-html/best_model_Acf-1.png" width="100%" /></p>
+</div>
+<div id="checando-resíduos-do-modelo" class="section level3">
+<h3><span class="header-section-number">3.1.2</span> Checando resíduos do modelo</h3>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">checkresiduals</span>(best_model<span class="op">$</span>model, <span class="dt">test =</span> <span class="st">&quot;LB&quot;</span>)</a></code></pre></div>
+<p><img src="04_models_exploration_files/figure-html/best_model_residuals-1.png" width="100%" /></p>
+<pre><code>## 
+##  Ljung-Box test
+## 
+## data:  Residuals from ETS(M,A,M)
+## Q* = 24.457, df = 3, p-value = 2.005e-05
+## 
+## Model df: 16.   Total lags used: 19</code></pre>
+</div>
+<div id="checando-a-projeção-do-modelo" class="section level3">
+<h3><span class="header-section-number">3.1.3</span> Checando a projeção do modelo</h3>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw">summary</span>(best_model<span class="op">$</span>model_projected)</a></code></pre></div>
+<pre><code>## 
+## Forecast method: ETS(M,A,M)
+## 
+## Model Information:
+## ETS(M,A,M) 
+## 
+## Call:
+##  ets(y = train_ts, model = method) 
+## 
+##   Smoothing parameters:
+##     alpha = 0.9442 
+##     beta  = 4e-04 
+##     gamma = 0.0039 
+## 
+##   Initial states:
+##     l = 14.7695 
+##     b = -0.164 
+##     s = 1.0047 1.0211 1.0476 1.0338 1.0169 1.0271
+##            0.981 0.9767 0.9929 0.9819 0.9526 0.9637
+## 
+##   sigma:  0.0496
+## 
+##      AIC     AICc      BIC 
+## 112.4614 141.6042 140.7419 
+## 
+## Error measures:
+##                      ME     RMSE       MAE         MPE     MAPE      MASE
+## Training set 0.01167671 0.486805 0.3682654 0.001297779 2.997105 0.1479532
+##                   ACF1
+## Training set 0.4978577
+## 
+## Forecasts:
+##          Point Forecast    Lo 95    Hi 95
+## Jun 2018       8.442854 7.622432 9.263276
+## Jul 2018       8.144859 7.045331 9.244388
+## Aug 2018       8.021042 6.693408 9.348675
+## Sep 2018       8.228316 6.645732 9.810900
+## Oct 2018       7.981957 6.250634 9.713279
+## Nov 2018       7.946001 6.038928 9.853074
+## Dec 2018       7.878624 5.813585 9.943662
+## Jan 2019       7.511565 5.381797 9.641333
+## Feb 2019       7.225532 5.025261 9.425804
+## Mar 2019       6.771317 4.569070 8.973564
+## Apr 2019       6.538113 4.277011 8.799214
+## May 2019       6.578786 4.168021 8.989552
+## Jun 2019       6.490090 3.976486 9.003694
+## Jul 2019       6.223993 3.683051 8.764935
+## Aug 2019       6.091451 3.475036 8.707865
+## Sep 2019       6.208364 3.407065 9.009663
+## Oct 2019       5.981558 3.149769 8.813346</code></pre>
+</div>
+<div id="checando-a-aderencia-do-melhor-modelo-na-base-de-validação" class="section level3">
+<h3><span class="header-section-number">3.1.4</span> Checando a aderencia do melhor modelo na base de validação</h3>
+<div class="figure">
+<img src="https://raw.githubusercontent.com/ldaniel/Time-Series-Analysis/master/gifs/model_fit.gif" alt="Animação do fit de na base de testes de todos os modelos lineares e exponenciais calculados." />
+<p class="caption">Animação do fit de na base de testes de todos os modelos lineares e exponenciais calculados.</p>
+</div>
+</div>
+<div id="checando-a-aderencia-do-melhor-modelo-na-base-de-validação-1" class="section level3">
+<h3><span class="header-section-number">3.1.5</span> Checando a aderencia do melhor modelo na base de validação</h3>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">plot</span>(best_model<span class="op">$</span>model_projected, </a>
+<a class="sourceLine" id="cb24-2" title="2">     <span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>,</a>
+<a class="sourceLine" id="cb24-3" title="3">     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(best_model<span class="op">$</span>model_final_projected<span class="op">$</span>fitted) <span class="op">*</span><span class="st"> </span><span class="fl">1.1</span>), </a>
+<a class="sourceLine" id="cb24-4" title="4">     <span class="dt">flty =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb24-5" title="5">     <span class="dt">main =</span> <span class="kw">str_to_upper</span>(<span class="kw">str_replace_all</span>(best_model<span class="op">$</span>title,<span class="st">&#39;ts|_&#39;</span>,<span class="st">&#39; &#39;</span>)))</a>
+<a class="sourceLine" id="cb24-6" title="6"></a>
+<a class="sourceLine" id="cb24-7" title="7"><span class="kw">title</span>(<span class="dt">sub =</span> <span class="kw">paste</span>(<span class="st">&#39;MAPE: &#39;</span>, <span class="kw">round</span>(<span class="kw">filter</span>(mape_ranking, Model <span class="op">==</span><span class="st"> </span>best_model<span class="op">$</span>title)<span class="op">$</span>MAPE_Test, <span class="dv">5</span>)),</a>
+<a class="sourceLine" id="cb24-8" title="8">      <span class="dt">col.sub =</span> <span class="st">&#39;blue&#39;</span>,</a>
+<a class="sourceLine" id="cb24-9" title="9">      <span class="dt">xlab =</span> <span class="st">&quot;Tempo&quot;</span>,</a>
+<a class="sourceLine" id="cb24-10" title="10">      <span class="dt">ylab =</span> <span class="st">&quot;Indice&quot;</span>)</a>
+<a class="sourceLine" id="cb24-11" title="11"></a>
+<a class="sourceLine" id="cb24-12" title="12"><span class="kw">lines</span>(best_model<span class="op">$</span>model_projected<span class="op">$</span>fitted, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>)</a>
+<a class="sourceLine" id="cb24-13" title="13"><span class="kw">lines</span>(test_ts, <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>)</a></code></pre></div>
+<p><img src="04_models_exploration_files/figure-html/best_model_aderencia-1.png" width="100%" /></p>
+</div>
+<div id="checando-as-métricas-do-modelo" class="section level3">
+<h3><span class="header-section-number">3.1.6</span> Checando as métricas do modelo</h3>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">best_model<span class="op">$</span>accuracy</a></code></pre></div>
+<pre><code>##                      ME      RMSE       MAE         MPE     MAPE      MASE
+## Training set 0.01167671 0.4868050 0.3682654 0.001297779 2.997105 0.1479532
+## Test set     0.22663207 0.7975745 0.6593151 1.067556556 8.958037 0.2648845
+##                   ACF1 Theil&#39;s U
+## Training set 0.4978577        NA
+## Test set     0.7576739  1.749004</code></pre>
+</div>
+<div id="checando-a-projeção-final-do-modelo" class="section level3">
+<h3><span class="header-section-number">3.1.7</span> Checando a projeção final do modelo</h3>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw">plot</span>(best_model<span class="op">$</span>model_final_projected, </a>
+<a class="sourceLine" id="cb27-2" title="2">     <span class="dt">bty =</span> <span class="st">&quot;l&quot;</span>,</a>
+<a class="sourceLine" id="cb27-3" title="3">     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(best_model<span class="op">$</span>model_final_projected<span class="op">$</span>fitted) <span class="op">*</span><span class="st"> </span><span class="fl">1.1</span>), </a>
+<a class="sourceLine" id="cb27-4" title="4">     <span class="dt">flty =</span> <span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb27-5" title="5">     <span class="dt">main =</span> <span class="kw">str_to_title</span>(<span class="kw">str_replace_all</span>(best_model<span class="op">$</span>title,<span class="st">&#39;ts|_&#39;</span>,<span class="st">&#39; &#39;</span>)))</a>
+<a class="sourceLine" id="cb27-6" title="6"></a>
+<a class="sourceLine" id="cb27-7" title="7"><span class="kw">title</span>(<span class="dt">sub =</span> <span class="st">&#39;Projeção do modelo com os parâmetros recalculados usando a base completa&#39;</span>, <span class="dt">col.sub =</span> <span class="st">&#39;blue&#39;</span>,</a>
+<a class="sourceLine" id="cb27-8" title="8">      <span class="dt">xlab =</span> <span class="st">&quot;Tempo&quot;</span>,</a>
+<a class="sourceLine" id="cb27-9" title="9">      <span class="dt">ylab =</span> <span class="st">&quot;Indice&quot;</span>)</a>
+<a class="sourceLine" id="cb27-10" title="10"></a>
+<a class="sourceLine" id="cb27-11" title="11"><span class="kw">lines</span>(best_model<span class="op">$</span>model_final_projected<span class="op">$</span>fitted, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="st">&quot;blue&quot;</span>)</a></code></pre></div>
+<p><img src="04_models_exploration_files/figure-html/best_model_final_projection-1.png" width="100%" /></p>
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

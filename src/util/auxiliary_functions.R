@@ -123,6 +123,8 @@ RunLinearTimeSeriesModel <- function (train_ts,
 # this function generates and saves all linear time series models to the
 # model's directory for later consuming
 GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size, number_of_periods_for_forecasting = 6) {
+  max_ylim <-  max(train_ts, test_ts)
+  
   # Tendência Linear
   model_trend <- RunLinearTimeSeriesModel(train_ts,
                                           test_ts,
@@ -132,7 +134,7 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size,
                                           number_of_periods_for_forecasting = number_of_periods_for_forecasting,
                                           title = "ts_linear_model_trend")
   saveRDS(model_trend, paste0('../models/', model_trend$title,'.rds'))
-  SaveFitPlot(model_trend)
+  SaveFitPlot(model_trend, max_ylim)
   
   # Tendência Quadrática
   model_trend_square <- RunLinearTimeSeriesModel(train_ts,
@@ -143,7 +145,7 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size,
                                                  number_of_periods_for_forecasting = number_of_periods_for_forecasting,
                                                  title = "ts_linear_model_trend_square")
   saveRDS(model_trend_square, paste0('../models/', model_trend_square$title,'.rds'))
-  SaveFitPlot(model_trend_square)
+  SaveFitPlot(model_trend_square, max_ylim)
 
   # Sazonalidade
   model_season <- RunLinearTimeSeriesModel(train_ts,
@@ -154,7 +156,7 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size,
                                            number_of_periods_for_forecasting = number_of_periods_for_forecasting,
                                            title = "ts_linear_model_season")
   saveRDS(model_season, paste0('../models/', model_season$title,'.rds'))
-  SaveFitPlot(model_season)
+  SaveFitPlot(model_season, max_ylim)
   
   # Tendência Linear com Sazonalidade
   model_trend_season <- RunLinearTimeSeriesModel(train_ts,
@@ -165,7 +167,7 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size,
                                                  number_of_periods_for_forecasting = number_of_periods_for_forecasting,
                                                  title = "ts_linear_model_trend_season")
   saveRDS(model_trend_season, paste0('../models/', model_trend_season$title,'.rds'))
-  SaveFitPlot(model_trend_season)
+  SaveFitPlot(model_trend_season, max_ylim)
   
   # Tendência Quadrática com Sazonalidade
   model_trend_square_season <- RunLinearTimeSeriesModel(train_ts,
@@ -176,7 +178,7 @@ GenerateLinearTimeSeriesModels <- function (train_ts, test_ts, test_sample_size,
                                                         number_of_periods_for_forecasting = number_of_periods_for_forecasting,
                                                         title = "ts_linear_model_trend_square_season")
   saveRDS(model_trend_square_season, paste0('../models/', model_trend_square_season$title,'.rds'))
-  SaveFitPlot(model_trend_square_season)
+  SaveFitPlot(model_trend_square_season, max_ylim)
   
   # performing result's consolidation
   consolidation <- tibble(Model = character(), MAPE_Train = numeric(), MAPE_Test = numeric())
@@ -317,6 +319,8 @@ GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts, train_t
 
   consolidation <- tibble(Model = character(), MAPE_Train = numeric(), MAPE_Test = numeric())
   
+  max_ylim <- max(target_ts, train_ts)
+  
   for (method_item in methods_list) {
     model <- RunExponentialsmoothingStateTimeSeriesModel(target_ts,
                                                          train_ts, 
@@ -327,7 +331,7 @@ GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts, train_t
     model_file_name <- paste0('../models/', model$title,'.rds')
     
     saveRDS(model, model_file_name)
-    SaveFitPlot(model)
+    SaveFitPlot(model, max_ylim)
     
     consolidation <-  add_row(consolidation,
                               Model = model$title,
@@ -339,7 +343,7 @@ GenerateExponentialsmoothingStateTimeSeriesModel <- function (target_ts, train_t
 }
 
 # plot model fit ----
-SaveFitPlot <- function(model) {
+SaveFitPlot <- function(model, max_ylim) {
 
   png(paste('../images/', model$title, '.png'),
       width = 640, 
@@ -347,7 +351,7 @@ SaveFitPlot <- function(model) {
   
   plot(model$model_projected, 
        bty = "l",
-       ylim = c(0, 10), 
+       ylim = c(0, max_ylim), 
        flty = 2,
        main = str_to_upper(str_replace_all(model$title,'ts|_',' ')))
   
