@@ -383,6 +383,7 @@ SaveFitPlot <- function(model, max_ylim) {
   title(sub = paste('MAPE: ', round(model$accuracy['Test set', 'MAPE'], 5)), 
         col.sub = 'blue',
         ylab = "Indice",
+        xlab = '',
         cex.sub = 1.7)
   
   title(col.sub = 'blue', xlab = "Tempo", ylab = "Indice")
