@@ -6,6 +6,7 @@ library(bizdays)
 library(lubridate)
 library(plotly)
 library(urca)
+library(astsa)
 
 setwd('D:/rodri/My GIT Projects/Time-Series-Analysis/markdown')
 
@@ -49,7 +50,7 @@ Box.test(target_ts, type = "Ljung")
 checkresiduals(target_ts_diff, test = 'LB')
 Box.test(target_ts_diff, type = "Ljung")
 
-target_ts <- target_ts_diff
+# target_ts <- target_ts_diff
 
 # creating train and test sets ----
 GenerateTrainTestDatasets(target_ts,
@@ -92,15 +93,34 @@ plot_projection <- function(model_proj, test_ts) {
   lines(test_ts)
 }
 
-# Modelo Arima
+# Modelo ARIMA ----
 Modelo_ARIMA <- Arima(train_ts, order = c(2, 1, 1))
 summary(Modelo_ARIMA)
 modelo_ARIMA_proj <- forecast(Modelo_ARIMA, h = test_sample_size, level = 0.95)
 plot_projection(modelo_ARIMA_proj, test_ts)
 
-# Modelo Auto Arima
-Modelo_Auto_ARIMA <- auto.arima(train_ts, stepwise = FALSE, approximation  =  FALSE)
+# Modelo SARIMA ----
+Modelo_SARIMA <- arima(train_ts, order = c(0, 1, 1), seasonal = list(order = c(1, 1, 1), period = 12))
+summary(Modelo_SARIMA)
+modelo_SARIMA_proj <- forecast(Modelo_SARIMA, h = test_sample_size, level = 0.95)
+plot_projection(modelo_SARIMA_proj, test_ts)
+
+# Modelo Auto ARIMA ----
+Modelo_Auto_ARIMA <- auto.arima(train_ts, stepwise = FALSE, approximation  =  FALSE, 
+                                seasonal = TRUE, stationary = FALSE,
+                                trace = TRUE)
 summary(Modelo_Auto_ARIMA)
 modelo_Auto_ARIMA_proj <- forecast(Modelo_Auto_ARIMA, h = test_sample_size, level = 0.95)
 plot_projection(modelo_Auto_ARIMA_proj, test_ts)
+
+
+# Modelo Auto ARIMA on full dataset ----
+Modelo_Auto_ARIMA <- auto.arima(target_ts, stepwise = FALSE, approximation  =  FALSE, 
+                                seasonal = TRUE, stationary = FALSE,
+                                trace = TRUE)
+summary(Modelo_Auto_ARIMA)
+modelo_Auto_ARIMA_proj <- forecast(Modelo_Auto_ARIMA, h = 6, level = 0.95)
+plot_projection(modelo_Auto_ARIMA_proj, test_ts)
+
+modelo_Auto_ARIMA_proj
 
