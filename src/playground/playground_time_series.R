@@ -49,7 +49,8 @@ Box.test(target_ts, type = "Ljung")
 checkresiduals(target_ts_diff, test = 'LB')
 Box.test(target_ts_diff, type = "Ljung")
 
-target_ts <- target_ts
+target_ts <- target_ts_diff
+
 # creating train and test sets ----
 GenerateTrainTestDatasets(target_ts,
                           parameters$train_start,
@@ -97,7 +98,7 @@ summary(Modelo_ARIMA)
 modelo_ARIMA_proj <- forecast(Modelo_ARIMA, h = test_sample_size, level = 0.95)
 plot_projection(modelo_ARIMA_proj, test_ts)
 
-# Modelo Arima
+# Modelo Auto Arima
 Modelo_Auto_ARIMA <- auto.arima(train_ts, stepwise = FALSE, approximation  =  FALSE)
 summary(Modelo_Auto_ARIMA)
 modelo_Auto_ARIMA_proj <- forecast(Modelo_Auto_ARIMA, h = test_sample_size, level = 0.95)
