@@ -16,6 +16,8 @@ Escolher uma série temporal e realizar uma apresentação de 10 min:
 ```
 See the final website report at: [https://ldaniel.github.io/Time-Series-Analysis](https://ldaniel.github.io/Time-Series-Analysis).
 
+You can also run the solution in binder at: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ldaniel/Time-Series-Analysis/master)
+
 ## Professor
 - Rafael Scopel
 
