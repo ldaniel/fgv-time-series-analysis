@@ -10,7 +10,7 @@ import requests
 from bs4 import BeautifulSoup
 
 if not os.path.exists(os.path.join('data', 'raw')):
-  os.mkdir(os.path.join('data', 'raw')
+  os.mkdir(os.path.join('data', 'raw'))
 
 def download_data():
     URL = f'http://sisweb.tesouro.gov.br/apex/f?p=2031:2'
