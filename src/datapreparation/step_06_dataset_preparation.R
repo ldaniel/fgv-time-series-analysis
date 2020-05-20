@@ -30,4 +30,4 @@ df$date <- make_date(year(df$dia), month(df$dia), 1)
 df <- group_by(df, date) %>%
    summarise(taxa_venda = mean(taxa_venda))
  
-saveRDS(df, '../data/processed/target_dataset.rds')
+saveRDS(df, 'data/processed/target_dataset.rds')

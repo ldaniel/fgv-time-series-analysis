@@ -9,6 +9,9 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
+if not os.path.exists(os.path.join('data', 'raw')):
+  os.mkdir(os.path.join('data', 'raw')
+
 def download_data():
     URL = f'http://sisweb.tesouro.gov.br/apex/f?p=2031:2'
     result = requests.get(URL).content
@@ -27,7 +30,8 @@ def download_data():
         filename = re.findall(r'filename="(.*)"; filename',
                               str(resp.headers["Content-Disposition"]))
         print(filename[0])
-        with open(f'data\\raw\\{filename[0]}', 'wb') as output:
+        path = os.path.join('data/raw', filename[0])
+        with open(path, 'wb') as output:
             output.write(resp.content)
 
     del a_tags, anchor_url, link, URL, filename
