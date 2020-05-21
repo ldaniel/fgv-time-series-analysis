@@ -37,3 +37,13 @@ rsconnect/
 
 #data folder
 data/raw
+
+# binder junk
+.bash_logout
+.bashrc
+.cargo/
+.config/
+.local/
+.profile
+.rstudio/
+.subversion/
