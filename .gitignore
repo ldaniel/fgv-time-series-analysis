@@ -48,3 +48,4 @@ data/raw
 .profile
 .rstudio/
 .subversion/
+.gitconfig
