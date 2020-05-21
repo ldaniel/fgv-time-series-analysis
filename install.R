@@ -12,7 +12,6 @@ install.packages('stringr')
 install.packages('lubridate')
 install.packages('reticulate')
 install.packages('bizdays')
-install.packages('rust')
 install.packages('gifski', repos = 'https://cloud.r-project.org')
 
 # plotting libraries
@@ -24,4 +23,4 @@ install.packages('ggthemes')
 install.packages('zoo')
 install.packages('forecast')
 install.packages('knitr')
-
+install.packages('rmarkdown')
