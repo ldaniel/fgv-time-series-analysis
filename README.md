@@ -14,7 +14,7 @@ Escolher uma série temporal e realizar uma apresentação de 10 min:
 - Estimar com os modelos observado em aula
 - Concluir sobre o melhor modelo
 ```
-See the final website report at: [https://ldaniel.github.io/Time-Series-Analysis](https://ldaniel.github.io/Time-Series-Analysis).
+See the final website report at: [https://ldaniel.github.io/fgv-time-series-analysis](https://ldaniel.github.io/fgv-time-series-analysis).
 
 You can also run the solution in binder at: 
 
